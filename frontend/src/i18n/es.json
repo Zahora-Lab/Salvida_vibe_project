@@ -544,7 +544,8 @@
     "stats": {
       "services": "Servicios Realizados",
       "users": "Personas Asistidas",
-      "points": "Puntos de Asistencia"
+      "points": "Puntos de Asistencia",
+      "loading": "Cargando estadísticas"
     },
     "video": {
       "imgAlt": "Asistente ayudando a una persona con movilidad reducida a bajar escaleras",
