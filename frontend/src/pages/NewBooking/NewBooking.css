@@ -165,7 +165,7 @@
 /* Urgency */
 .urgency-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 1rem;
   padding-bottom: 8rem;
 }
@@ -276,7 +276,7 @@
 /* Date & Time section */
 .datetime-card__row {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 1rem;
 }
 
@@ -578,4 +578,30 @@
   display: flex;
   gap: 1rem;
   width: 100%;
+}
+
+/* ── Mobile ───────────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .new-booking__header {
+    height: 4rem;
+    padding: 0 1rem;
+  }
+
+  .new-booking__body {
+    padding: 1rem;
+  }
+
+  .passenger-card {
+    padding: 1rem;
+  }
+
+  .booking-actions {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .datetime-card__row {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }

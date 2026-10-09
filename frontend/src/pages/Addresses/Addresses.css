@@ -547,3 +547,20 @@
   0% { background-position: 200% 0; }
   100% { background-position: -200% 0; }
 }
+
+/* ── Mobile ───────────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .addresses__body {
+    padding: 1rem;
+  }
+
+  .addresses__map-full {
+    height: min(600px, 65vh);
+  }
+
+  .addresses__entity-filter {
+    min-width: 0;
+    max-width: none;
+    flex-basis: 100%;
+  }
+}

@@ -286,3 +286,23 @@
   color: var(--color-slate-400);
   font-size: 0.875rem;
 }
+
+/* ── Mobile ───────────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .prms__body {
+    padding: 1rem;
+  }
+
+  .prms__inner {
+    gap: 1rem;
+  }
+
+  .prms__filter-tabs {
+    overflow-x: auto;
+    padding-bottom: 0.25rem;
+  }
+
+  .prms__filter-tab {
+    flex-shrink: 0;
+  }
+}

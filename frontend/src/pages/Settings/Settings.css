@@ -838,3 +838,39 @@
 .settings-zone__dropdown-item:hover {
   background-color: var(--color-primary-05);
 }
+
+/* ── Mobile ───────────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .settings__body {
+    padding: 1rem;
+  }
+
+  .settings__inner {
+    gap: 1rem;
+  }
+
+  .settings-panel {
+    padding: 1.25rem;
+    min-height: 0;
+  }
+
+  .settings-profile {
+    gap: 1.5rem;
+  }
+
+  .settings-profile__footer {
+    padding-top: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .settings-avatar {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+  }
+
+  .settings-avatar__info {
+    align-items: center;
+  }
+}
