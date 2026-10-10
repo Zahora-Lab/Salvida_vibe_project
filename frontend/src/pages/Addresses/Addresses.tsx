@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-import { MapPin, Check, X, RotateCcw, ChevronDown, ChevronUp, List, Map, ExternalLink } from 'lucide-react';
+import { MapPin, ChevronDown, ChevronUp, List, Map, User } from 'lucide-react';
 import Header from '../../components/Header/Header';
 import { useAddresses, useValidateAddress } from '../../hooks/useAddresses';
 import type { AccessibilityFilter } from '../../hooks/useAddresses';
+import { useMediaQuery } from '../../hooks/useMediaQuery';
 import type { Address } from '../../types';
+import AddressActions from './AddressActions';
+import AddressCard from './AddressCard';
 import AddressMapPreview from './AddressMapPreview';
 import AddressesMapView from './AddressesMapView';
 import UserMultiSelect from '../../components/UserMultiSelect/UserMultiSelect';
@@ -18,6 +21,7 @@ type ViewMode = 'list' | 'map';
 export default function Addresses() {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const isMobile = useMediaQuery('(max-width: 768px)');
   const [filter, setFilter]           = useState<AccessibilityFilter | 'all'>('all');
   const [viewMode, setViewMode]       = useState<ViewMode>('list');
   const [expandedId, setExpandedId]   = useState<string | null>(null);
@@ -40,6 +44,7 @@ export default function Addresses() {
     prmIds,
   });
   const validateAddress = useValidateAddress();
+  const showCards = isMobile && !isLoading && addresses.length > 0;
 
   function toggleExpand(id: string) {
     setExpandedId(expandedId === id ? null : id);
@@ -130,8 +135,24 @@ export default function Addresses() {
             />
           )}
 
-          {/* List view */}
-          {viewMode === 'list' && (
+          {/* List view — cards on mobile, table on larger screens.
+              Loading and empty states keep the shared wrapper in both. */}
+          {viewMode === 'list' && showCards && (
+            <ul className="addresses__cards">
+              {addresses.map((address) => (
+                <AddressCard
+                  key={address.id}
+                  address={address}
+                  expanded={expandedId === address.id}
+                  onToggleExpand={toggleExpand}
+                  onAssess={handleAssess}
+                  onOpenPrm={(prmId) => navigate(`/app/prms/${prmId}`)}
+                />
+              ))}
+            </ul>
+          )}
+
+          {viewMode === 'list' && !showCards && (
             <div className="addresses__table-wrap">
               {isLoading ? (
                 <div className="addresses__loading">
@@ -176,38 +197,7 @@ export default function Addresses() {
                             <AddressAccessibilityBadge value={address.is_accessible} />
                           </td>
                           <td>
-                            <div className="addresses__action-group">
-                              {address.is_accessible !== true && (
-                                <button
-                                  className="addresses__action-btn addresses__action-btn--validate"
-                                  onClick={() => handleAssess(address, true)}
-                                  title={t('addresses.actions.markAccessible')}
-                                >
-                                  <Check size={14} />
-                                  {t('addresses.actions.markAccessible')}
-                                </button>
-                              )}
-                              {address.is_accessible !== false && (
-                                <button
-                                  className="addresses__action-btn addresses__action-btn--reject"
-                                  onClick={() => handleAssess(address, false)}
-                                  title={t('addresses.actions.markNotAccessible')}
-                                >
-                                  <X size={14} />
-                                  {t('addresses.actions.markNotAccessible')}
-                                </button>
-                              )}
-                              {address.is_accessible !== null && (
-                                <button
-                                  className="addresses__action-btn addresses__action-btn--reset"
-                                  onClick={() => handleAssess(address, null)}
-                                  title={t('addresses.actions.resetPending')}
-                                >
-                                  <RotateCcw size={14} />
-                                  {t('addresses.actions.resetPending')}
-                                </button>
-                              )}
-                            </div>
+                            <AddressActions address={address} onAssess={handleAssess} />
                           </td>
                           <td>
                             {address.lat && address.lng && (
@@ -228,7 +218,7 @@ export default function Addresses() {
                                 onClick={() => navigate(`/app/prms/${address.prm_id}`)}
                                 title={address.prm_name ? `Ver perfil de ${address.prm_name}` : 'Ver perfil del PMR'}
                               >
-                                <ExternalLink size={15} />
+                                <User size={15} />
                               </button>
                             )}
                           </td>
