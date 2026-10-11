@@ -216,7 +216,7 @@ export default function Addresses() {
                               <button
                                 className="addresses__expand-btn addresses__prm-link"
                                 onClick={() => navigate(`/app/prms/${address.prm_id}`)}
-                                title={address.prm_name ? `Ver perfil de ${address.prm_name}` : 'Ver perfil del PMR'}
+                                title={address.prm_name ? `Ver perfil de ${address.prm_name}` : 'Ver perfil del usuario del servicio'}
                               >
                                 <User size={15} />
                               </button>

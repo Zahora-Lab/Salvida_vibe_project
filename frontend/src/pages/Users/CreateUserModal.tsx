@@ -62,7 +62,7 @@ export default function CreateUserModal({ onClose }: Props) {
     <div className="cum-overlay"       onClick={(event) => event.target === event.currentTarget && onClose()}>
       <div className="cum-modal" role="dialog" aria-modal="true">
         <div className="cum-header">
-          <h2 className="cum-title">Nuevo usuario</h2>
+          <h2 className="cum-title">Nuevo responsable</h2>
           <button className="cum-close" onClick={onClose} aria-label="Cerrar">
             <X size={18} />
           </button>
@@ -168,14 +168,14 @@ export default function CreateUserModal({ onClose }: Props) {
               value={role}
               onChange={(e) => setRole(e.target.value as UserRole)}
             >
-              <option value="user">Usuario</option>
+              <option value="user">Responsable</option>
               {isSuperAdmin && <option value="admin">Admin</option>}
             </select>
           </div>
 
           {isSuperAdmin && (
             <label className="cum-toggle">
-              <span className="cum-toggle-label">Usuario demo</span>
+              <span className="cum-toggle-label">Responsable demo</span>
               <button
                 type="button"
                 role="switch"
@@ -190,7 +190,7 @@ export default function CreateUserModal({ onClose }: Props) {
 
           {method === 'invite' && (
             <p className="cum-hint">
-              Se enviará un email de invitación. El usuario deberá activar su cuenta.
+              Se enviará un email de invitación. El responsable deberá activar su cuenta.
             </p>
           )}
 
@@ -199,7 +199,7 @@ export default function CreateUserModal({ onClose }: Props) {
               Cancelar
             </button>
             <button type="submit" className="cum-btn cum-btn--primary" disabled={createUser.isPending}>
-              {createUser.isPending ? 'Creando…' : method === 'invite' ? 'Enviar invitación' : 'Crear usuario'}
+              {createUser.isPending ? 'Creando…' : method === 'invite' ? 'Enviar invitación' : 'Crear responsable'}
             </button>
           </div>
         </form>

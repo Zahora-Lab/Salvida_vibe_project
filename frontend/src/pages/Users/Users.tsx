@@ -11,7 +11,7 @@ import './Users.css';
 const ROLE_LABEL: Record<string, string> = {
   superadmin: 'Super Admin',
   admin: 'Admin',
-  user: 'Usuario',
+  user: 'Responsable',
 };
 
 function getInitials(u: UserProfile) {
@@ -49,7 +49,7 @@ export default function Users() {
 
   return (
     <div className="users">
-      <Header title="Usuarios" subtitle="Gestión de cuentas de usuario" />
+      <Header title="Responsables" subtitle="Gestión de cuentas de responsables" />
 
       {showCreateModal && <CreateUserModal onClose={() => setShowCreateModal(false)} />}
 
@@ -74,7 +74,7 @@ export default function Users() {
               onClick={() => setShowCreateModal(true)}
             >
               <Plus size={16} />
-              <span>Nuevo usuario</span>
+              <span>Nuevo responsable</span>
             </button>
           </div>
 
@@ -95,7 +95,7 @@ export default function Users() {
               <table className="users__table">
                 <thead>
                   <tr>
-                    <th>Usuario</th>
+                    <th>Responsable</th>
                     <th>Email</th>
                     <th>Organización</th>
                     <th>Rol</th>
@@ -118,7 +118,7 @@ export default function Users() {
                   ) : filtered.length === 0 ? (
                     <tr>
                       <td colSpan={6} className="users__empty">
-                        No se encontraron usuarios
+                        No se encontraron responsables
                       </td>
                     </tr>
                   ) : (
@@ -152,7 +152,7 @@ export default function Users() {
                               {ROLE_LABEL[u.role ?? ''] ?? u.role}
                             </span>
                             {isSuperAdmin && u.isDemo && (
-                              <span className="user-demo-badge" title="Usuario demo">
+                              <span className="user-demo-badge" title="Responsable demo">
                                 <FlaskConical size={12} />
                                 demo
                               </span>
@@ -168,7 +168,7 @@ export default function Users() {
                           <DropdownMenu
                             items={[
                               {
-                                label: u.isActive === false ? 'Restaurar usuario' : 'Archivar usuario',
+                                label: u.isActive === false ? 'Restaurar responsable' : 'Archivar responsable',
                                 onClick: () => archiveUser.mutate(u.id),
                                 variant: u.isActive === false ? 'default' : 'danger',
                               },

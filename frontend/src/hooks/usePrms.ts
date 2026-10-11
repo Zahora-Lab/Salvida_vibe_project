@@ -43,9 +43,9 @@ export function useCreatePrm() {
       apiClient.post<Prm>('/api/prms', body),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: PRMS_KEY });
-      toast.success('PRM creado correctamente');
+      toast.success('Usuario del servicio creado correctamente');
     },
-    onError: (error) => toast.error(parseApiError(error, 'Error al crear el PRM')),
+    onError: (error) => toast.error(parseApiError(error, 'Error al crear el usuario del servicio')),
   });
 }
 
@@ -57,9 +57,9 @@ export function useUpdatePrm() {
     onSuccess: (_data, vars) => {
       qc.invalidateQueries({ queryKey: PRMS_KEY });
       qc.invalidateQueries({ queryKey: prmKey(vars.id) });
-      toast.success('PRM actualizado correctamente');
+      toast.success('Usuario del servicio actualizado correctamente');
     },
-    onError: (error) => toast.error(parseApiError(error, 'Error al actualizar el PRM')),
+    onError: (error) => toast.error(parseApiError(error, 'Error al actualizar el usuario del servicio')),
   });
 }
 
@@ -69,9 +69,9 @@ export function useDeletePrm() {
     mutationFn: (id: string) => apiClient.delete<void>(`/api/prms/${id}`),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: PRMS_KEY });
-      toast.success('PRM eliminado correctamente');
+      toast.success('Usuario del servicio eliminado correctamente');
     },
-    onError: (error) => toast.error(parseApiError(error, 'Error al eliminar el PRM')),
+    onError: (error) => toast.error(parseApiError(error, 'Error al eliminar el usuario del servicio')),
   });
 }
 

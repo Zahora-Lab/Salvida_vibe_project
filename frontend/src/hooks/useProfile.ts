@@ -45,9 +45,9 @@ export function useArchiveUser() {
       apiClient.patch<UserProfile>(`/api/profile/${userId}/archive`, {}),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: USERS_KEY });
-      toast.success('Estado del usuario actualizado');
+      toast.success('Estado del responsable actualizado');
     },
-    onError: (error) => toast.error(parseApiError(error, 'Error al archivar el usuario')),
+    onError: (error) => toast.error(parseApiError(error, 'Error al archivar el responsable')),
   });
 }
 
@@ -72,10 +72,10 @@ export function useCreateUser() {
       apiClient.post<UserProfile>('/api/profile/users', body),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: USERS_KEY });
-      toast.success('Usuario creado correctamente');
+      toast.success('Responsable creado correctamente');
     },
     onError: (error) => {
-      toast.error(parseApiError(error, 'Error al crear el usuario'));
+      toast.error(parseApiError(error, 'Error al crear el responsable'));
     },
   });
 }
