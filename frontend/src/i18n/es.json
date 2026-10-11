@@ -75,7 +75,9 @@
     "pending": "Pendientes",
     "completed": "Completados",
     "todayBookings": "Reservas de hoy",
-    "requestNewBooking": "Solicitar nueva reserva",
+    "newBooking": "Nueva reserva",
+    "newBookingShort": "Nueva reserva",
+    "filtersToggle": "Filtros",
     "viewAll": "Ver todo",
     "noBookingsToday": "No hay reservas para hoy",
     "dateLabel": "Reservas del {{date}}",
@@ -513,8 +515,29 @@
     }
   },
   "calendar": {
-    "months": ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
-    "weekdays": ["D", "L", "M", "X", "J", "V", "S"]
+    "months": [
+      "Enero",
+      "Febrero",
+      "Marzo",
+      "Abril",
+      "Mayo",
+      "Junio",
+      "Julio",
+      "Agosto",
+      "Septiembre",
+      "Octubre",
+      "Noviembre",
+      "Diciembre"
+    ],
+    "weekdays": [
+      "D",
+      "L",
+      "M",
+      "X",
+      "J",
+      "V",
+      "S"
+    ]
   },
   "header": {
     "date": "{{month}} {{year}}"

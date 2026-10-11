@@ -291,3 +291,28 @@
   color: var(--color-slate-400);
 }
 
+
+/* ── Mobile ───────────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .users__body {
+    padding: 1rem;
+  }
+
+  .users__toolbar {
+    flex-wrap: wrap;
+  }
+
+  .users__search-wrap {
+    flex: 1 1 100%;
+    max-width: none;
+  }
+
+  .users__filter-tabs {
+    overflow-x: auto;
+    max-width: 100%;
+  }
+
+  .users__filter-tab {
+    flex-shrink: 0;
+  }
+}

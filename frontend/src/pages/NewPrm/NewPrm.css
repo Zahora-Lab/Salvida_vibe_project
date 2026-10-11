@@ -270,3 +270,25 @@
   opacity: 0.6;
   cursor: not-allowed;
 }
+
+/* ── Mobile / tablet ──────────────────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .new-prm__subtitle {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .new-prm__header {
+    height: 4rem;
+    padding: 0 1rem;
+  }
+
+  .new-prm__body {
+    padding: 1rem;
+  }
+
+  .new-prm__section {
+    padding: 1rem;
+  }
+}

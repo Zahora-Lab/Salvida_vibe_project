@@ -568,3 +568,153 @@
     padding: 1rem;
   }
 }
+
+/* ── Mobile redesign: compact controls + collapsible panels ─────────────────── */
+
+.dashboard__mobile-bar {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  /* Row 1: view toggle (left) + "+" new booking (right) */
+  .dashboard__mobile-toolbar {
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.75rem;
+    padding-bottom: 0.5rem;
+  }
+
+  .dashboard__mobile-new-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 0.75rem;
+    background-color: var(--color-primary);
+    color: white;
+    box-shadow: 0 6px 12px -4px var(--color-primary-40);
+    transition: background-color 0.15s;
+  }
+
+  .dashboard__mobile-new-btn:hover {
+    background-color: var(--color-primary-dark);
+  }
+
+  /* Row 2: date selector (left, grows) + filters toggle (right) */
+  .dashboard__mobile-bar {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .dashboard__mobile-chip {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 2.75rem;
+    padding: 0 0.875rem;
+    border-radius: 0.75rem;
+    border: 1px solid var(--color-slate-200);
+    background-color: white;
+    color: var(--color-slate-600);
+    font-size: 0.875rem;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    transition: border-color 0.15s, color 0.15s;
+  }
+
+  .dashboard__mobile-chip--date {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .dashboard__mobile-chip-text {
+    flex: 1;
+    min-width: 0;
+    text-align: left;
+    text-transform: capitalize;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .dashboard__mobile-chip[aria-expanded='true'] {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+  }
+
+  /* Same gray as the filters card below, so the button and its panel read as one */
+  .dashboard__mobile-chip--filters[aria-expanded='true'] {
+    background-color: var(--color-slate-100);
+    border-color: var(--color-slate-200);
+  }
+
+  .dashboard__chevron {
+    flex-shrink: 0;
+    transition: transform 0.2s;
+  }
+
+  .dashboard__mobile-chip[aria-expanded='true'] .dashboard__chevron {
+    transform: rotate(180deg);
+  }
+
+  .dashboard__mobile-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 1.25rem;
+    height: 1.25rem;
+    padding: 0 0.3rem;
+    border-radius: 9999px;
+    background-color: var(--color-primary);
+    color: white;
+    font-size: 0.6875rem;
+    font-weight: 700;
+  }
+
+  /* Collapsible panels: hidden until their trigger is toggled */
+  .dashboard__calendar:not(.dashboard__calendar--open),
+  .dashboard__filters:not(.dashboard__filters--open) {
+    display: none;
+  }
+
+  .booking-filters {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 1rem;
+    background-color: var(--color-slate-100);
+    border-color: var(--color-slate-200);
+  }
+
+  /* Calendar view order: [calendar] [filters] → bookings (main) → summary.
+     `display: contents` lets the children of both columns be reordered
+     together in a single flex column. */
+  .dashboard__grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .dashboard__left,
+  .dashboard__right {
+    display: contents;
+  }
+
+  .dashboard__calendar { order: 1; }
+  .dashboard__filters { order: 2; }
+  .bookings-header { order: 3; }
+  .booking-list { order: 4; }
+  .summary-card { order: 5; }
+
+  /* The "+" in the top bar replaces the bottom call-to-action */
+  .new-booking-btn {
+    display: none;
+  }
+
+  .dashboard__list-view {
+    gap: 1rem;
+  }
+}
