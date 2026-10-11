@@ -24,7 +24,7 @@ export default function AddressCard({
   const { t } = useTranslation();
   const { lat, lng, prm_id: prmId, prm_name: prmName } = address;
   const hasCoords = lat != null && lng != null;
-  const prmLabel = prmName ? `Ver perfil de ${prmName}` : 'Ver perfil del PMR';
+  const prmLabel = prmName ? t('addresses.viewPrmProfile', { name: prmName }) : t('addresses.viewPrmProfileGeneric');
 
   return (
     <li className="addresses__card">
