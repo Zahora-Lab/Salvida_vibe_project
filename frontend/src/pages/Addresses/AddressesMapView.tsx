@@ -89,7 +89,7 @@ export default function AddressesMapView({ addresses, onAssess }: AddressesMapVi
                 <div className="addr-popup__header">
                   {address.prm_name
                     ? <span className="addr-popup__prm">{address.prm_name}</span>
-                    : <span className="addr-popup__prm addr-popup__prm--unknown">Sin usuario del servicio</span>
+                    : <span className="addr-popup__prm addr-popup__prm--unknown">{t('addresses.noPrm')}</span>
                   }
                   {address.owner_name && (
                     <span className="addr-popup__owner">

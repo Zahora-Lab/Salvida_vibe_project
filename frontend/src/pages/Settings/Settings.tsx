@@ -261,8 +261,8 @@ export default function Settings() {
                   <UserSelector
                     value={notifTargetUser?.id ?? ''}
                     onChange={(_id, user) => setNotifTargetUser(user)}
-                    label="Gestionar responsable"
-                    placeholder="Buscar responsable… (vacío = mis preferencias)"
+                    label={t("settings.manageUser")}
+                    placeholder={t("settings.searchUserPlaceholder")}
                   />
                 )}
 

@@ -1,5 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
 import { apiClient, parseApiError } from '../lib/api';
 import type { UserProfile, NotificationPrefs, CreateUserRequest } from '../types';
 
@@ -39,15 +40,16 @@ export function useUpdateNotificationPrefs() {
 }
 
 export function useArchiveUser() {
+  const { t } = useTranslation();
   const qc = useQueryClient();
   return useMutation({
     mutationFn: (userId: string) =>
       apiClient.patch<UserProfile>(`/api/profile/${userId}/archive`, {}),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: USERS_KEY });
-      toast.success('Estado del responsable actualizado');
+      toast.success(t('users.toast.statusUpdated'));
     },
-    onError: (error) => toast.error(parseApiError(error, 'Error al archivar el responsable')),
+    onError: (error) => toast.error(parseApiError(error, t('users.toast.archiveError'))),
   });
 }
 
@@ -65,6 +67,7 @@ export function useDemoMode() {
 }
 
 export function useCreateUser() {
+  const { t } = useTranslation();
   const qc = useQueryClient();
 
   return useMutation({
@@ -72,10 +75,10 @@ export function useCreateUser() {
       apiClient.post<UserProfile>('/api/profile/users', body),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: USERS_KEY });
-      toast.success('Responsable creado correctamente');
+      toast.success(t('users.toast.created'));
     },
     onError: (error) => {
-      toast.error(parseApiError(error, 'Error al crear el responsable'));
+      toast.error(parseApiError(error, t('users.toast.createError')));
     },
   });
 }

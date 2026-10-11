@@ -102,7 +102,7 @@ const testimonials = [
       "Mi padre lleva meses usando el servicio y cada vez que lo veo bajar solo las escaleras, sé que fue la mejor decisión. Gracias por el cuidado y la profesionalidad.",
     initials: "LM",
     name: "Luis Martínez",
-    role: "Familiar de usuario del servicio",
+    role: "Familiar de Usuario",
     avatarMod: "purple",
   },
   {

@@ -1,5 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
 import { apiClient, parseApiError } from '../lib/api';
 import type { Prm, EmergencyContact } from '../types';
 
@@ -37,19 +38,21 @@ export function usePrm(id: string) {
 }
 
 export function useCreatePrm() {
+  const { t } = useTranslation();
   const qc = useQueryClient();
   return useMutation({
     mutationFn: (body: Omit<Prm, 'id' | 'addresses' | 'emergency_contacts'>) =>
       apiClient.post<Prm>('/api/prms', body),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: PRMS_KEY });
-      toast.success('Usuario del servicio creado correctamente');
+      toast.success(t('prms.toast.created'));
     },
-    onError: (error) => toast.error(parseApiError(error, 'Error al crear el usuario del servicio')),
+    onError: (error) => toast.error(parseApiError(error, t('prms.toast.createError'))),
   });
 }
 
 export function useUpdatePrm() {
+  const { t } = useTranslation();
   const qc = useQueryClient();
   return useMutation({
     mutationFn: ({ id, ...body }: Partial<Prm> & { id: string }) =>
@@ -57,21 +60,22 @@ export function useUpdatePrm() {
     onSuccess: (_data, vars) => {
       qc.invalidateQueries({ queryKey: PRMS_KEY });
       qc.invalidateQueries({ queryKey: prmKey(vars.id) });
-      toast.success('Usuario del servicio actualizado correctamente');
+      toast.success(t('prms.toast.updated'));
     },
-    onError: (error) => toast.error(parseApiError(error, 'Error al actualizar el usuario del servicio')),
+    onError: (error) => toast.error(parseApiError(error, t('prms.toast.updateError'))),
   });
 }
 
 export function useDeletePrm() {
+  const { t } = useTranslation();
   const qc = useQueryClient();
   return useMutation({
     mutationFn: (id: string) => apiClient.delete<void>(`/api/prms/${id}`),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: PRMS_KEY });
-      toast.success('Usuario del servicio eliminado correctamente');
+      toast.success(t('prms.toast.deleted'));
     },
-    onError: (error) => toast.error(parseApiError(error, 'Error al eliminar el usuario del servicio')),
+    onError: (error) => toast.error(parseApiError(error, t('prms.toast.deleteError'))),
   });
 }
 

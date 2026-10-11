@@ -181,6 +181,14 @@
       "contactRelationshipPlaceholder": "Ej: Madre, Hermano",
       "addressAlias": "Alias (ej: Casa, Hospital…)",
       "addAddress": "Añadir dirección"
+    },
+    "toast": {
+      "created": "Usuario del servicio creado correctamente",
+      "updated": "Usuario del servicio actualizado correctamente",
+      "deleted": "Usuario del servicio eliminado correctamente",
+      "createError": "Error al crear el usuario del servicio",
+      "updateError": "Error al actualizar el usuario del servicio",
+      "deleteError": "Error al eliminar el usuario del servicio"
     }
   },
   "prmDetail": {
@@ -253,6 +261,31 @@
       "imageFormat": "Solo se admiten imágenes (JPG, PNG, GIF)",
       "imageSize": "La imagen no puede superar los 2MB",
       "uploadError": "Error al subir la imagen"
+    }
+  },
+  "users": {
+    "title": "Responsables",
+    "subtitle": "Gestión de cuentas de responsables",
+    "newUser": "Nuevo responsable",
+    "empty": "No se encontraron responsables",
+    "demo": "Responsable demo",
+    "columns": {
+      "user": "Responsable"
+    },
+    "menu": {
+      "archive": "Archivar responsable",
+      "restore": "Restaurar responsable"
+    },
+    "toast": {
+      "statusUpdated": "Estado del responsable actualizado",
+      "archiveError": "Error al archivar el responsable",
+      "created": "Responsable creado correctamente",
+      "createError": "Error al crear el responsable"
+    },
+    "create": {
+      "title": "Nuevo responsable",
+      "submit": "Crear responsable",
+      "inviteNote": "Se enviará un email de invitación. El responsable deberá activar su cuenta."
     }
   },
   "booking": {
@@ -426,7 +459,9 @@
     },
     "placeholder": {
       "underDevelopment": "Esta sección está en desarrollo. Vuelve pronto."
-    }
+    },
+    "manageUser": "Gestionar responsable",
+    "searchUserPlaceholder": "Buscar responsable… (vacío = mis preferencias)"
   },
   "notifications": {
     "title": "Notificaciones",
@@ -512,7 +547,10 @@
       "allUsers": "Todos los responsables",
       "prm": "Usuario del servicio",
       "allPrms": "Todos los usuarios del servicio"
-    }
+    },
+    "viewPrmProfile": "Ver perfil de {{name}}",
+    "viewPrmProfileGeneric": "Ver perfil del usuario del servicio",
+    "noPrm": "Sin usuario del servicio"
   },
   "calendar": {
     "months": [
