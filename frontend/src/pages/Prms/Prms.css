@@ -306,3 +306,116 @@
     flex-shrink: 0;
   }
 }
+
+/* ── PMR cards (mobile list) ──────────────────────────────────────────────────
+   One card per PMR; every value sits under its column title. */
+
+.prms__cards {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.prms__card {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem;
+  background: white;
+  border: 1px solid var(--color-slate-100);
+  border-radius: 1rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.prms__card--skeleton {
+  min-height: 7rem;
+}
+
+.prms__card-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding-bottom: 0.875rem;
+  border-bottom: 1px solid var(--color-slate-100);
+}
+
+.prms__card-link {
+  flex: 1;
+  min-width: 0;
+  gap: 0.75rem;
+}
+
+.prms__card-id {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.375rem;
+  min-width: 0;
+}
+
+.prms__card-id .prm-link__name {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+.prms__card-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.875rem 1rem;
+}
+
+.prms__card-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: 0;
+  font-size: 0.875rem;
+  color: var(--color-slate-900);
+}
+
+.prms__card-field--full {
+  grid-column: 1 / -1;
+}
+
+.prms__card-field dt {
+  font-size: 0.625rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.prms__card-owner {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  color: var(--color-slate-600);
+  font-weight: 500;
+}
+
+.prms__card-contact-item {
+  align-items: flex-start;
+  font-size: 0.8125rem;
+}
+
+.prms__card-contact-item svg {
+  flex-shrink: 0;
+  margin-top: 0.2rem;
+}
+
+.prms__card-contact-item span {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.prms__card-count {
+  font-weight: 700;
+}
+
+.prms__empty--card {
+  background: white;
+  border: 1px solid var(--color-slate-100);
+  border-radius: 1rem;
+}

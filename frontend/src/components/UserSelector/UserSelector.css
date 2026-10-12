@@ -34,6 +34,33 @@
   box-shadow: 0 0 0 2px var(--color-primary);
 }
 
+.settings-user-selector__input--selected {
+  padding-right: 2.5rem;
+}
+
+/* Clear button: sits inside the input so it never affects the layout flow */
+.settings-user-selector__clear {
+  position: absolute;
+  top: 50%;
+  right: 0.5rem;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  color: var(--color-slate-400);
+  font-size: 1.125rem;
+  line-height: 1;
+  transition: color 0.15s, background-color 0.15s;
+}
+
+.settings-user-selector__clear:hover {
+  color: var(--color-slate-600);
+  background-color: var(--color-slate-100);
+}
+
 .settings-user-selector__dropdown {
   position: absolute;
   top: calc(100% + 0.25rem);

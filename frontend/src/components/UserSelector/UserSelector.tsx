@@ -8,6 +8,8 @@ import './UserSelector.css';
 interface UserSelectorProps {
   value: string;
   onChange: (userId: string, user: UserProfile) => void;
+  /** Shows a clear (×) button when provided. Pass it only where "no user" is a valid state. */
+  onClear?: () => void;
   label?: string;
   placeholder?: string;
 }
@@ -26,6 +28,7 @@ function UserOption({ option }: { option: AutocompleteOption }) {
 export default function UserSelector({
   value,
   onChange,
+  onClear,
   label,
   placeholder,
 }: UserSelectorProps) {
@@ -41,6 +44,10 @@ export default function UserSelector({
     }));
 
   const handleChange = (id: string) => {
+    if (!id) {
+      onClear?.();
+      return;
+    }
     const matchedUser = users.find((user) => user.id === id);
     if (matchedUser) onChange(id, matchedUser);
   };
@@ -51,6 +58,7 @@ export default function UserSelector({
       options={options}
       value={value}
       onChange={handleChange}
+      showClear={Boolean(onClear)}
       placeholder={placeholder ?? t('common.searchUser')}
       label={label ?? t('common.user')}
       renderOption={(option) => <UserOption option={option} />}
