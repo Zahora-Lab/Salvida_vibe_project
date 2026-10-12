@@ -4,6 +4,7 @@ import { Search, Plus, Mail, Phone, User } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import Header from '../../components/Header/Header';
 import DropdownMenu from '../../components/DropdownMenu';
+import MobileAddButton from '../../components/MobileAddButton/MobileAddButton';
 import type { DropdownItem } from '../../components/DropdownMenu';
 import { usePrms, useUpdatePrm } from '../../hooks/usePrms';
 import type { PrmListItem } from '../../hooks/usePrms';
@@ -70,16 +71,19 @@ export default function Prms() {
             </Link>
           </div>
 
-          <div className="prms__filter-tabs">
-            {(['all', 'Activo', 'Inactivo'] as const).map((tab) => (
-              <button
-                key={tab}
-                className={`prms__filter-tab${statusTab === tab ? ' prms__filter-tab--active' : ''}`}
-                onClick={() => setStatusTab(tab)}
-              >
-                {tab === 'Activo' ? t('prms.tabs.active') : tab === 'Inactivo' ? t('prms.tabs.inactive') : t('prms.tabs.all')}
-              </button>
-            ))}
+          <div className="prms__filters-row">
+            <div className="prms__filter-tabs">
+              {(['all', 'Activo', 'Inactivo'] as const).map((tab) => (
+                <button
+                  key={tab}
+                  className={`prms__filter-tab${statusTab === tab ? ' prms__filter-tab--active' : ''}`}
+                  onClick={() => setStatusTab(tab)}
+                >
+                  {tab === 'Activo' ? t('prms.tabs.active') : tab === 'Inactivo' ? t('prms.tabs.inactive') : t('prms.tabs.all')}
+                </button>
+              ))}
+            </div>
+            <MobileAddButton to="/app/prms/new" label={t('prms.addPrm')} />
           </div>
 
           {/* Mobile: one card per PMR, every value labelled with its column title */}

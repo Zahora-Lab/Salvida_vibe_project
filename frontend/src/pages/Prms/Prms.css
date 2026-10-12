@@ -297,13 +297,25 @@
     gap: 1rem;
   }
 
-  .prms__filter-tabs {
+  .prms__filters-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .prms__filters-row .prms__filter-tabs {
+    flex: 1;
+    min-width: 0;
     overflow-x: auto;
-    padding-bottom: 0.25rem;
   }
 
   .prms__filter-tab {
     flex-shrink: 0;
+  }
+
+  /* The "+" button in the filters row replaces the full-text one */
+  .prms__add-btn {
+    display: none;
   }
 }
 

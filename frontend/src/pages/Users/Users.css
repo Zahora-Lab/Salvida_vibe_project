@@ -307,12 +307,24 @@
     max-width: none;
   }
 
-  .users__filter-tabs {
+  .users__filters-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .users__filters-row .users__filter-tabs {
+    flex: 1;
+    min-width: 0;
     overflow-x: auto;
-    max-width: 100%;
   }
 
   .users__filter-tab {
     flex-shrink: 0;
+  }
+
+  /* The "+" button in the filters row replaces the full-text one */
+  .users__create-btn {
+    display: none;
   }
 }
