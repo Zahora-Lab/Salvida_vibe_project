@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Search, Plus, FlaskConical } from 'lucide-react';
 import Header from '../../components/Header/Header';
 import DropdownMenu from '../../components/DropdownMenu';
+import MobileAddButton from '../../components/MobileAddButton/MobileAddButton';
 import { useUsers, useArchiveUser, useToggleUserDemo, useProfile } from '../../hooks/useProfile';
 import CreateUserModal from './CreateUserModal';
 import type { UserProfile } from '../../types';
@@ -78,16 +79,19 @@ export default function Users() {
             </button>
           </div>
 
-          <div className="users__filter-tabs">
-            {(['all', 'active', 'archived'] as const).map((tab) => (
-              <button
-                key={tab}
-                className={`users__filter-tab${statusTab === tab ? ' users__filter-tab--active' : ''}`}
-                onClick={() => setStatusTab(tab)}
-              >
-                {tab === 'active' ? 'Activos' : tab === 'archived' ? 'Archivados' : 'Todos'}
-              </button>
-            ))}
+          <div className="users__filters-row">
+            <div className="users__filter-tabs">
+              {(['all', 'active', 'archived'] as const).map((tab) => (
+                <button
+                  key={tab}
+                  className={`users__filter-tab${statusTab === tab ? ' users__filter-tab--active' : ''}`}
+                  onClick={() => setStatusTab(tab)}
+                >
+                  {tab === 'active' ? 'Activos' : tab === 'archived' ? 'Archivados' : 'Todos'}
+                </button>
+              ))}
+            </div>
+            <MobileAddButton label="Nuevo usuario" onClick={() => setShowCreateModal(true)} />
           </div>
 
           <div className="users__table-wrap">

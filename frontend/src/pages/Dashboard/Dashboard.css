@@ -576,30 +576,12 @@
 }
 
 @media (max-width: 768px) {
-  /* Row 1: view toggle (left) + "+" new booking (right) */
+  /* Row 1: view toggle (left) + "+" new booking (right, see MobileAddButton) */
   .dashboard__mobile-toolbar {
     justify-content: space-between;
     align-items: center;
     gap: 0.75rem;
     padding-bottom: 0.5rem;
-  }
-
-  .dashboard__mobile-new-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    width: 2.5rem;
-    height: 2.5rem;
-    border-radius: 0.75rem;
-    background-color: var(--color-primary);
-    color: white;
-    box-shadow: 0 6px 12px -4px var(--color-primary-40);
-    transition: background-color 0.15s;
-  }
-
-  .dashboard__mobile-new-btn:hover {
-    background-color: var(--color-primary-dark);
   }
 
   /* Row 2: date selector (left, grows) + filters toggle (right) */
