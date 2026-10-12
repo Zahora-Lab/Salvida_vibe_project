@@ -1,9 +1,9 @@
 import { useState, type FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Eye, EyeOff } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { supabase } from '../../lib/supabaseClient';
 import { useAuthStore } from '../../store/useAuthStore';
+import { Input } from '../ui/input';
 import './LoginForm.css';
 
 interface LoginFormProps {
@@ -18,7 +18,6 @@ export default function LoginForm({ onSuccess }: LoginFormProps) {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -56,10 +55,9 @@ export default function LoginForm({ onSuccess }: LoginFormProps) {
         <label className="login__label" htmlFor="lf-email">
           {t('login.email')}
         </label>
-        <input
+        <Input
           id="lf-email"
           type="email"
-          className="login__input"
           placeholder={t('login.emailPlaceholder')}
           value={email}
           onChange={(e) => setEmail(e.target.value)}
@@ -72,27 +70,17 @@ export default function LoginForm({ onSuccess }: LoginFormProps) {
         <label className="login__label" htmlFor="lf-password">
           {t('login.password')}
         </label>
-        <div className="login__input-wrapper">
-          <input
-            id="lf-password"
-            type={showPassword ? 'text' : 'password'}
-            className="login__input"
-            placeholder={t('login.passwordPlaceholder')}
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            autoComplete="current-password"
-          />
-          <button
-            type="button"
-            className="login__eye-btn"
-            onClick={() => setShowPassword((v) => !v)}
-            tabIndex={-1}
-            aria-label={showPassword ? t('login.hidePassword') : t('login.showPassword')}
-          >
-            {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-          </button>
-        </div>
+        <Input
+          id="lf-password"
+          type="password"
+          placeholder={t('login.passwordPlaceholder')}
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+          autoComplete="current-password"
+          showLabel={t('login.showPassword')}
+          hideLabel={t('login.hidePassword')}
+        />
       </div>
 
       {error && <p className="login__error">{error}</p>}
