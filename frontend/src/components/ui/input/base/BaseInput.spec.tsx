@@ -21,6 +21,21 @@ describe('BaseInput', () => {
     expect(screen.getByPlaceholderText('x')).toHaveClass('input', 'input--outlined', 'custom');
   });
 
+  it.each(['outlined', 'filled', 'compact'] as const)('applies variant="%s"', (variant) => {
+    render(<BaseInput variant={variant} placeholder="x" />);
+    expect(screen.getByPlaceholderText('x')).toHaveClass(`input--${variant}`);
+  });
+
+  it('combines variant, size and status classes', () => {
+    render(<BaseInput variant="filled" size="md" status="error" placeholder="x" />);
+    expect(screen.getByPlaceholderText('x')).toHaveClass(
+      'input',
+      'input--filled',
+      'input--md',
+      'input--error',
+    );
+  });
+
   it('uses the lg size by default', () => {
     render(<BaseInput placeholder="x" />);
     expect(screen.getByPlaceholderText('x')).toHaveClass('input--lg');

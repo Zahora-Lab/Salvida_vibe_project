@@ -9,6 +9,7 @@ import UserSelector from '../../components/UserSelector/UserSelector';
 import { useAuthStore } from '../../store/useAuthStore';
 import DateInput from '../../components/DateInput/DateInput';
 import type { Address } from '../../types';
+import { Input } from '../../components/ui/input';
 import './NewPrm.css';
 
 interface ContactDraft {
@@ -167,10 +168,10 @@ export default function NewPrm() {
                 <label className="new-prm__label" htmlFor="name">
                   {t('prms.newPrm.nameFull')} <span className="new-prm__required">*</span>
                 </label>
-                <input
+                <Input
                   id="name"
                   type="text"
-                  className={`new-prm__input${nameError ? ' new-prm__input--error' : ''}`}
+                  status={nameError ? 'error' : undefined}
                   placeholder={t('prms.newPrm.namePlaceholder')}
                   value={name}
                   onChange={(e) => { setName(e.target.value); setNameError(''); }}
@@ -180,10 +181,9 @@ export default function NewPrm() {
 
               <div className="new-prm__field">
                 <label className="new-prm__label" htmlFor="email">{t('prms.newPrm.email')}</label>
-                <input
+                <Input
                   id="email"
                   type="email"
-                  className="new-prm__input"
                   placeholder={t('prms.newPrm.emailPlaceholder')}
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -192,10 +192,9 @@ export default function NewPrm() {
 
               <div className="new-prm__field">
                 <label className="new-prm__label" htmlFor="phone">{t('prms.newPrm.phone')}</label>
-                <input
+                <Input
                   id="phone"
                   type="tel"
-                  className="new-prm__input"
                   placeholder={t('prms.newPrm.phonePlaceholder')}
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
@@ -204,10 +203,9 @@ export default function NewPrm() {
 
               <div className="new-prm__field">
                 <label className="new-prm__label" htmlFor="dni">{t('prms.newPrm.dni')}</label>
-                <input
+                <Input
                   id="dni"
                   type="text"
-                  className="new-prm__input"
                   placeholder={t('prms.newPrm.dniPlaceholder')}
                   value={dni}
                   onChange={(e) => setDni(e.target.value)}
@@ -261,10 +259,9 @@ export default function NewPrm() {
 
               <div className="new-prm__field">
                 <label className="new-prm__label" htmlFor="height">{t('prms.newPrm.height')}</label>
-                <input
+                <Input
                   id="height"
                   type="text"
-                  className="new-prm__input"
                   placeholder={t('prms.newPrm.heightPlaceholder')}
                   value={height}
                   onChange={(e) => setHeight(e.target.value)}
@@ -273,10 +270,9 @@ export default function NewPrm() {
 
               <div className="new-prm__field">
                 <label className="new-prm__label" htmlFor="weight">{t('prms.newPrm.weight')}</label>
-                <input
+                <Input
                   id="weight"
                   type="text"
-                  className="new-prm__input"
                   placeholder={t('prms.newPrm.weightPlaceholder')}
                   value={weight}
                   onChange={(e) => setWeight(e.target.value)}
@@ -296,9 +292,8 @@ export default function NewPrm() {
                 <div className="new-prm__grid">
                   <div className="new-prm__field">
                     <label className="new-prm__label">{t('prms.newPrm.contactName')}</label>
-                    <input
+                    <Input
                       type="text"
-                      className="new-prm__input"
                       placeholder={t('prms.newPrm.contactNamePlaceholder')}
                       value={contact.name}
                       onChange={(event) => updateContact(index, 'name', event.target.value)}
@@ -306,9 +301,8 @@ export default function NewPrm() {
                   </div>
                   <div className="new-prm__field">
                     <label className="new-prm__label">{t('prms.newPrm.contactPhone')}</label>
-                    <input
+                    <Input
                       type="tel"
-                      className="new-prm__input"
                       placeholder={t('prms.newPrm.phonePlaceholder')}
                       value={contact.phone}
                       onChange={(event) => updateContact(index, 'phone', event.target.value)}
@@ -316,9 +310,8 @@ export default function NewPrm() {
                   </div>
                   <div className="new-prm__field">
                     <label className="new-prm__label">{t('prms.newPrm.contactRelationship')}</label>
-                    <input
+                    <Input
                       type="text"
-                      className="new-prm__input"
                       placeholder={t('prms.newPrm.contactRelationshipPlaceholder')}
                       value={contact.relationship}
                       onChange={(event) => updateContact(index, 'relationship', event.target.value)}
@@ -358,9 +351,8 @@ export default function NewPrm() {
                     onChange={(v) => updateAddressDraftValue(index, v)}
                     showValidation={false}
                   />
-                  <input
+                  <Input
                     type="text"
-                    className="new-prm__input"
                     placeholder={t('prms.newPrm.addressAlias')}
                     value={draft.alias}
                     onChange={(event) => updateAddressDraftAlias(index, event.target.value)}

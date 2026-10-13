@@ -4,6 +4,7 @@ import { Plus, Trash2, Save, Pencil } from "lucide-react";
 import { toast } from "react-toastify";
 import { apiClient } from "../../lib/api";
 import PLATFORM_ICONS from "../../lib/platformIcons";
+import { Input } from "../../components/ui/input";
 import { useTranslation } from "react-i18next";
 
 // ── Types ──────────────────────────────────────────────────────────────────
@@ -204,8 +205,8 @@ export default function SettingsRRSS() {
 
           <div className="settings-form__group">
             <label className="settings-form__label">{t("settings.rrss.labelField")}</label>
-            <input
-              className="settings-form__input"
+            <Input
+              variant="filled"
               type="text"
               value={form.label}
               onChange={(event) => setForm((p) => ({ ...p, label: event.target.value }))}
@@ -215,8 +216,8 @@ export default function SettingsRRSS() {
 
           <div className="settings-form__group">
             <label className="settings-form__label">{t("settings.rrss.url")}</label>
-            <input
-              className="settings-form__input"
+            <Input
+              variant="filled"
               type="url"
               value={form.url}
               onChange={(event) => setForm((p) => ({ ...p, url: event.target.value }))}
@@ -227,8 +228,8 @@ export default function SettingsRRSS() {
 
           <div className="settings-form__group">
             <label className="settings-form__label">{t("settings.rrss.order")}</label>
-            <input
-              className="settings-form__input"
+            <Input
+              variant="filled"
               type="number"
               min={0}
               value={form.order}

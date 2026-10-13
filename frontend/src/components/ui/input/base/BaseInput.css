@@ -46,6 +46,46 @@
   color: var(--color-slate-400);
 }
 
+/* ── variant: filled (no border, slate-50 background, 2px focus ring) ─── */
+.input--filled {
+  border: none;
+  color: var(--color-slate-900);
+  background-color: var(--color-slate-50);
+  font-weight: 500;
+}
+
+.input--filled:focus {
+  box-shadow: 0 0 0 2px var(--color-primary);
+}
+
+.input--filled::placeholder {
+  color: var(--color-slate-400);
+  font-weight: 400;
+}
+
+.input--filled.input--error {
+  box-shadow: 0 0 0 2px var(--color-red-500);
+}
+
+/* ── variant: compact (inline edit: content width, 1px border, border-only focus) ── */
+.input--compact {
+  width: auto;
+  max-width: 14rem;
+  border: 1px solid var(--color-slate-200);
+  color: var(--color-slate-900);
+  background-color: var(--color-slate-50);
+  font-weight: 700;
+}
+
+.input--compact:focus {
+  border-color: var(--color-primary);
+}
+
+.input--compact::placeholder {
+  color: var(--color-slate-400);
+  font-weight: 400;
+}
+
 /* ── status ────────────────────────────────────────────────────────────── */
 .input--error {
   border-color: var(--color-red-500);

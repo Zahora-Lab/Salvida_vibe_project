@@ -30,6 +30,7 @@ import { usePushNotifications } from "../../hooks/usePushNotifications";
 import { supabase } from "../../lib/supabaseClient";
 import { toast } from "react-toastify";
 import { useDebounce } from "../../hooks/useDebounce";
+import { Input } from "../../components/ui/input";
 import "./Settings.css";
 
 const GEOAPIFY_KEY = import.meta.env.VITE_GEOAPIFY_API_KEY as string;
@@ -539,12 +540,12 @@ export default function Settings() {
                         <label className="settings-form__label">
                           {t("settings.profile.firstName")}
                         </label>
-                        <input
+                        <Input
+                          variant="filled"
                           type="text"
                           name="firstName"
                           value={form.firstName}
                           onChange={handleChange}
-                          className="settings-form__input"
                           placeholder={t(
                             "settings.profile.firstNamePlaceholder",
                           )}
@@ -554,12 +555,12 @@ export default function Settings() {
                         <label className="settings-form__label">
                           {t("settings.profile.lastName")}
                         </label>
-                        <input
+                        <Input
+                          variant="filled"
                           type="text"
                           name="lastName"
                           value={form.lastName}
                           onChange={handleChange}
-                          className="settings-form__input"
                           placeholder={t(
                             "settings.profile.lastNamePlaceholder",
                           )}
@@ -569,12 +570,12 @@ export default function Settings() {
                         <label className="settings-form__label">
                           {t("settings.profile.dni")}
                         </label>
-                        <input
+                        <Input
+                          variant="filled"
                           type="text"
                           name="dni"
                           value={form.dni}
                           onChange={handleChange}
-                          className="settings-form__input"
                           placeholder={t("settings.profile.dniPlaceholder")}
                           autoComplete="off"
                         />
@@ -583,12 +584,12 @@ export default function Settings() {
                         <label className="settings-form__label">
                           {t("settings.profile.email")}
                         </label>
-                        <input
+                        <Input
+                          variant="filled"
                           type="email"
                           name="email"
                           value={form.email}
                           onChange={handleChange}
-                          className="settings-form__input"
                           placeholder={t("settings.profile.emailPlaceholder")}
                         />
                       </div>
@@ -596,12 +597,12 @@ export default function Settings() {
                         <label className="settings-form__label">
                           {t("settings.profile.phone")}
                         </label>
-                        <input
+                        <Input
+                          variant="filled"
                           type="tel"
                           name="phone"
                           value={form.phone}
                           onChange={handleChange}
-                          className="settings-form__input"
                           placeholder={t("settings.profile.phonePlaceholder")}
                         />
                       </div>
@@ -609,12 +610,12 @@ export default function Settings() {
                         <label className="settings-form__label">
                           {t("settings.profile.organization")}
                         </label>
-                        <input
+                        <Input
+                          variant="filled"
                           type="text"
                           name="organization"
                           value={form.organization}
                           onChange={handleChange}
-                          className="settings-form__input"
                           placeholder={t(
                             "settings.profile.organizationPlaceholder",
                           )}
@@ -625,7 +626,8 @@ export default function Settings() {
                           <label className="settings-form__label">
                             Municipio
                           </label>
-                          <input
+                          <Input
+                            variant="filled"
                             type="text"
                             value={municipalityQuery}
                             onChange={(e) => {
@@ -639,7 +641,7 @@ export default function Settings() {
                               if (!municipalitySelected && municipalitySuggestions.length > 0) setMunicipalityOpen(true);
                             }}
                             placeholder="Busca tu municipio..."
-                            className={`settings-form__input${municipalitySelected ? " settings-form__input--selected" : ""}`}
+                            className={municipalitySelected ? "settings-form__input--selected" : undefined}
                           />
                           {municipalityLoading && <span className="settings-zone__spinner" />}
                           {municipalityOpen && municipalitySuggestions.length > 0 && (

@@ -441,6 +441,7 @@
 
 /* ---- Edit mode ---- */
 
+/* TODO: only the blood-type <select> still uses .prm-edit-input / --stat; remove when Select is centralized */
 .prm-edit-input {
   font-size: 0.875rem;
   font-weight: 700;
@@ -458,7 +459,7 @@
   border-color: var(--color-primary);
 }
 
-.prm-edit-input--name {
+.input.prm-edit-input--name {
   font-size: 1.5rem;
   font-weight: 900;
   text-align: center;
@@ -466,7 +467,8 @@
   width: 100%;
 }
 
-.prm-edit-input--stat {
+.prm-edit-input--stat,
+.input.prm-edit-input--stat {
   text-align: center;
   font-size: 1rem;
   font-weight: 700;

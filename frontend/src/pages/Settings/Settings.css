@@ -214,6 +214,7 @@
   letter-spacing: 0.1em;
 }
 
+/* TODO: only the native <select> in SettingsRRSS still uses this; remove when Select is centralized */
 .settings-form__input {
   width: 100%;
   padding: 0.75rem 1rem;
@@ -776,7 +777,7 @@
 }
 
 /* Municipality autocomplete field */
-.settings-form__input--selected {
+.input.settings-form__input--selected {
   border-color: var(--color-emerald-500);
   background-color: rgba(16, 185, 129, 0.04);
 }
