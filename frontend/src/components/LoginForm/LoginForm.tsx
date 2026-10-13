@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { supabase } from '../../lib/supabaseClient';
 import { useAuthStore } from '../../store/useAuthStore';
 import { Input } from '../ui/input';
+import { FormField } from '../ui/form-field';
 import './LoginForm.css';
 
 interface LoginFormProps {
@@ -51,37 +52,35 @@ export default function LoginForm({ onSuccess }: LoginFormProps) {
 
   return (
     <form className="login__form" onSubmit={handleSubmit}>
-      <div className="login__field">
-        <label className="login__label" htmlFor="lf-email">
-          {t('login.email')}
-        </label>
-        <Input
-          id="lf-email"
-          type="email"
-          placeholder={t('login.emailPlaceholder')}
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-          autoComplete="email"
-        />
-      </div>
+      <FormField label={t('login.email')} htmlFor="lf-email">
+        {(field) => (
+          <Input
+            {...field}
+            type="email"
+            placeholder={t('login.emailPlaceholder')}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            autoComplete="email"
+          />
+        )}
+      </FormField>
 
-      <div className="login__field">
-        <label className="login__label" htmlFor="lf-password">
-          {t('login.password')}
-        </label>
-        <Input
-          id="lf-password"
-          type="password"
-          placeholder={t('login.passwordPlaceholder')}
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-          autoComplete="current-password"
-          showLabel={t('login.showPassword')}
-          hideLabel={t('login.hidePassword')}
-        />
-      </div>
+      <FormField label={t('login.password')} htmlFor="lf-password">
+        {(field) => (
+          <Input
+            {...field}
+            type="password"
+            placeholder={t('login.passwordPlaceholder')}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            autoComplete="current-password"
+            showLabel={t('login.showPassword')}
+            hideLabel={t('login.hidePassword')}
+          />
+        )}
+      </FormField>
 
       {error && <p className="login__error">{error}</p>}
 

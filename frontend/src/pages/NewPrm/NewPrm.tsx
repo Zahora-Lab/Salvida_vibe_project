@@ -10,6 +10,7 @@ import { useAuthStore } from '../../store/useAuthStore';
 import DateInput from '../../components/DateInput/DateInput';
 import type { Address } from '../../types';
 import { Input } from '../../components/ui/input';
+import { FormField } from '../../components/ui/form-field';
 import './NewPrm.css';
 
 interface ContactDraft {
@@ -164,65 +165,70 @@ export default function NewPrm() {
               {t('prms.newPrm.sections.basic')}
             </h2>
             <div className="new-prm__grid">
-              <div className="new-prm__field new-prm__field--full">
-                <label className="new-prm__label" htmlFor="name">
-                  {t('prms.newPrm.nameFull')} <span className="new-prm__required">*</span>
-                </label>
-                <Input
-                  id="name"
-                  type="text"
-                  status={nameError ? 'error' : undefined}
-                  placeholder={t('prms.newPrm.namePlaceholder')}
-                  value={name}
-                  onChange={(e) => { setName(e.target.value); setNameError(''); }}
-                />
-                {nameError && <p className="new-prm__field-error">{nameError}</p>}
-              </div>
+              <FormField
+                className="new-prm__field--full"
+                label={t('prms.newPrm.nameFull')}
+                htmlFor="name"
+                required
+                error={nameError}
+              >
+                {(field) => (
+                  <Input
+                    {...field}
+                    type="text"
+                    placeholder={t('prms.newPrm.namePlaceholder')}
+                    value={name}
+                    onChange={(e) => { setName(e.target.value); setNameError(''); }}
+                  />
+                )}
+              </FormField>
 
-              <div className="new-prm__field">
-                <label className="new-prm__label" htmlFor="email">{t('prms.newPrm.email')}</label>
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder={t('prms.newPrm.emailPlaceholder')}
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-              </div>
+              <FormField label={t('prms.newPrm.email')} htmlFor="email">
+                {(field) => (
+                  <Input
+                    {...field}
+                    type="email"
+                    placeholder={t('prms.newPrm.emailPlaceholder')}
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                )}
+              </FormField>
 
-              <div className="new-prm__field">
-                <label className="new-prm__label" htmlFor="phone">{t('prms.newPrm.phone')}</label>
-                <Input
-                  id="phone"
-                  type="tel"
-                  placeholder={t('prms.newPrm.phonePlaceholder')}
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                />
-              </div>
+              <FormField label={t('prms.newPrm.phone')} htmlFor="phone">
+                {(field) => (
+                  <Input
+                    {...field}
+                    type="tel"
+                    placeholder={t('prms.newPrm.phonePlaceholder')}
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                  />
+                )}
+              </FormField>
 
-              <div className="new-prm__field">
-                <label className="new-prm__label" htmlFor="dni">{t('prms.newPrm.dni')}</label>
-                <Input
-                  id="dni"
-                  type="text"
-                  placeholder={t('prms.newPrm.dniPlaceholder')}
-                  value={dni}
-                  onChange={(e) => setDni(e.target.value)}
-                />
-              </div>
+              <FormField label={t('prms.newPrm.dni')} htmlFor="dni">
+                {(field) => (
+                  <Input
+                    {...field}
+                    type="text"
+                    placeholder={t('prms.newPrm.dniPlaceholder')}
+                    value={dni}
+                    onChange={(e) => setDni(e.target.value)}
+                  />
+                )}
+              </FormField>
 
-              <div className="new-prm__field">
-                <label className="new-prm__label" htmlFor="birthDate">{t('prms.newPrm.birthDate')}</label>
+              <FormField label={t('prms.newPrm.birthDate')} htmlFor="birthDate">
                 <DateInput
+                  id="birthDate"
                   value={birthDate}
                   onChange={setBirthDate}
                   placeholder={t('prms.newPrm.birthDate')}
                 />
-              </div>
+              </FormField>
 
-              <div className="new-prm__field">
-                <label className="new-prm__label" htmlFor="status">{t('prms.newPrm.status')}</label>
+              <FormField label={t('prms.newPrm.status')} htmlFor="status">
                 <select
                   id="status"
                   className="new-prm__select"
@@ -232,7 +238,7 @@ export default function NewPrm() {
                   <option value="Activo">{t('prms.newPrm.statusActive')}</option>
                   <option value="Inactivo">{t('prms.newPrm.statusInactive')}</option>
                 </select>
-              </div>
+              </FormField>
             </div>
           </section>
 
@@ -242,8 +248,7 @@ export default function NewPrm() {
               {t('prms.newPrm.sections.medical')}
             </h2>
             <div className="new-prm__grid">
-              <div className="new-prm__field">
-                <label className="new-prm__label" htmlFor="bloodType">{t('prms.newPrm.bloodType')}</label>
+              <FormField label={t('prms.newPrm.bloodType')} htmlFor="bloodType">
                 <select
                   id="bloodType"
                   className="new-prm__select"
@@ -255,29 +260,31 @@ export default function NewPrm() {
                     <option key={g} value={g}>{g}</option>
                   ))}
                 </select>
-              </div>
+              </FormField>
 
-              <div className="new-prm__field">
-                <label className="new-prm__label" htmlFor="height">{t('prms.newPrm.height')}</label>
-                <Input
-                  id="height"
-                  type="text"
-                  placeholder={t('prms.newPrm.heightPlaceholder')}
-                  value={height}
-                  onChange={(e) => setHeight(e.target.value)}
-                />
-              </div>
+              <FormField label={t('prms.newPrm.height')} htmlFor="height">
+                {(field) => (
+                  <Input
+                    {...field}
+                    type="text"
+                    placeholder={t('prms.newPrm.heightPlaceholder')}
+                    value={height}
+                    onChange={(e) => setHeight(e.target.value)}
+                  />
+                )}
+              </FormField>
 
-              <div className="new-prm__field">
-                <label className="new-prm__label" htmlFor="weight">{t('prms.newPrm.weight')}</label>
-                <Input
-                  id="weight"
-                  type="text"
-                  placeholder={t('prms.newPrm.weightPlaceholder')}
-                  value={weight}
-                  onChange={(e) => setWeight(e.target.value)}
-                />
-              </div>
+              <FormField label={t('prms.newPrm.weight')} htmlFor="weight">
+                {(field) => (
+                  <Input
+                    {...field}
+                    type="text"
+                    placeholder={t('prms.newPrm.weightPlaceholder')}
+                    value={weight}
+                    onChange={(e) => setWeight(e.target.value)}
+                  />
+                )}
+              </FormField>
             </div>
           </section>
 
@@ -290,33 +297,39 @@ export default function NewPrm() {
             {contacts.map((contact, index) => (
               <div key={index} className="new-prm__contact-row">
                 <div className="new-prm__grid">
-                  <div className="new-prm__field">
-                    <label className="new-prm__label">{t('prms.newPrm.contactName')}</label>
-                    <Input
-                      type="text"
-                      placeholder={t('prms.newPrm.contactNamePlaceholder')}
-                      value={contact.name}
-                      onChange={(event) => updateContact(index, 'name', event.target.value)}
-                    />
-                  </div>
-                  <div className="new-prm__field">
-                    <label className="new-prm__label">{t('prms.newPrm.contactPhone')}</label>
-                    <Input
-                      type="tel"
-                      placeholder={t('prms.newPrm.phonePlaceholder')}
-                      value={contact.phone}
-                      onChange={(event) => updateContact(index, 'phone', event.target.value)}
-                    />
-                  </div>
-                  <div className="new-prm__field">
-                    <label className="new-prm__label">{t('prms.newPrm.contactRelationship')}</label>
-                    <Input
-                      type="text"
-                      placeholder={t('prms.newPrm.contactRelationshipPlaceholder')}
-                      value={contact.relationship}
-                      onChange={(event) => updateContact(index, 'relationship', event.target.value)}
-                    />
-                  </div>
+                  <FormField label={t('prms.newPrm.contactName')}>
+                    {(field) => (
+                      <Input
+                        {...field}
+                        type="text"
+                        placeholder={t('prms.newPrm.contactNamePlaceholder')}
+                        value={contact.name}
+                        onChange={(event) => updateContact(index, 'name', event.target.value)}
+                      />
+                    )}
+                  </FormField>
+                  <FormField label={t('prms.newPrm.contactPhone')}>
+                    {(field) => (
+                      <Input
+                        {...field}
+                        type="tel"
+                        placeholder={t('prms.newPrm.phonePlaceholder')}
+                        value={contact.phone}
+                        onChange={(event) => updateContact(index, 'phone', event.target.value)}
+                      />
+                    )}
+                  </FormField>
+                  <FormField label={t('prms.newPrm.contactRelationship')}>
+                    {(field) => (
+                      <Input
+                        {...field}
+                        type="text"
+                        placeholder={t('prms.newPrm.contactRelationshipPlaceholder')}
+                        value={contact.relationship}
+                        onChange={(event) => updateContact(index, 'relationship', event.target.value)}
+                      />
+                    )}
+                  </FormField>
                 </div>
                 <button
                   type="button"

@@ -7,6 +7,8 @@ import './TimeInput.css';
 const FORMAT = 'HH:mm';
 
 interface TimeInputProps {
+  /** Id of the underlying input, so an external <label htmlFor> can target it. */
+  id?: string;
   value?: string;
   onChange?: (value: string) => void;
   placeholder?: string;
@@ -15,6 +17,7 @@ interface TimeInputProps {
 }
 
 export default function TimeInput({
+  id,
   value,
   onChange,
   placeholder = 'Selecciona una hora',
@@ -27,6 +30,7 @@ export default function TimeInput({
   return (
     <ConfigProvider theme={ANTD_THEME}>
       <TimePicker
+        id={id}
         value={dayjsValue}
         onChange={(d) => onChange?.(d ? d.format(FORMAT) : '')}
         format={FORMAT}

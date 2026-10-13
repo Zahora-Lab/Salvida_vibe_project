@@ -10,6 +10,8 @@ dayjs.locale('es');
 const FORMAT = 'YYYY-MM-DD';
 
 interface DateInputProps {
+  /** Id of the underlying input, so an external <label htmlFor> can target it. */
+  id?: string;
   value?: string;
   onChange?: (value: string) => void;
   min?: string;
@@ -19,6 +21,7 @@ interface DateInputProps {
 }
 
 export default function DateInput({
+  id,
   value,
   onChange,
   min,
@@ -36,6 +39,7 @@ export default function DateInput({
   return (
     <ConfigProvider theme={ANTD_THEME}>
       <DatePicker
+        id={id}
         value={dayjsValue}
         onChange={(d) => onChange?.(d ? d.format(FORMAT) : '')}
         format="DD/MM/YYYY"

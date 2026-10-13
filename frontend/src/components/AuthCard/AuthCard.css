@@ -31,22 +31,10 @@
   gap: 1.25rem;
 }
 
-.auth-card__field {
-  display: flex;
-  flex-direction: column;
-  gap: 0.375rem;
-}
-
 .auth-card__field-row {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 0.75rem;
-}
-
-.auth-card__label {
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: var(--color-slate-700);
 }
 
 .auth-card__error {
