@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import { apiClient } from "../../lib/api";
 import PLATFORM_ICONS from "../../lib/platformIcons";
 import { Input } from "../../components/ui/input";
+import { FormField } from "../../components/ui/form-field";
 import { useTranslation } from "react-i18next";
 
 // ── Types ──────────────────────────────────────────────────────────────────
@@ -188,54 +189,62 @@ export default function SettingsRRSS() {
       {/* Add / Edit form */}
       {showForm && (
         <form className="settings-rrss__form" onSubmit={handleSubmit}>
-          <div className="settings-form__group">
-            <label className="settings-form__label">{t("settings.rrss.platform")}</label>
-            <select
-              className="settings-form__input"
-              value={form.platform}
-              onChange={handlePlatformChange}
-            >
-              {PLATFORMS.map((p) => (
-                <option key={p.value} value={p.value}>
-                  {p.label}
-                </option>
-              ))}
-            </select>
-          </div>
+          <FormField variant="eyebrow" label={t("settings.rrss.platform")}>
+            {(field) => (
+              <select
+                id={field.id}
+                className="settings-form__input"
+                value={form.platform}
+                onChange={handlePlatformChange}
+              >
+                {PLATFORMS.map((p) => (
+                  <option key={p.value} value={p.value}>
+                    {p.label}
+                  </option>
+                ))}
+              </select>
+            )}
+          </FormField>
 
-          <div className="settings-form__group">
-            <label className="settings-form__label">{t("settings.rrss.labelField")}</label>
-            <Input
-              variant="filled"
-              type="text"
-              value={form.label}
-              onChange={(event) => setForm((p) => ({ ...p, label: event.target.value }))}
-              required
-            />
-          </div>
+          <FormField variant="eyebrow" label={t("settings.rrss.labelField")}>
+            {(field) => (
+              <Input
+                {...field}
+                variant="filled"
+                type="text"
+                value={form.label}
+                onChange={(event) => setForm((p) => ({ ...p, label: event.target.value }))}
+                required
+              />
+            )}
+          </FormField>
 
-          <div className="settings-form__group">
-            <label className="settings-form__label">{t("settings.rrss.url")}</label>
-            <Input
-              variant="filled"
-              type="url"
-              value={form.url}
-              onChange={(event) => setForm((p) => ({ ...p, url: event.target.value }))}
-              placeholder="https://..."
-              required
-            />
-          </div>
+          <FormField variant="eyebrow" label={t("settings.rrss.url")}>
+            {(field) => (
+              <Input
+                {...field}
+                variant="filled"
+                type="url"
+                value={form.url}
+                onChange={(event) => setForm((p) => ({ ...p, url: event.target.value }))}
+                placeholder="https://..."
+                required
+              />
+            )}
+          </FormField>
 
-          <div className="settings-form__group">
-            <label className="settings-form__label">{t("settings.rrss.order")}</label>
-            <Input
-              variant="filled"
-              type="number"
-              min={0}
-              value={form.order}
-              onChange={(e) => setForm((p) => ({ ...p, order: Number(e.target.value) }))}
-            />
-          </div>
+          <FormField variant="eyebrow" label={t("settings.rrss.order")}>
+            {(field) => (
+              <Input
+                {...field}
+                variant="filled"
+                type="number"
+                min={0}
+                value={form.order}
+                onChange={(e) => setForm((p) => ({ ...p, order: Number(e.target.value) }))}
+              />
+            )}
+          </FormField>
 
           <div className="settings-rrss__form-actions">
             <button type="submit" className="settings-save-btn" disabled={isSaving}>

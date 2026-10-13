@@ -196,22 +196,8 @@
   }
 }
 
-.settings-form__field {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
 .settings-form__field--full {
   grid-column: 1 / -1;
-}
-
-.settings-form__label {
-  font-size: 0.75rem;
-  font-weight: 700;
-  color: var(--color-slate-400);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
 }
 
 /* TODO: only the native <select> in SettingsRRSS still uses this; remove when Select is centralized */
