@@ -53,35 +53,19 @@
   to { transform: translateY(-50%) rotate(360deg); }
 }
 
-.address-selector__input {
-  width: 100%;
-  padding: 0.875rem 2.75rem 0.875rem 2.75rem;
-  border-radius: 0.75rem;
-  border: 1px solid var(--color-slate-200);
-  background-color: var(--color-slate-50);
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: var(--color-slate-900);
-  outline: none;
-  transition: box-shadow 0.15s, border-color 0.15s, background-color 0.15s;
-  font-family: inherit;
+/* left/right padding make room for the search icon and the status icon */
+.input.address-selector__input {
+  padding-left: 2.75rem;
+  padding-right: 2.75rem;
 }
 
-.address-selector__input::placeholder {
-  color: var(--color-slate-400);
-  font-weight: 400;
-}
-
-.address-selector__input:focus {
-  box-shadow: 0 0 0 2px var(--color-primary);
-  border-color: var(--color-primary);
-}
-
-.address-selector__input--selected {
-  border-color: var(--color-emerald-500);
+.input.address-selector__input--selected {
   background-color: rgba(16, 185, 129, 0.04);
-  color: var(--color-slate-900);
   cursor: default;
+}
+
+.input.address-selector__input--selected:not(:focus) {
+  border-color: var(--color-emerald-500);
 }
 
 /* Dropdown */
@@ -180,28 +164,8 @@
   gap: 0.5rem;
 }
 
-.address-selector__extra-input {
+.input.address-selector__extra-input {
   flex: 1;
-  padding: 0.625rem 0.75rem;
-  border-radius: 0.75rem;
-  border: 1px solid var(--color-slate-200);
-  background-color: var(--color-slate-50);
-  font-size: 0.8125rem;
-  font-weight: 500;
-  color: var(--color-slate-900);
-  outline: none;
-  transition: box-shadow 0.15s, border-color 0.15s;
-  font-family: inherit;
-}
-
-.address-selector__extra-input::placeholder {
-  color: var(--color-slate-400);
-  font-weight: 400;
-}
-
-.address-selector__extra-input:focus {
-  box-shadow: 0 0 0 2px var(--color-primary);
-  border-color: var(--color-primary);
 }
 
 /* Interactive map */

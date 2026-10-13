@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Search, Plus, Mail, Phone, User } from 'lucide-react';
+import { Mail, Phone, User } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import Header from '../../components/Header/Header';
 import DropdownMenu from '../../components/DropdownMenu';
-import MobileAddButton from '../../components/MobileAddButton/MobileAddButton';
+import { ListToolbar } from '../../components/ui/list-toolbar';
+import { FilterTabs } from '../../components/ui/filter-tabs';
 import type { DropdownItem } from '../../components/DropdownMenu';
 import { usePrms, useUpdatePrm } from '../../hooks/usePrms';
 import type { PrmListItem } from '../../hooks/usePrms';
@@ -52,39 +53,21 @@ export default function Prms() {
       <div className="prms__body">
         <div className="prms__inner">
 
-          <div className="prms__toolbar">
-            <div className="prms__search-wrap">
-              <span className="prms__search-icon">
-                <Search size={18} />
-              </span>
-              <input
-                type="text"
-                placeholder={t('prms.search')}
-                className="prms__search-input"
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
+          <ListToolbar
+            search={{ value: query, onChange: setQuery, placeholder: t('prms.search') }}
+            create={{ label: t('prms.addPrm'), to: '/app/prms/new' }}
+            filters={
+              <FilterTabs
+                value={statusTab}
+                onChange={setStatusTab}
+                options={[
+                  { value: 'all', label: t('prms.tabs.all') },
+                  { value: 'Activo', label: t('prms.tabs.active') },
+                  { value: 'Inactivo', label: t('prms.tabs.inactive') },
+                ]}
               />
-            </div>
-            <Link to="/app/prms/new" className="prms__add-btn">
-              <Plus size={20} />
-              <span>{t('prms.addPrm')}</span>
-            </Link>
-          </div>
-
-          <div className="prms__filters-row">
-            <div className="prms__filter-tabs">
-              {(['all', 'Activo', 'Inactivo'] as const).map((tab) => (
-                <button
-                  key={tab}
-                  className={`prms__filter-tab${statusTab === tab ? ' prms__filter-tab--active' : ''}`}
-                  onClick={() => setStatusTab(tab)}
-                >
-                  {tab === 'Activo' ? t('prms.tabs.active') : tab === 'Inactivo' ? t('prms.tabs.inactive') : t('prms.tabs.all')}
-                </button>
-              ))}
-            </div>
-            <MobileAddButton to="/app/prms/new" label={t('prms.addPrm')} />
-          </div>
+            }
+          />
 
           {/* Mobile: one card per PMR, every value labelled with its column title */}
           {isMobile && (

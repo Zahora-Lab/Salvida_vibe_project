@@ -321,27 +321,6 @@
   opacity: 0.88;
 }
 
-.new-booking-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  width: 100%;
-  padding: 1rem;
-  border-radius: 1rem;
-  border: 2px dashed var(--color-slate-200);
-  color: var(--color-slate-400);
-  font-weight: 700;
-  transition: border-color 0.15s, color 0.15s, background-color 0.15s;
-  text-decoration: none;
-}
-
-.new-booking-btn:hover {
-  border-color: var(--color-primary);
-  color: var(--color-primary);
-  background-color: var(--color-primary-05);
-}
-
 /* ── Mobile toolbar ──────────────────────────────────────────────────────── */
 
 .dashboard__mobile-toolbar {
@@ -576,7 +555,7 @@
 }
 
 @media (max-width: 768px) {
-  /* Row 1: view toggle (left) + "+" new booking (right, see MobileAddButton) */
+  /* Row 1: view toggle (left) + "+" new booking (right, see CreateButton) */
   .dashboard__mobile-toolbar {
     justify-content: space-between;
     align-items: center;
@@ -690,11 +669,6 @@
   .bookings-header { order: 3; }
   .booking-list { order: 4; }
   .summary-card { order: 5; }
-
-  /* The "+" in the top bar replaces the bottom call-to-action */
-  .new-booking-btn {
-    display: none;
-  }
 
   .dashboard__list-view {
     gap: 1rem;

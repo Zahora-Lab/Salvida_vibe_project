@@ -1,10 +1,10 @@
 import { useEffect, useRef, type FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Eye, EyeOff } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { supabase } from '../../lib/supabaseClient';
 import { useAuthStore } from '../../store/useAuthStore';
 import { useAuthFormStore } from '../../store/useAuthFormStore';
+import { Input } from '../../components/ui/input';
 
 interface AuthModalProps {
   open: boolean;
@@ -24,8 +24,6 @@ export default function AuthModal({ open, onClose }: AuthModalProps) {
     lastName, setLastName,
     dni, setDni,
     phone, setPhone,
-    showRegPassword, toggleShowRegPassword,
-    showConfirmPassword, toggleShowConfirmPassword,
     loading, setLoading,
     error, setError,
     success, setSuccess,
@@ -107,10 +105,9 @@ export default function AuthModal({ open, onClose }: AuthModalProps) {
                 <label className="lp-modal__label" htmlFor="modal-reg-firstname">
                   {t('login.firstName')}
                 </label>
-                <input
+                <Input
                   id="modal-reg-firstname"
                   type="text"
-                  className="lp-modal__input"
                   placeholder={t('login.firstNamePlaceholder')}
                   value={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
@@ -122,10 +119,9 @@ export default function AuthModal({ open, onClose }: AuthModalProps) {
                 <label className="lp-modal__label" htmlFor="modal-reg-lastname">
                   {t('login.lastName')}
                 </label>
-                <input
+                <Input
                   id="modal-reg-lastname"
                   type="text"
-                  className="lp-modal__input"
                   placeholder={t('login.lastNamePlaceholder')}
                   value={lastName}
                   onChange={(e) => setLastName(e.target.value)}
@@ -137,10 +133,9 @@ export default function AuthModal({ open, onClose }: AuthModalProps) {
 
             <div className="lp-modal__field">
               <label className="lp-modal__label" htmlFor="modal-reg-dni">{t('login.dni')}</label>
-              <input
+              <Input
                 id="modal-reg-dni"
                 type="text"
-                className="lp-modal__input"
                 placeholder={t('login.dniPlaceholder')}
                 value={dni}
                 onChange={(e) => setDni(e.target.value)}
@@ -151,10 +146,9 @@ export default function AuthModal({ open, onClose }: AuthModalProps) {
 
             <div className="lp-modal__field">
               <label className="lp-modal__label" htmlFor="modal-reg-phone">{t('login.phone')}</label>
-              <input
+              <Input
                 id="modal-reg-phone"
                 type="tel"
-                className="lp-modal__input"
                 placeholder={t('login.phonePlaceholder')}
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
@@ -165,10 +159,9 @@ export default function AuthModal({ open, onClose }: AuthModalProps) {
 
             <div className="lp-modal__field">
               <label className="lp-modal__label" htmlFor="modal-reg-email">{t('login.email')}</label>
-              <input
+              <Input
                 id="modal-reg-email"
                 type="email"
-                className="lp-modal__input"
                 placeholder={t('login.emailPlaceholder')}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -179,52 +172,32 @@ export default function AuthModal({ open, onClose }: AuthModalProps) {
 
             <div className="lp-modal__field">
               <label className="lp-modal__label" htmlFor="modal-reg-password">{t('login.password')}</label>
-              <div className="lp-modal__input-wrapper">
-                <input
-                  id="modal-reg-password"
-                  type={showRegPassword ? 'text' : 'password'}
-                  className="lp-modal__input"
-                  placeholder={t('login.passwordPlaceholder')}
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                  autoComplete="new-password"
-                />
-                <button
-                  type="button"
-                  className="lp-modal__eye-btn"
-                  onClick={toggleShowRegPassword}
-                  tabIndex={-1}
-                  aria-label={showRegPassword ? t('login.hidePassword') : t('login.showPassword')}
-                >
-                  {showRegPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-                </button>
-              </div>
+              <Input
+                id="modal-reg-password"
+                type="password"
+                placeholder={t('login.passwordPlaceholder')}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                autoComplete="new-password"
+                showLabel={t('login.showPassword')}
+                hideLabel={t('login.hidePassword')}
+              />
             </div>
 
             <div className="lp-modal__field">
               <label className="lp-modal__label" htmlFor="modal-reg-confirm">{t('login.confirmPassword')}</label>
-              <div className="lp-modal__input-wrapper">
-                <input
-                  id="modal-reg-confirm"
-                  type={showConfirmPassword ? 'text' : 'password'}
-                  className="lp-modal__input"
-                  placeholder={t('login.confirmPasswordPlaceholder')}
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                  required
-                  autoComplete="new-password"
-                />
-                <button
-                  type="button"
-                  className="lp-modal__eye-btn"
-                  onClick={toggleShowConfirmPassword}
-                  tabIndex={-1}
-                  aria-label={showConfirmPassword ? t('login.hidePassword') : t('login.showPassword')}
-                >
-                  {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-                </button>
-              </div>
+              <Input
+                id="modal-reg-confirm"
+                type="password"
+                placeholder={t('login.confirmPasswordPlaceholder')}
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                required
+                autoComplete="new-password"
+                showLabel={t('login.showPassword')}
+                hideLabel={t('login.hidePassword')}
+              />
             </div>
 
             {error && <p className="lp-modal__error">{error}</p>}

@@ -30,6 +30,8 @@ import { usePushNotifications } from "../../hooks/usePushNotifications";
 import { supabase } from "../../lib/supabaseClient";
 import { toast } from "react-toastify";
 import { useDebounce } from "../../hooks/useDebounce";
+import { Input } from "../../components/ui/input";
+import { FormField } from "../../components/ui/form-field";
 import "./Settings.css";
 
 const GEOAPIFY_KEY = import.meta.env.VITE_GEOAPIFY_API_KEY as string;
@@ -535,112 +537,115 @@ export default function Settings() {
 
                     {/* Form */}
                     <form className="settings-form" onSubmit={handleSubmit}>
-                      <div className="settings-form__field">
-                        <label className="settings-form__label">
-                          {t("settings.profile.firstName")}
-                        </label>
-                        <input
-                          type="text"
-                          name="firstName"
-                          value={form.firstName}
-                          onChange={handleChange}
-                          className="settings-form__input"
-                          placeholder={t(
-                            "settings.profile.firstNamePlaceholder",
-                          )}
-                        />
-                      </div>
-                      <div className="settings-form__field">
-                        <label className="settings-form__label">
-                          {t("settings.profile.lastName")}
-                        </label>
-                        <input
-                          type="text"
-                          name="lastName"
-                          value={form.lastName}
-                          onChange={handleChange}
-                          className="settings-form__input"
-                          placeholder={t(
-                            "settings.profile.lastNamePlaceholder",
-                          )}
-                        />
-                      </div>
-                      <div className="settings-form__field">
-                        <label className="settings-form__label">
-                          {t("settings.profile.dni")}
-                        </label>
-                        <input
-                          type="text"
-                          name="dni"
-                          value={form.dni}
-                          onChange={handleChange}
-                          className="settings-form__input"
-                          placeholder={t("settings.profile.dniPlaceholder")}
-                          autoComplete="off"
-                        />
-                      </div>
-                      <div className="settings-form__field">
-                        <label className="settings-form__label">
-                          {t("settings.profile.email")}
-                        </label>
-                        <input
-                          type="email"
-                          name="email"
-                          value={form.email}
-                          onChange={handleChange}
-                          className="settings-form__input"
-                          placeholder={t("settings.profile.emailPlaceholder")}
-                        />
-                      </div>
-                      <div className="settings-form__field">
-                        <label className="settings-form__label">
-                          {t("settings.profile.phone")}
-                        </label>
-                        <input
-                          type="tel"
-                          name="phone"
-                          value={form.phone}
-                          onChange={handleChange}
-                          className="settings-form__input"
-                          placeholder={t("settings.profile.phonePlaceholder")}
-                        />
-                      </div>
-                      <div className="settings-form__field settings-form__field--full">
-                        <label className="settings-form__label">
-                          {t("settings.profile.organization")}
-                        </label>
-                        <input
-                          type="text"
-                          name="organization"
-                          value={form.organization}
-                          onChange={handleChange}
-                          className="settings-form__input"
-                          placeholder={t(
-                            "settings.profile.organizationPlaceholder",
-                          )}
-                        />
-                      </div>
-
-                      <div className="settings-form__field settings-form__field--full" ref={municipalityRef} style={{ position: "relative", zIndex: 2 }}>
-                          <label className="settings-form__label">
-                            Municipio
-                          </label>
-                          <input
+                      <FormField variant="eyebrow" label={t("settings.profile.firstName")}>
+                        {(field) => (
+                          <Input
+                            {...field}
+                            variant="filled"
                             type="text"
-                            value={municipalityQuery}
-                            onChange={(e) => {
-                              setMunicipalityQuery(e.target.value);
-                              if (municipalitySelected) {
-                                setMunicipalitySelected(false);
-                                setMunicipalityCoords(null);
-                              }
-                            }}
-                            onFocus={() => {
-                              if (!municipalitySelected && municipalitySuggestions.length > 0) setMunicipalityOpen(true);
-                            }}
-                            placeholder="Busca tu municipio..."
-                            className={`settings-form__input${municipalitySelected ? " settings-form__input--selected" : ""}`}
+                            name="firstName"
+                            value={form.firstName}
+                            onChange={handleChange}
+                            placeholder={t(
+                              "settings.profile.firstNamePlaceholder",
+                            )}
                           />
+                        )}
+                      </FormField>
+                      <FormField variant="eyebrow" label={t("settings.profile.lastName")}>
+                        {(field) => (
+                          <Input
+                            {...field}
+                            variant="filled"
+                            type="text"
+                            name="lastName"
+                            value={form.lastName}
+                            onChange={handleChange}
+                            placeholder={t(
+                              "settings.profile.lastNamePlaceholder",
+                            )}
+                          />
+                        )}
+                      </FormField>
+                      <FormField variant="eyebrow" label={t("settings.profile.dni")}>
+                        {(field) => (
+                          <Input
+                            {...field}
+                            variant="filled"
+                            type="text"
+                            name="dni"
+                            value={form.dni}
+                            onChange={handleChange}
+                            placeholder={t("settings.profile.dniPlaceholder")}
+                            autoComplete="off"
+                          />
+                        )}
+                      </FormField>
+                      <FormField variant="eyebrow" label={t("settings.profile.email")}>
+                        {(field) => (
+                          <Input
+                            {...field}
+                            variant="filled"
+                            type="email"
+                            name="email"
+                            value={form.email}
+                            onChange={handleChange}
+                            placeholder={t("settings.profile.emailPlaceholder")}
+                          />
+                        )}
+                      </FormField>
+                      <FormField variant="eyebrow" label={t("settings.profile.phone")}>
+                        {(field) => (
+                          <Input
+                            {...field}
+                            variant="filled"
+                            type="tel"
+                            name="phone"
+                            value={form.phone}
+                            onChange={handleChange}
+                            placeholder={t("settings.profile.phonePlaceholder")}
+                          />
+                        )}
+                      </FormField>
+                      <FormField variant="eyebrow" label={t("settings.profile.organization")} className="settings-form__field--full">
+                        {(field) => (
+                          <Input
+                            {...field}
+                            variant="filled"
+                            type="text"
+                            name="organization"
+                            value={form.organization}
+                            onChange={handleChange}
+                            placeholder={t(
+                              "settings.profile.organizationPlaceholder",
+                            )}
+                          />
+                        )}
+                      </FormField>
+
+                      <div className="settings-form__field--full" ref={municipalityRef} style={{ position: "relative", zIndex: 2 }}>
+                          <FormField variant="eyebrow" label="Municipio">
+                            {(field) => (
+                              <Input
+                                {...field}
+                                variant="filled"
+                                type="text"
+                                value={municipalityQuery}
+                                onChange={(e) => {
+                                  setMunicipalityQuery(e.target.value);
+                                  if (municipalitySelected) {
+                                    setMunicipalitySelected(false);
+                                    setMunicipalityCoords(null);
+                                  }
+                                }}
+                                onFocus={() => {
+                                  if (!municipalitySelected && municipalitySuggestions.length > 0) setMunicipalityOpen(true);
+                                }}
+                                placeholder="Busca tu municipio..."
+                                className={municipalitySelected ? "settings-form__input--selected" : undefined}
+                              />
+                            )}
+                          </FormField>
                           {municipalityLoading && <span className="settings-zone__spinner" />}
                           {municipalityOpen && municipalitySuggestions.length > 0 && (
                             <ul className="settings-zone__dropdown">

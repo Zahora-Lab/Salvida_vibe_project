@@ -1,9 +1,10 @@
 import { useState, type FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Eye, EyeOff } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { supabase } from '../../lib/supabaseClient';
 import { useAuthStore } from '../../store/useAuthStore';
+import { Input } from '../ui/input';
+import { FormField } from '../ui/form-field';
 import './AuthCard.css';
 
 interface AuthCardProps {
@@ -29,7 +30,6 @@ export default function AuthCard({ showRegister = false }: AuthCardProps) {
   // ── Login state ──────────────────────────────────────────────────────────
   const [loginEmail, setLoginEmail] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
-  const [showLoginPwd, setShowLoginPwd] = useState(false);
   const [loginLoading, setLoginLoading] = useState(false);
   const [loginError, setLoginError] = useState<string | null>(null);
 
@@ -41,8 +41,6 @@ export default function AuthCard({ showRegister = false }: AuthCardProps) {
   const [regEmail, setRegEmail] = useState('');
   const [regPassword, setRegPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [showRegPwd, setShowRegPwd] = useState(false);
-  const [showConfirmPwd, setShowConfirmPwd] = useState(false);
   const [regLoading, setRegLoading] = useState(false);
   const [regError, setRegError] = useState<string | null>(null);
   const [regSuccess, setRegSuccess] = useState<string | null>(null);
@@ -129,48 +127,35 @@ export default function AuthCard({ showRegister = false }: AuthCardProps) {
 
       {tab === 'login' ? (
         <form className="auth-card__form" onSubmit={handleLogin}>
-          <div className="auth-card__field">
-            <label className="auth-card__label" htmlFor="ac-email">
-              {t('login.email')}
-            </label>
-            <input
-              id="ac-email"
-              type="email"
-              className="auth-card__input"
-              placeholder={t('login.emailPlaceholder')}
-              value={loginEmail}
-              onChange={(e) => setLoginEmail(e.target.value)}
-              required
-              autoComplete="email"
-            />
-          </div>
+          <FormField label={t('login.email')} htmlFor="ac-email">
+            {(field) => (
+              <Input
+                {...field}
+                type="email"
+                placeholder={t('login.emailPlaceholder')}
+                value={loginEmail}
+                onChange={(e) => setLoginEmail(e.target.value)}
+                required
+                autoComplete="email"
+              />
+            )}
+          </FormField>
 
-          <div className="auth-card__field">
-            <label className="auth-card__label" htmlFor="ac-password">
-              {t('login.password')}
-            </label>
-            <div className="auth-card__input-wrapper">
-              <input
-                id="ac-password"
-                type={showLoginPwd ? 'text' : 'password'}
-                className="auth-card__input"
+          <FormField label={t('login.password')} htmlFor="ac-password">
+            {(field) => (
+              <Input
+                {...field}
+                type="password"
                 placeholder={t('login.passwordPlaceholder')}
                 value={loginPassword}
                 onChange={(e) => setLoginPassword(e.target.value)}
                 required
                 autoComplete="current-password"
+                showLabel={t('login.showPassword')}
+                hideLabel={t('login.hidePassword')}
               />
-              <button
-                type="button"
-                className="auth-card__eye-btn"
-                onClick={() => setShowLoginPwd((v) => !v)}
-                tabIndex={-1}
-                aria-label={showLoginPwd ? t('login.hidePassword') : t('login.showPassword')}
-              >
-                {showLoginPwd ? <EyeOff size={18} /> : <Eye size={18} />}
-              </button>
-            </div>
-          </div>
+            )}
+          </FormField>
 
           {loginError && <p className="auth-card__error">{loginError}</p>}
 
@@ -181,129 +166,107 @@ export default function AuthCard({ showRegister = false }: AuthCardProps) {
       ) : (
         <form className="auth-card__form" onSubmit={handleRegister}>
           <div className="auth-card__field-row">
-            <div className="auth-card__field">
-              <label className="auth-card__label" htmlFor="ac-firstname">
-                {t('login.firstName')}
-              </label>
-              <input
-                id="ac-firstname"
+            <FormField label={t('login.firstName')} htmlFor="ac-firstname">
+              {(field) => (
+                <Input
+                  {...field}
+                  type="text"
+                  placeholder={t('login.firstNamePlaceholder')}
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                  required
+                  autoComplete="given-name"
+                />
+              )}
+            </FormField>
+            <FormField label={t('login.lastName')} htmlFor="ac-lastname">
+              {(field) => (
+                <Input
+                  {...field}
+                  type="text"
+                  placeholder={t('login.lastNamePlaceholder')}
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                  required
+                  autoComplete="family-name"
+                />
+              )}
+            </FormField>
+          </div>
+
+          <FormField label={t('login.dni')} htmlFor="ac-dni">
+            {(field) => (
+              <Input
+                {...field}
                 type="text"
-                className="auth-card__input"
-                placeholder={t('login.firstNamePlaceholder')}
-                value={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
+                placeholder={t('login.dniPlaceholder')}
+                value={dni}
+                onChange={(e) => setDni(e.target.value)}
                 required
-                autoComplete="given-name"
+                autoComplete="off"
               />
-            </div>
-            <div className="auth-card__field">
-              <label className="auth-card__label" htmlFor="ac-lastname">
-                {t('login.lastName')}
-              </label>
-              <input
-                id="ac-lastname"
-                type="text"
-                className="auth-card__input"
-                placeholder={t('login.lastNamePlaceholder')}
-                value={lastName}
-                onChange={(e) => setLastName(e.target.value)}
+            )}
+          </FormField>
+
+          <FormField label={t('login.phone')} htmlFor="ac-phone">
+            {(field) => (
+              <Input
+                {...field}
+                type="tel"
+                placeholder={t('login.phonePlaceholder')}
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
                 required
-                autoComplete="family-name"
+                autoComplete="tel"
               />
-            </div>
-          </div>
+            )}
+          </FormField>
 
-          <div className="auth-card__field">
-            <label className="auth-card__label" htmlFor="ac-dni">{t('login.dni')}</label>
-            <input
-              id="ac-dni"
-              type="text"
-              className="auth-card__input"
-              placeholder={t('login.dniPlaceholder')}
-              value={dni}
-              onChange={(e) => setDni(e.target.value)}
-              required
-              autoComplete="off"
-            />
-          </div>
+          <FormField label={t('login.email')} htmlFor="ac-reg-email">
+            {(field) => (
+              <Input
+                {...field}
+                type="email"
+                placeholder={t('login.emailPlaceholder')}
+                value={regEmail}
+                onChange={(e) => setRegEmail(e.target.value)}
+                required
+                autoComplete="email"
+              />
+            )}
+          </FormField>
 
-          <div className="auth-card__field">
-            <label className="auth-card__label" htmlFor="ac-phone">{t('login.phone')}</label>
-            <input
-              id="ac-phone"
-              type="tel"
-              className="auth-card__input"
-              placeholder={t('login.phonePlaceholder')}
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-              required
-              autoComplete="tel"
-            />
-          </div>
-
-          <div className="auth-card__field">
-            <label className="auth-card__label" htmlFor="ac-reg-email">{t('login.email')}</label>
-            <input
-              id="ac-reg-email"
-              type="email"
-              className="auth-card__input"
-              placeholder={t('login.emailPlaceholder')}
-              value={regEmail}
-              onChange={(e) => setRegEmail(e.target.value)}
-              required
-              autoComplete="email"
-            />
-          </div>
-
-          <div className="auth-card__field">
-            <label className="auth-card__label" htmlFor="ac-reg-password">{t('login.password')}</label>
-            <div className="auth-card__input-wrapper">
-              <input
-                id="ac-reg-password"
-                type={showRegPwd ? 'text' : 'password'}
-                className="auth-card__input"
+          <FormField label={t('login.password')} htmlFor="ac-reg-password">
+            {(field) => (
+              <Input
+                {...field}
+                type="password"
                 placeholder={t('login.passwordPlaceholder')}
                 value={regPassword}
                 onChange={(e) => setRegPassword(e.target.value)}
                 required
                 autoComplete="new-password"
+                showLabel={t('login.showPassword')}
+                hideLabel={t('login.hidePassword')}
               />
-              <button
-                type="button"
-                className="auth-card__eye-btn"
-                onClick={() => setShowRegPwd((v) => !v)}
-                tabIndex={-1}
-                aria-label={showRegPwd ? t('login.hidePassword') : t('login.showPassword')}
-              >
-                {showRegPwd ? <EyeOff size={18} /> : <Eye size={18} />}
-              </button>
-            </div>
-          </div>
+            )}
+          </FormField>
 
-          <div className="auth-card__field">
-            <label className="auth-card__label" htmlFor="ac-confirm">{t('login.confirmPassword')}</label>
-            <div className="auth-card__input-wrapper">
-              <input
-                id="ac-confirm"
-                type={showConfirmPwd ? 'text' : 'password'}
-                className="auth-card__input"
+          <FormField label={t('login.confirmPassword')} htmlFor="ac-confirm">
+            {(field) => (
+              <Input
+                {...field}
+                type="password"
                 placeholder={t('login.confirmPasswordPlaceholder')}
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 required
                 autoComplete="new-password"
+                showLabel={t('login.showPassword')}
+                hideLabel={t('login.hidePassword')}
               />
-              <button
-                type="button"
-                className="auth-card__eye-btn"
-                onClick={() => setShowConfirmPwd((v) => !v)}
-                tabIndex={-1}
-                aria-label={showConfirmPwd ? t('login.hidePassword') : t('login.showPassword')}
-              >
-                {showConfirmPwd ? <EyeOff size={18} /> : <Eye size={18} />}
-              </button>
-            </div>
-          </div>
+            )}
+          </FormField>
 
           {regError && <p className="auth-card__error">{regError}</p>}
           {regSuccess ? (

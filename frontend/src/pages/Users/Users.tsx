@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Search, Plus, FlaskConical } from 'lucide-react';
+import { FlaskConical } from 'lucide-react';
 import Header from '../../components/Header/Header';
 import DropdownMenu from '../../components/DropdownMenu';
 import type { DropdownItem } from '../../components/DropdownMenu';
-import MobileAddButton from '../../components/MobileAddButton/MobileAddButton';
+import { ListToolbar } from '../../components/ui/list-toolbar';
+import { FilterTabs } from '../../components/ui/filter-tabs';
 import { useUsers, useArchiveUser, useToggleUserDemo, useProfile } from '../../hooks/useProfile';
 import { useMediaQuery } from '../../hooks/useMediaQuery';
 import CreateUserModal from './CreateUserModal';
@@ -64,42 +65,26 @@ export default function Users() {
       <div className="users__body">
         <div className="users__inner">
 
-          <div className="users__toolbar">
-            <div className="users__search-wrap">
-              <span className="users__search-icon">
-                <Search size={18} />
-              </span>
-              <input
-                type="text"
-                placeholder="Buscar por nombre, email u organización…"
-                className="users__search-input"
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
+          <ListToolbar
+            search={{
+              value: query,
+              onChange: setQuery,
+              placeholder: 'Buscar por nombre, email u organización…',
+            }}
+            create={{ label: 'Nuevo usuario', onClick: () => setShowCreateModal(true) }}
+            filters={
+              <FilterTabs
+                ariaLabel="Estado"
+                value={statusTab}
+                onChange={setStatusTab}
+                options={[
+                  { value: 'all', label: 'Todos' },
+                  { value: 'active', label: 'Activos' },
+                  { value: 'archived', label: 'Archivados' },
+                ]}
               />
-            </div>
-            <button
-              className="users__create-btn"
-              onClick={() => setShowCreateModal(true)}
-            >
-              <Plus size={16} />
-              <span>Nuevo usuario</span>
-            </button>
-          </div>
-
-          <div className="users__filters-row">
-            <div className="users__filter-tabs">
-              {(['all', 'active', 'archived'] as const).map((tab) => (
-                <button
-                  key={tab}
-                  className={`users__filter-tab${statusTab === tab ? ' users__filter-tab--active' : ''}`}
-                  onClick={() => setStatusTab(tab)}
-                >
-                  {tab === 'active' ? 'Activos' : tab === 'archived' ? 'Archivados' : 'Todos'}
-                </button>
-              ))}
-            </div>
-            <MobileAddButton label="Nuevo usuario" onClick={() => setShowCreateModal(true)} />
-          </div>
+            }
+          />
 
           {/* Mobile: one card per user, every value labelled with its column title */}
           {isMobile && (
