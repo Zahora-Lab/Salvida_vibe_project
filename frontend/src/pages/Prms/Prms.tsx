@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import Header from '../../components/Header/Header';
 import DropdownMenu from '../../components/DropdownMenu';
 import { ListToolbar } from '../../components/ui/list-toolbar';
+import { FilterTabs } from '../../components/ui/filter-tabs';
 import type { DropdownItem } from '../../components/DropdownMenu';
 import { usePrms, useUpdatePrm } from '../../hooks/usePrms';
 import type { PrmListItem } from '../../hooks/usePrms';
@@ -56,17 +57,15 @@ export default function Prms() {
             search={{ value: query, onChange: setQuery, placeholder: t('prms.search') }}
             create={{ label: t('prms.addPrm'), to: '/app/prms/new' }}
             filters={
-              <div className="prms__filter-tabs">
-                {(['all', 'Activo', 'Inactivo'] as const).map((tab) => (
-                  <button
-                    key={tab}
-                    className={`prms__filter-tab${statusTab === tab ? ' prms__filter-tab--active' : ''}`}
-                    onClick={() => setStatusTab(tab)}
-                  >
-                    {tab === 'Activo' ? t('prms.tabs.active') : tab === 'Inactivo' ? t('prms.tabs.inactive') : t('prms.tabs.all')}
-                  </button>
-                ))}
-              </div>
+              <FilterTabs
+                value={statusTab}
+                onChange={setStatusTab}
+                options={[
+                  { value: 'all', label: t('prms.tabs.all') },
+                  { value: 'Activo', label: t('prms.tabs.active') },
+                  { value: 'Inactivo', label: t('prms.tabs.inactive') },
+                ]}
+              />
             }
           />
 

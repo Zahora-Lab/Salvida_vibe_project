@@ -5,6 +5,7 @@ import Header from '../../components/Header/Header';
 import DropdownMenu from '../../components/DropdownMenu';
 import type { DropdownItem } from '../../components/DropdownMenu';
 import { ListToolbar } from '../../components/ui/list-toolbar';
+import { FilterTabs } from '../../components/ui/filter-tabs';
 import { useUsers, useArchiveUser, useToggleUserDemo, useProfile } from '../../hooks/useProfile';
 import { useMediaQuery } from '../../hooks/useMediaQuery';
 import CreateUserModal from './CreateUserModal';
@@ -72,17 +73,16 @@ export default function Users() {
             }}
             create={{ label: 'Nuevo usuario', onClick: () => setShowCreateModal(true) }}
             filters={
-              <div className="users__filter-tabs">
-                {(['all', 'active', 'archived'] as const).map((tab) => (
-                  <button
-                    key={tab}
-                    className={`users__filter-tab${statusTab === tab ? ' users__filter-tab--active' : ''}`}
-                    onClick={() => setStatusTab(tab)}
-                  >
-                    {tab === 'active' ? 'Activos' : tab === 'archived' ? 'Archivados' : 'Todos'}
-                  </button>
-                ))}
-              </div>
+              <FilterTabs
+                ariaLabel="Estado"
+                value={statusTab}
+                onChange={setStatusTab}
+                options={[
+                  { value: 'all', label: 'Todos' },
+                  { value: 'active', label: 'Activos' },
+                  { value: 'archived', label: 'Archivados' },
+                ]}
+              />
             }
           />
 

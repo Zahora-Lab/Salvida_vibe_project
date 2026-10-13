@@ -2,17 +2,12 @@ import { forwardRef } from 'react';
 import BaseInput, { type BaseInputProps } from './base/BaseInput';
 import PasswordInput, { type PasswordInputProps } from './types/password/PasswordInput';
 
-/** Types that need no dedicated behavior: they render the bare input. */
-export type PlainInputType =
-  | 'text'
-  | 'email'
-  | 'tel'
-  | 'url'
-  | 'number'
-  | 'search'
-  | 'date'
-  | 'time'
-  | 'file';
+/**
+ * Types that need no dedicated behavior: they render the bare input.
+ * Deliberately excluded: `file` (hidden input driven by a button, nothing to style),
+ * `date`/`time` (use DateInput/TimeInput) and `checkbox`/`radio` (different control).
+ */
+export type PlainInputType = 'text' | 'email' | 'tel' | 'url' | 'number' | 'search';
 
 type PasswordProps = PasswordInputProps & { type: 'password' };
 type PlainProps = Omit<BaseInputProps, 'type'> & { type?: PlainInputType };
