@@ -3,6 +3,7 @@ import { X } from 'lucide-react';
 import { useCreateUser } from '../../hooks/useProfile';
 import { useProfile } from '../../hooks/useProfile';
 import type { UserRole } from '../../types';
+import { Input } from '../../components/ui/input';
 import './CreateUserModal.css';
 
 interface Props {
@@ -88,9 +89,10 @@ export default function CreateUserModal({ onClose }: Props) {
         <form className="cum-form" onSubmit={handleSubmit} noValidate>
           <div className="cum-field">
             <label className="cum-label" htmlFor="cum-email">Email *</label>
-            <input
+            <Input
               id="cum-email"
-              className={`cum-input${errors.email ? ' cum-input--error' : ''}`}
+              size="sm"
+              status={errors.email ? 'error' : undefined}
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -102,10 +104,13 @@ export default function CreateUserModal({ onClose }: Props) {
           {method === 'direct' && (
             <div className="cum-field">
               <label className="cum-label" htmlFor="cum-password">Contraseña *</label>
-              <input
+              <Input
                 id="cum-password"
-                className={`cum-input${errors.password ? ' cum-input--error' : ''}`}
+                size="sm"
+                status={errors.password ? 'error' : undefined}
                 type="password"
+                showLabel="Mostrar contraseña"
+                hideLabel="Ocultar contraseña"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 autoComplete="new-password"
@@ -117,9 +122,9 @@ export default function CreateUserModal({ onClose }: Props) {
           <div className="cum-row">
             <div className="cum-field">
               <label className="cum-label" htmlFor="cum-first">Nombre</label>
-              <input
+              <Input
                 id="cum-first"
-                className="cum-input"
+                size="sm"
                 type="text"
                 value={firstName}
                 onChange={(e) => setFirstName(e.target.value)}
@@ -127,9 +132,9 @@ export default function CreateUserModal({ onClose }: Props) {
             </div>
             <div className="cum-field">
               <label className="cum-label" htmlFor="cum-last">Apellido</label>
-              <input
+              <Input
                 id="cum-last"
-                className="cum-input"
+                size="sm"
                 type="text"
                 value={lastName}
                 onChange={(e) => setLastName(e.target.value)}
@@ -140,9 +145,9 @@ export default function CreateUserModal({ onClose }: Props) {
           <div className="cum-row">
             <div className="cum-field">
               <label className="cum-label" htmlFor="cum-phone">Teléfono</label>
-              <input
+              <Input
                 id="cum-phone"
-                className="cum-input"
+                size="sm"
                 type="tel"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
@@ -150,9 +155,9 @@ export default function CreateUserModal({ onClose }: Props) {
             </div>
             <div className="cum-field">
               <label className="cum-label" htmlFor="cum-org">Organización</label>
-              <input
+              <Input
                 id="cum-org"
-                className="cum-input"
+                size="sm"
                 type="text"
                 value={organization}
                 onChange={(e) => setOrganization(e.target.value)}

@@ -1,0 +1,81 @@
+.create-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  white-space: nowrap;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* ── variant: solid (primary fill) ─────────────────────────────────────── */
+.create-btn--solid {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 8px;
+  background: var(--color-primary);
+  color: #fff;
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition: opacity 0.15s;
+}
+
+.create-btn--solid:hover {
+  opacity: 0.88;
+}
+
+/* ── variant: dashed (full-width call to action) ───────────────────────── */
+.create-btn--dashed {
+  display: flex;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 1rem;
+  border: 2px dashed var(--color-slate-200);
+  border-radius: 1rem;
+  background: none;
+  color: var(--color-slate-400);
+  font-weight: 700;
+  transition: border-color 0.15s, color 0.15s, background-color 0.15s;
+}
+
+.create-btn--dashed:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  background-color: var(--color-primary-05);
+}
+
+/* ── display: icon is a square "+" ─────────────────────────────────────── */
+.create-btn--icon {
+  display: none;
+  flex-shrink: 0;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+}
+
+@media (max-width: 768px) {
+  .create-btn--full {
+    display: none;
+  }
+
+  /* responsive: the same element collapses to a square "+" */
+  .create-btn--responsive {
+    flex-shrink: 0;
+    width: 2.5rem;
+    height: 2.5rem;
+    padding: 0;
+  }
+
+  .create-btn--responsive .create-btn__label {
+    display: none;
+  }
+
+  .create-btn--responsive svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .create-btn--icon {
+    display: inline-flex;
+  }
+}

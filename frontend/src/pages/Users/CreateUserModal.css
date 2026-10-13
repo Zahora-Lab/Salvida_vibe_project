@@ -102,7 +102,6 @@
   color: var(--color-text, #374151);
 }
 
-.cum-input,
 .cum-select {
   padding: 0.5rem 0.75rem;
   border: 1.5px solid var(--color-border, #d1d5db);
@@ -115,14 +114,9 @@
   box-sizing: border-box;
 }
 
-.cum-input:focus,
 .cum-select:focus {
   outline: none;
   border-color: var(--color-primary, #2563eb);
-}
-
-.cum-input--error {
-  border-color: #ef4444;
 }
 
 .cum-error {

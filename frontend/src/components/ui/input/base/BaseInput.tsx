@@ -1,7 +1,7 @@
 import { forwardRef, type InputHTMLAttributes } from 'react';
 import './BaseInput.css';
 
-export type InputVariant = 'outlined' | 'filled' | 'compact';
+export type InputVariant = 'outlined' | 'filled' | 'filled-bordered' | 'compact';
 export type InputSize = 'lg' | 'md' | 'sm' | 'xs';
 export type InputStatus = 'error';
 

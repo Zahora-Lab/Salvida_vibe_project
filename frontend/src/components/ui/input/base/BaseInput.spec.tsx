@@ -21,7 +21,7 @@ describe('BaseInput', () => {
     expect(screen.getByPlaceholderText('x')).toHaveClass('input', 'input--outlined', 'custom');
   });
 
-  it.each(['outlined', 'filled', 'compact'] as const)('applies variant="%s"', (variant) => {
+  it.each(['outlined', 'filled', 'filled-bordered', 'compact'] as const)('applies variant="%s"', (variant) => {
     render(<BaseInput variant={variant} placeholder="x" />);
     expect(screen.getByPlaceholderText('x')).toHaveClass(`input--${variant}`);
   });

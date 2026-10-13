@@ -6,9 +6,8 @@ import type { BookingFilterValues } from '../../components/FilterBar/FilterBar';
 import BookingCard from '../../components/BookingCard/BookingCard';
 import type { MultiSelectOption } from '../../components/MultiSelect/MultiSelect';
 import ContractModal from '../../components/ContractModal/ContractModal';
-import MobileAddButton from '../../components/MobileAddButton/MobileAddButton';
+import { CreateButton } from '../../components/ui/button';
 import {
-  PlusCircle,
   CalendarDays,
   List,
   ArrowUp,
@@ -16,7 +15,7 @@ import {
   ChevronDown,
   SlidersHorizontal,
 } from 'lucide-react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
   useBookings,
@@ -277,7 +276,8 @@ export default function Dashboard() {
         {/* ── Mobile-only: view toggle + new booking ── */}
         <div className="dashboard__mobile-toolbar">
           <ViewToggle view={view} onChange={handleViewChange} />
-          <MobileAddButton
+          <CreateButton
+            display="icon"
             to="/app/bookings/new"
             state={view === 'calendar' ? { date: dateStr } : undefined}
             label={t('dashboard.newBookingShort')}
@@ -418,14 +418,12 @@ export default function Dashboard() {
                 </div>
               )}
 
-              <Link
+              <CreateButton
+                variant="dashed"
                 to="/app/bookings/new"
                 state={{ date: dateStr }}
-                className="new-booking-btn"
-              >
-                <PlusCircle size={20} />
-                <span>{t('dashboard.newBooking')}</span>
-              </Link>
+                label={t('dashboard.newBooking')}
+              />
             </div>
           </div>
         )}
@@ -503,10 +501,7 @@ export default function Dashboard() {
               </div>
             )}
 
-            <Link to="/app/bookings/new" className="new-booking-btn">
-              <PlusCircle size={20} />
-              <span>{t('dashboard.newBooking')}</span>
-            </Link>
+            <CreateButton variant="dashed" to="/app/bookings/new" label={t('dashboard.newBooking')} />
           </div>
         )}
       </div>

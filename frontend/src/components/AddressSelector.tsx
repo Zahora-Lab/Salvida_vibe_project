@@ -13,6 +13,7 @@ import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import type { Address } from '../types';
 import { useDebounce } from '../hooks/useDebounce';
+import { Input } from './ui/input';
 import './AddressSelector.css';
 
 delete (L.Icon.Default.prototype as unknown as Record<string, unknown>)._getIconUrl;
@@ -265,8 +266,9 @@ export default function AddressSelector({
           <span className="address-selector__icon-search">
             <Search size={16} />
           </span>
-          <input
+          <Input
             type="text"
+            variant="filled-bordered"
             value={query}
             onChange={(e) => {
               setQuery(e.target.value);
@@ -357,15 +359,19 @@ export default function AddressSelector({
       {/* Floor / Door */}
       {selected && (
         <div className="address-selector__extras">
-          <input
+          <Input
             type="text"
+            variant="filled-bordered"
+            size="md"
             value={floor}
             onChange={(e) => handleFloorChange(e.target.value)}
             placeholder="Piso (ej: 2º)"
             className="address-selector__extra-input"
           />
-          <input
+          <Input
             type="text"
+            variant="filled-bordered"
+            size="md"
             value={door}
             onChange={(e) => handleDoorChange(e.target.value)}
             placeholder="Puerta (ej: A)"
