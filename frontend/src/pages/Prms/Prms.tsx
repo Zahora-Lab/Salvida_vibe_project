@@ -4,9 +4,15 @@ import { Search, Plus, Mail, Phone, User } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import Header from '../../components/Header/Header';
 import DropdownMenu from '../../components/DropdownMenu';
+import MobileAddButton from '../../components/MobileAddButton/MobileAddButton';
+import type { DropdownItem } from '../../components/DropdownMenu';
 import { usePrms, useUpdatePrm } from '../../hooks/usePrms';
+import type { PrmListItem } from '../../hooks/usePrms';
 import { useAuthStore } from '../../store/useAuthStore';
 import { useDebounce } from '../../hooks/useDebounce';
+import { useMediaQuery } from '../../hooks/useMediaQuery';
+import { formatLastVisit } from '../../utils';
+import PrmCard from './PrmCard';
 import './Prms.css';
 
 export default function Prms() {
@@ -22,6 +28,19 @@ export default function Prms() {
   );
   const updatePrm = useUpdatePrm();
   const isAdmin = useAuthStore((s) => s.user?.role === 'admin' || s.user?.role === 'superadmin');
+  const isMobile = useMediaQuery('(max-width: 768px)');
+
+  function buildMenuItems(prm: PrmListItem): DropdownItem[] {
+    const isActive = prm.status === 'Activo';
+    return [
+      { label: t('prms.menu.viewProfile'), onClick: () => navigate(`/app/prms/${prm.id}`) },
+      {
+        label: isActive ? t('prms.menu.deactivate') : t('prms.menu.activate'),
+        onClick: () => updatePrm.mutate({ id: prm.id, status: isActive ? 'Inactivo' : 'Activo' }),
+        variant: isActive ? 'danger' : 'default',
+      },
+    ];
+  }
 
   return (
     <div className="prms">
@@ -52,18 +71,45 @@ export default function Prms() {
             </Link>
           </div>
 
-          <div className="prms__filter-tabs">
-            {(['all', 'Activo', 'Inactivo'] as const).map((tab) => (
-              <button
-                key={tab}
-                className={`prms__filter-tab${statusTab === tab ? ' prms__filter-tab--active' : ''}`}
-                onClick={() => setStatusTab(tab)}
-              >
-                {tab === 'Activo' ? t('prms.tabs.active') : tab === 'Inactivo' ? t('prms.tabs.inactive') : t('prms.tabs.all')}
-              </button>
-            ))}
+          <div className="prms__filters-row">
+            <div className="prms__filter-tabs">
+              {(['all', 'Activo', 'Inactivo'] as const).map((tab) => (
+                <button
+                  key={tab}
+                  className={`prms__filter-tab${statusTab === tab ? ' prms__filter-tab--active' : ''}`}
+                  onClick={() => setStatusTab(tab)}
+                >
+                  {tab === 'Activo' ? t('prms.tabs.active') : tab === 'Inactivo' ? t('prms.tabs.inactive') : t('prms.tabs.all')}
+                </button>
+              ))}
+            </div>
+            <MobileAddButton to="/app/prms/new" label={t('prms.addPrm')} />
           </div>
 
+          {/* Mobile: one card per PMR, every value labelled with its column title */}
+          {isMobile && (
+            isLoading ? (
+              <ul className="prms__cards" aria-busy="true">
+                {Array.from({ length: 3 }).map((_, i) => (
+                  <li key={i} className="prms__card prms__card--skeleton">
+                    <div className="prms__skeleton" style={{ width: '55%' }} />
+                    <div className="prms__skeleton" style={{ width: '80%' }} />
+                    <div className="prms__skeleton" style={{ width: '40%' }} />
+                  </li>
+                ))}
+              </ul>
+            ) : prms.length === 0 ? (
+              <p className="prms__empty prms__empty--card">{t('prms.empty')}</p>
+            ) : (
+              <ul className="prms__cards">
+                {prms.map((prm) => (
+                  <PrmCard key={prm.id} prm={prm} isAdmin={isAdmin} menuItems={buildMenuItems(prm)} />
+                ))}
+              </ul>
+            )
+          )}
+
+          {!isMobile && (
           <div className="prms__table-wrap">
             <div className="prms__table-scroll">
               <table className="prms__table">
@@ -134,9 +180,7 @@ export default function Prms() {
                           {prm.booking_count ?? 0}
                         </td>
                         <td className="prm-date">
-                          {prm.last_booking_date
-                            ? new Date(prm.last_booking_date).toLocaleDateString('es-ES', { day: 'numeric', month: 'short', year: 'numeric' })
-                            : '—'}
+                          {formatLastVisit(prm.last_booking_date)}
                         </td>
                         <td>
                           <span className={`prm-status ${prm.status === 'Activo' ? 'prm-status--active' : 'prm-status--inactive'}`}>
@@ -144,16 +188,7 @@ export default function Prms() {
                           </span>
                         </td>
                         <td>
-                          <DropdownMenu
-                            items={[
-                              { label: t('prms.menu.viewProfile'), onClick: () => navigate(`/app/prms/${prm.id}`) },
-                              {
-                                label: prm.status === 'Activo' ? t('prms.menu.deactivate') : t('prms.menu.activate'),
-                                onClick: () => updatePrm.mutate({ id: prm.id, status: prm.status === 'Activo' ? 'Inactivo' : 'Activo' }),
-                                variant: prm.status === 'Activo' ? 'danger' : 'default',
-                              },
-                            ]}
-                          />
+                          <DropdownMenu items={buildMenuItems(prm)} />
                         </td>
                       </tr>
                     ))
@@ -162,6 +197,7 @@ export default function Prms() {
               </table>
             </div>
           </div>
+          )}
 
         </div>
       </div>

@@ -1,4 +1,3 @@
-
 ![logo](https://github.com/user-attachments/assets/2b568d6f-a653-437a-8ad1-6a966ac176b7)
 
 # Salvida
@@ -17,7 +16,7 @@ La misión de Salvida es facilitar el transporte accesible y el acompañamiento 
 
 **Autenticación:** Supabase Auth (JWT)
 
-**Mapas:** Leaflet + Nominatim (OpenStreetMap, sin coste)
+**Mapas:** Leaflet + Nominatim (OpenStreetMap)
 
 **Deployment:** Por definir
 
@@ -201,6 +200,7 @@ Images
 ## Contribución
 
 Las contribuciones son bienvenidas. Si deseas colaborar:
+
 - Abre un issue para discutir cambios importantes.
 - Envía un pull request con tus mejoras.
 - Asegúrate de que las pruebas pasen y sigue las convenciones del proyecto.

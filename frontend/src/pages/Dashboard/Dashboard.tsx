@@ -6,9 +6,9 @@ import type { BookingFilterValues } from '../../components/FilterBar/FilterBar';
 import BookingCard from '../../components/BookingCard/BookingCard';
 import type { MultiSelectOption } from '../../components/MultiSelect/MultiSelect';
 import ContractModal from '../../components/ContractModal/ContractModal';
+import MobileAddButton from '../../components/MobileAddButton/MobileAddButton';
 import {
   PlusCircle,
-  Plus,
   CalendarDays,
   List,
   ArrowUp,
@@ -277,15 +277,11 @@ export default function Dashboard() {
         {/* ── Mobile-only: view toggle + new booking ── */}
         <div className="dashboard__mobile-toolbar">
           <ViewToggle view={view} onChange={handleViewChange} />
-          <Link
+          <MobileAddButton
             to="/app/bookings/new"
             state={view === 'calendar' ? { date: dateStr } : undefined}
-            className="dashboard__mobile-new-btn"
-            aria-label={t('dashboard.newBookingShort')}
-            title={t('dashboard.newBookingShort')}
-          >
-            <Plus size={22} />
-          </Link>
+            label={t('dashboard.newBookingShort')}
+          />
         </div>
 
         {/* ── Mobile-only: date selector + filters toggle ── */}

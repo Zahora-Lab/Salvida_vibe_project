@@ -23,6 +23,12 @@ export function formatDateShort(dateStr: string): string {
   return new Date(y, m - 1, d).toLocaleDateString('es-ES', { day: 'numeric', month: 'short' });
 }
 
+/** "3 oct 2026" for a booking date coming from the API, "—" when there is none. */
+export function formatLastVisit(dateStr?: string): string {
+  if (!dateStr) return '—';
+  return new Date(dateStr).toLocaleDateString('es-ES', { day: 'numeric', month: 'short', year: 'numeric' });
+}
+
 export function cardState(
   value: unknown,
   submitAttempted: boolean,

@@ -149,6 +149,7 @@ export default function NewPrm() {
                 label=""
                 placeholder={t('prms.newPrm.responsiblePlaceholder')}
                 onChange={(id) => setOwnerId(id)}
+                onClear={() => setOwnerId('')}
               />
               {!ownerId && (
                 <p className="new-prm__owner-hint">{t('prms.newPrm.responsibleHint')}</p>
