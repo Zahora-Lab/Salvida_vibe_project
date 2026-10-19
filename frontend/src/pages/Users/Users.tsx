@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Search, Plus, FlaskConical } from 'lucide-react';
 import Header from '../../components/Header/Header';
 import DropdownMenu from '../../components/DropdownMenu';
@@ -14,6 +15,7 @@ import type { UserProfile } from '../../types';
 import './Users.css';
 
 export default function Users() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const { data: liveProfile } = useProfile();
   const isSuperAdmin = liveProfile?.role === 'superadmin';
@@ -28,7 +30,7 @@ export default function Users() {
   function buildMenuItems(u: UserProfile): DropdownItem[] {
     return [
       {
-        label: u.isActive === false ? 'Restaurar usuario' : 'Archivar usuario',
+        label: u.isActive === false ? t('users.menu.restore') : t('users.menu.archive'),
         onClick: () => archiveUser.mutate(u.id),
         variant: u.isActive === false ? 'default' : 'danger',
       },
@@ -57,7 +59,7 @@ export default function Users() {
 
   return (
     <div className="users">
-      <Header title="Usuarios" subtitle="Gestión de cuentas de usuario" />
+      <Header title={t('users.title')} subtitle={t('users.subtitle')} />
 
       {showCreateModal && <CreateUserModal onClose={() => setShowCreateModal(false)} />}
 
@@ -82,7 +84,7 @@ export default function Users() {
               onClick={() => setShowCreateModal(true)}
             >
               <Plus size={16} />
-              <span>Nuevo usuario</span>
+              <span>{t('users.newUser')}</span>
             </button>
           </div>
 
@@ -98,7 +100,7 @@ export default function Users() {
                 </button>
               ))}
             </div>
-            <MobileAddButton label="Nuevo usuario" onClick={() => setShowCreateModal(true)} />
+            <MobileAddButton label={t('users.newUser')} onClick={() => setShowCreateModal(true)} />
           </div>
 
           {/* Mobile: one card per user, every value labelled with its column title */}
@@ -114,7 +116,7 @@ export default function Users() {
                 ))}
               </ul>
             ) : filtered.length === 0 ? (
-              <p className="users__empty users__empty--card">No se encontraron usuarios</p>
+              <p className="users__empty users__empty--card">{t('users.empty')}</p>
             ) : (
               <ul className="users__cards">
                 {filtered.map((u) => (
@@ -136,7 +138,7 @@ export default function Users() {
               <table className="users__table">
                 <thead>
                   <tr>
-                    <th>Usuario</th>
+                    <th>{t('users.columns.user')}</th>
                     <th>Email</th>
                     <th>Organización</th>
                     <th>Rol</th>
@@ -159,7 +161,7 @@ export default function Users() {
                   ) : filtered.length === 0 ? (
                     <tr>
                       <td colSpan={6} className="users__empty">
-                        No se encontraron usuarios
+                        {t('users.empty')}
                       </td>
                     </tr>
                   ) : (
@@ -186,10 +188,10 @@ export default function Users() {
                         <td>
                           <div className="users__role-cell">
                             <span className={`user-role-badge user-role-badge--${u.role}`}>
-                              {ROLE_LABEL[u.role ?? ''] ?? u.role}
+                              {u.role === 'user' ? t('userRoles.user') : (ROLE_LABEL[u.role ?? ''] ?? u.role)}
                             </span>
                             {isSuperAdmin && u.isDemo && (
-                              <span className="user-demo-badge" title="Usuario demo">
+                              <span className="user-demo-badge" title={t('users.demo')}>
                                 <FlaskConical size={12} />
                                 demo
                               </span>
