@@ -1,4 +1,5 @@
 import { FlaskConical } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import DropdownMenu from '../../components/DropdownMenu';
 import type { DropdownItem } from '../../components/DropdownMenu';
 import type { UserProfile } from '../../types';
@@ -13,6 +14,7 @@ interface UserCardProps {
 
 /** Mobile counterpart of a table row. Every value carries its column title. */
 export default function UserCard({ user, showDemo, menuItems, onOpen }: UserCardProps) {
+  const { t } = useTranslation();
   const isArchived = user.isActive === false;
 
   return (
@@ -43,10 +45,10 @@ export default function UserCard({ user, showDemo, menuItems, onOpen }: UserCard
           <dd>
             <div className="users__role-cell">
               <span className={`user-role-badge user-role-badge--${user.role}`}>
-                {ROLE_LABEL[user.role ?? ''] ?? user.role}
+                {user.role === 'user' ? t('userRoles.user') : (ROLE_LABEL[user.role ?? ''] ?? user.role)}
               </span>
               {showDemo && user.isDemo && (
-                <span className="user-demo-badge" title="Usuario demo">
+                <span className="user-demo-badge" title={t('users.demo')}>
                   <FlaskConical size={12} />
                   demo
                 </span>

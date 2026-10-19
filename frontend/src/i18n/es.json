@@ -25,8 +25,8 @@
     "remove": "Eliminar",
     "noResults": "Sin resultados",
     "clearSelection": "Limpiar selección",
-    "user": "Usuario",
-    "searchUser": "Buscar usuario…"
+    "user": "Responsable",
+    "searchUser": "Buscar responsable…"
   },
   "bookingStatuses": {
     "Approved": "Aprobada",
@@ -51,15 +51,15 @@
     "successMessage": "¡Contrato firmado! Tu reserva está confirmada."
   },
   "userRoles": {
-    "user": "Usuario",
+    "user": "Responsable",
     "admin": "Administrador",
     "superadmin": "Super Admin"
   },
   "nav": {
     "dashboard": "Dashboard",
     "bookings": "Reservas",
-    "prms": "Mis PMRs",
-    "users": "Usuarios",
+    "prms": "Mis usuarios del servicio",
+    "users": "Responsables",
     "addresses": "Direcciones",
     "settings": "Ajustes",
     "superadmin": "Super Admin",
@@ -94,30 +94,30 @@
     "viewList": "Lista",
     "noBookings": "No hay reservas con los filtros aplicados",
     "filters": {
-      "user": "Usuario",
-      "prm": "PMR",
+      "user": "Responsable",
+      "prm": "Usuario del servicio",
       "status": "Estado",
       "dateFrom": "Desde",
       "dateTo": "Hasta",
-      "allUsers": "Todos los usuarios",
-      "allPrms": "Todos los PMRs",
+      "allUsers": "Todos los responsables",
+      "allPrms": "Todos los usuarios del servicio",
       "allStatuses": "Todos los estados"
     },
     "sort": {
       "label": "Ordenar por",
       "date": "Fecha",
       "time": "Hora",
-      "prm": "PMR",
+      "prm": "Usuario del servicio",
       "status": "Estado",
       "responsible": "Responsable"
     }
   },
   "prms": {
-    "title": "Mis PMRs",
+    "title": "Mis usuarios del servicio",
     "subtitle": "Gestiona tus pacientes de movilidad reducida",
-    "search": "Buscar PMRs...",
-    "addPrm": "Añadir PMR",
-    "empty": "No se encontraron PMRs",
+    "search": "Buscar usuarios del servicio...",
+    "addPrm": "Añadir usuario del servicio",
+    "empty": "No se encontraron usuarios del servicio",
     "columns": {
       "name": "Nombre",
       "contact": "Contacto",
@@ -138,7 +138,7 @@
       "activate": "Restaurar"
     },
     "newPrm": {
-      "title": "Nuevo PMR",
+      "title": "Nuevo usuario del servicio",
       "subtitle": "Registra un nuevo paciente de movilidad reducida",
       "sections": {
         "basic": "Información básica",
@@ -148,15 +148,15 @@
         "responsible": "Responsable",
         "addresses": "Direcciones"
       },
-      "submit": "Guardar PMR",
+      "submit": "Guardar usuario del servicio",
       "submitting": "Guardando...",
       "cancel": "Cancelar",
       "contactAdd": "Añadir contacto de urgencia",
       "contactMax": "Máximo 2 contactos de urgencia",
       "errorRequired": "El nombre es obligatorio",
-      "errorGeneric": "Error al guardar el PMR. Inténtalo de nuevo.",
-      "responsiblePlaceholder": "Selecciona el usuario responsable…",
-      "responsibleHint": "Si no seleccionas un responsable, el PMR se asignará a tu cuenta.",
+      "errorGeneric": "Error al guardar el usuario del servicio. Inténtalo de nuevo.",
+      "responsiblePlaceholder": "Selecciona el responsable…",
+      "responsibleHint": "Si no seleccionas un responsable, el usuario del servicio se asignará a tu cuenta.",
       "nameFull": "Nombre completo",
       "namePlaceholder": "Nombre y apellidos",
       "email": "Email",
@@ -181,10 +181,18 @@
       "contactRelationshipPlaceholder": "Ej: Madre, Hermano",
       "addressAlias": "Alias (ej: Casa, Hospital…)",
       "addAddress": "Añadir dirección"
+    },
+    "toast": {
+      "created": "Usuario del servicio creado correctamente",
+      "updated": "Usuario del servicio actualizado correctamente",
+      "deleted": "Usuario del servicio eliminado correctamente",
+      "createError": "Error al crear el usuario del servicio",
+      "updateError": "Error al actualizar el usuario del servicio",
+      "deleteError": "Error al eliminar el usuario del servicio"
     }
   },
   "prmDetail": {
-    "title": "Detalle del PMR",
+    "title": "Detalle del usuario del servicio",
     "personalInfo": "Información personal",
     "recentHistory": "Historial reciente",
     "bookAppointment": "Reservar cita",
@@ -202,9 +210,9 @@
     "birthdate": "Fecha de nacimiento",
     "dni": "DNI / NIE",
     "status": "Estado",
-    "notFound": "PMR no encontrado",
+    "notFound": "Usuario del servicio no encontrado",
     "goBack": "Volver",
-    "saveSuccess": "PMR actualizado correctamente",
+    "saveSuccess": "Usuario del servicio actualizado correctamente",
     "saveError": "Error al guardar los cambios",
     "emergencyContacts": "Contactos de urgencia",
     "addContact": "Añadir contacto",
@@ -219,7 +227,7 @@
     "noEmergencyContacts": "No hay contactos de urgencia",
     "address": "Dirección",
     "addressFull": "Dirección completa",
-    "addressAccessible": "Accesible para PMR",
+    "addressAccessible": "Accesible para usuarios del servicio",
     "addressValidation": "Validación",
     "addressPending": "Pendiente de validación",
     "addressValidated": "Validada",
@@ -243,8 +251,8 @@
       "edit": "Editar",
       "history": "Historial",
       "delete": "Eliminar",
-      "archive": "Archivar PMR",
-      "restore": "Restaurar PMR"
+      "archive": "Archivar usuario del servicio",
+      "restore": "Restaurar usuario del servicio"
     },
     "avatar": {
       "changePhoto": "Cambiar foto"
@@ -255,6 +263,31 @@
       "uploadError": "Error al subir la imagen"
     }
   },
+  "users": {
+    "title": "Responsables",
+    "subtitle": "Gestión de cuentas de responsables",
+    "newUser": "Nuevo responsable",
+    "empty": "No se encontraron responsables",
+    "demo": "Responsable demo",
+    "columns": {
+      "user": "Responsable"
+    },
+    "menu": {
+      "archive": "Archivar responsable",
+      "restore": "Restaurar responsable"
+    },
+    "toast": {
+      "statusUpdated": "Estado del responsable actualizado",
+      "archiveError": "Error al archivar el responsable",
+      "created": "Responsable creado correctamente",
+      "createError": "Error al crear el responsable"
+    },
+    "create": {
+      "title": "Nuevo responsable",
+      "submit": "Crear responsable",
+      "inviteNote": "Se enviará un email de invitación. El responsable deberá activar su cuenta."
+    }
+  },
   "booking": {
     "title": "Nueva Reserva",
     "editTitle": "Editar reserva",
@@ -263,7 +296,7 @@
     "address": "Dirección de asistencia",
     "addressPlaceholder": "Introduce la dirección de asistencia",
     "passengerDetails": "Detalles del pasajero",
-    "pmrStatus": "Estado PMR",
+    "pmrStatus": "Estado del usuario del servicio",
     "reducedMobility": "Movilidad reducida",
     "serviceReason": "Motivo del servicio",
     "serviceReasonPlaceholder": "Selecciona un motivo",
@@ -272,23 +305,23 @@
     "urgency": "Urgencia",
     "routine": "Rutina",
     "urgent": "Urgente",
-    "selectPrm": "Seleccionar PMR",
-    "searchPrm": "Buscar PMR por nombre...",
-    "noPrmSelected": "Ningún PMR seleccionado",
-    "selectedPrm": "PMR seleccionado",
+    "selectPrm": "Seleccionar usuario del servicio",
+    "searchPrm": "Buscar usuario del servicio por nombre...",
+    "noPrmSelected": "Ningún usuario del servicio seleccionado",
+    "selectedPrm": "Usuario del servicio seleccionado",
     "submit": "Enviar solicitud",
     "submitting": "Enviando...",
     "cancel": "Cancelar",
     "save": "Guardar cambios",
     "saving": "Guardando...",
-    "prm": "PMR",
-    "prmSelect": "Selecciona un PRM…",
+    "prm": "Usuario del servicio",
+    "prmSelect": "Selecciona un usuario del servicio…",
     "prmWaitingOwner": "Selecciona primero un responsable…",
-    "noPrms": "No tienes PMRs registrados.",
-    "noPrmsForUser": "Este usuario no tiene PMRs asociados.",
+    "noPrms": "No tienes usuarios del servicio registrados.",
+    "noPrmsForUser": "Este responsable no tiene usuarios del servicio asociados.",
     "changePrm": "Cambiar",
     "responsible": "Responsable",
-    "responsibleSelect": "Selecciona un usuario…",
+    "responsibleSelect": "Selecciona un responsable…",
     "dateTime": "Fecha y hora",
     "assistDate": "Fecha de asistencia",
     "assistTime": "Hora de asistencia",
@@ -299,7 +332,7 @@
       "dateSelected": "Fecha",
       "timeSelected": "Hora de asistencia"
     },
-    "noValidatedAddresses": "Este PMR no tiene direcciones validadas.",
+    "noValidatedAddresses": "Este usuario del servicio no tiene direcciones validadas.",
     "addAddressFromProfile": "Añade una desde su perfil",
     "missingFields": "Falta completar",
     "errorCreate": "Error al crear la reserva. Por favor, inténtalo de nuevo.",
@@ -412,21 +445,23 @@
       "statusActive": "Activo",
       "statusArchived": "Archivado",
       "userActions": {
-        "archiveUser": "Archivar usuario",
-        "restoreUser": "Restaurar usuario"
+        "archiveUser": "Archivar responsable",
+        "restoreUser": "Restaurar responsable"
       }
     },
     "confirm": {
-      "archiveTitle": "¿Archivar usuario?",
+      "archiveTitle": "¿Archivar responsable?",
       "archiveDesc": "{{name}} quedará desactivado. Esta acción puede tener consecuencias sobre sus servicios asociados.",
-      "restoreTitle": "¿Restaurar usuario?",
+      "restoreTitle": "¿Restaurar responsable?",
       "restoreDesc": "{{name}} volverá a estar activo en el sistema.",
       "archiveBtn": "Archivar",
       "restoreBtn": "Restaurar"
     },
     "placeholder": {
       "underDevelopment": "Esta sección está en desarrollo. Vuelve pronto."
-    }
+    },
+    "manageUser": "Gestionar responsable",
+    "searchUserPlaceholder": "Buscar responsable… (vacío = mis preferencias)"
   },
   "notifications": {
     "title": "Notificaciones",
@@ -472,7 +507,7 @@
   },
   "addresses": {
     "title": "Gestión de Direcciones",
-    "subtitle": "Revisa y valida las direcciones de los PMRs",
+    "subtitle": "Revisa y valida las direcciones de los usuarios del servicio",
     "filterAll": "Todas",
     "filterPending": "Pendientes",
     "filterAccessible": "Aptas",
@@ -508,11 +543,14 @@
     "viewMap": "Ver mapa",
     "mapEmpty": "Ninguna dirección tiene coordenadas para mostrar en el mapa",
     "filters": {
-      "user": "Usuario responsable",
-      "allUsers": "Todos los usuarios",
-      "prm": "PMR",
-      "allPrms": "Todos los PMRs"
-    }
+      "user": "Responsable",
+      "allUsers": "Todos los responsables",
+      "prm": "Usuario del servicio",
+      "allPrms": "Todos los usuarios del servicio"
+    },
+    "viewPrmProfile": "Ver perfil de {{name}}",
+    "viewPrmProfileGeneric": "Ver perfil del usuario del servicio",
+    "noPrm": "Sin usuario del servicio"
   },
   "calendar": {
     "months": [

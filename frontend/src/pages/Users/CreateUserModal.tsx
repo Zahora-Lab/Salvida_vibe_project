@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { X } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { useCreateUser } from '../../hooks/useProfile';
 import { useProfile } from '../../hooks/useProfile';
 import type { UserRole } from '../../types';
@@ -10,6 +11,7 @@ interface Props {
 }
 
 export default function CreateUserModal({ onClose }: Props) {
+  const { t } = useTranslation();
   const { data: liveProfile } = useProfile();
   const isSuperAdmin = liveProfile?.role === 'superadmin';
 
@@ -62,7 +64,7 @@ export default function CreateUserModal({ onClose }: Props) {
     <div className="cum-overlay"       onClick={(event) => event.target === event.currentTarget && onClose()}>
       <div className="cum-modal" role="dialog" aria-modal="true">
         <div className="cum-header">
-          <h2 className="cum-title">Nuevo usuario</h2>
+          <h2 className="cum-title">{t('users.create.title')}</h2>
           <button className="cum-close" onClick={onClose} aria-label="Cerrar">
             <X size={18} />
           </button>
@@ -168,14 +170,14 @@ export default function CreateUserModal({ onClose }: Props) {
               value={role}
               onChange={(e) => setRole(e.target.value as UserRole)}
             >
-              <option value="user">Usuario</option>
+              <option value="user">{t('userRoles.user')}</option>
               {isSuperAdmin && <option value="admin">Admin</option>}
             </select>
           </div>
 
           {isSuperAdmin && (
             <label className="cum-toggle">
-              <span className="cum-toggle-label">Usuario demo</span>
+              <span className="cum-toggle-label">{t('users.demo')}</span>
               <button
                 type="button"
                 role="switch"
@@ -190,7 +192,7 @@ export default function CreateUserModal({ onClose }: Props) {
 
           {method === 'invite' && (
             <p className="cum-hint">
-              Se enviará un email de invitación. El usuario deberá activar su cuenta.
+              {t('users.create.inviteNote')}
             </p>
           )}
 
@@ -199,7 +201,7 @@ export default function CreateUserModal({ onClose }: Props) {
               Cancelar
             </button>
             <button type="submit" className="cum-btn cum-btn--primary" disabled={createUser.isPending}>
-              {createUser.isPending ? 'Creando…' : method === 'invite' ? 'Enviar invitación' : 'Crear usuario'}
+              {createUser.isPending ? 'Creando…' : method === 'invite' ? 'Enviar invitación' : t('users.create.submit')}
             </button>
           </div>
         </form>

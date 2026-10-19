@@ -262,8 +262,8 @@ export default function Settings() {
                     value={notifTargetUser?.id ?? ''}
                     onChange={(_id, user) => setNotifTargetUser(user)}
                     onClear={() => setNotifTargetUser(null)}
-                    label="Gestionar usuario"
-                    placeholder="Buscar usuario… (vacío = mis preferencias)"
+                    label={t("settings.manageUser")}
+                    placeholder={t("settings.searchUserPlaceholder")}
                   />
                 )}
 

@@ -3,7 +3,6 @@ import type { UserProfile } from '../../types';
 export const ROLE_LABEL: Record<string, string> = {
   superadmin: 'Super Admin',
   admin: 'Admin',
-  user: 'Usuario',
 };
 
 export function getInitials(u: UserProfile) {
