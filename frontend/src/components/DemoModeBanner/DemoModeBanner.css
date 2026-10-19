@@ -20,3 +20,14 @@
   cursor: default;
   user-select: none;
 }
+
+/* On mobile the page gutter is 1rem (16px). Keep the strip narrower than that
+   so it sits in the margin instead of covering content and header icons. */
+@media (max-width: 768px) {
+  .demo-banner {
+    width: 0.75rem;
+    font-size: 0.5625rem;
+    letter-spacing: 0.04em;
+    line-height: 1;
+  }
+}

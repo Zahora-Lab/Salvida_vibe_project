@@ -271,6 +271,25 @@
   background: var(--lp-surface-container-highest);
 }
 
+/* Auth CTAs are disabled while the home KPIs are loading (#72) */
+.lp-nav__cta:disabled,
+.lp-hero__btn-primary:disabled,
+.lp-hero__btn-secondary:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.lp-nav__cta:disabled:hover,
+.lp-hero__btn-primary:disabled:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+.lp-hero__btn-secondary:disabled:hover {
+  background: var(--lp-surface-container-high);
+}
+
 /* ============================================================
    STATS
    ============================================================ */
@@ -326,6 +345,14 @@
   font-weight: 800;
   color: var(--lp-on-surface);
   letter-spacing: -0.03em;
+}
+
+.lp-stats__value--loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* matches the rendered height of the number so the card does not jump */
+  min-height: 2.75rem;
 }
 
 .lp-stats__label {

@@ -214,30 +214,33 @@ export default function Autocomplete({
             <span aria-hidden>×</span>
           </button>
         )}
-      </div>
 
-      {open && (
-        <ul id={listboxId} ref={listRef} className={`${classNamePrefix}__dropdown`} role="listbox">
-          {filtered.map((option, index) => (
-            <AutocompleteOption
-              key={option.id}
-              optionId={`${listboxId}-option-${index}`}
-              option={option}
-              isSelected={value === option.id}
-              isActive={index === activeIndex}
-              prefix={classNamePrefix}
-              renderOption={renderOption}
-              onSelect={handleSelect}
-              onHover={() => setActiveIndex(index)}
-            />
-          ))}
-          {filtered.length === 0 && search && (
-            <li className={`${classNamePrefix}__option ${classNamePrefix}__option--empty`}>
-              {t('common.noResults')}
-            </li>
-          )}
-        </ul>
-      )}
+        {/* Must stay inside the combobox: that wrapper is the `position: relative`
+            anchor of the absolutely-positioned dropdown. Rendered as a sibling it
+            attaches to the nearest positioned ancestor instead (or the viewport). */}
+        {open && (
+          <ul id={listboxId} ref={listRef} className={`${classNamePrefix}__dropdown`} role="listbox">
+            {filtered.map((option, index) => (
+              <AutocompleteOption
+                key={option.id}
+                optionId={`${listboxId}-option-${index}`}
+                option={option}
+                isSelected={value === option.id}
+                isActive={index === activeIndex}
+                prefix={classNamePrefix}
+                renderOption={renderOption}
+                onSelect={handleSelect}
+                onHover={() => setActiveIndex(index)}
+              />
+            ))}
+            {filtered.length === 0 && search && (
+              <li className={`${classNamePrefix}__option ${classNamePrefix}__option--empty`}>
+                {t('common.noResults')}
+              </li>
+            )}
+          </ul>
+        )}
+      </div>
     </div>
   );
 }

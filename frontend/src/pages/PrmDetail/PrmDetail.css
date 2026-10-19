@@ -148,7 +148,7 @@
 
 .prm-stats {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1rem;
 }
 
@@ -516,4 +516,29 @@
 .prm-edit-actions__save:disabled {
   opacity: 0.6;
   cursor: not-allowed;
+}
+
+/* ── Mobile ───────────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .prm-detail__header {
+    height: 4rem;
+    padding: 0 1rem;
+  }
+
+  .prm-detail__body {
+    padding: 1rem;
+  }
+
+  .prm-detail__inner {
+    gap: 1.5rem;
+  }
+
+  .prm-profile__avatar {
+    width: 6rem;
+    height: 6rem;
+  }
+
+  .prm-stats {
+    gap: 0.5rem;
+  }
 }

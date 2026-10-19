@@ -262,7 +262,8 @@
   letter-spacing: 0.05em;
 }
 
-.user-role-badge--admin {
+.user-role-badge--admin,
+.user-role-badge--superadmin {
   background: var(--color-primary-10);
   color: var(--color-primary);
 }
@@ -291,3 +292,140 @@
   color: var(--color-slate-400);
 }
 
+
+/* ── Mobile ───────────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .users__body {
+    padding: 1rem;
+  }
+
+  .users__toolbar {
+    flex-wrap: wrap;
+  }
+
+  .users__search-wrap {
+    flex: 1 1 100%;
+    max-width: none;
+  }
+
+  .users__filters-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .users__filters-row .users__filter-tabs {
+    flex: 1;
+    min-width: 0;
+    overflow-x: auto;
+  }
+
+  .users__filter-tab {
+    flex-shrink: 0;
+  }
+
+  /* The "+" button in the filters row replaces the full-text one */
+  .users__create-btn {
+    display: none;
+  }
+}
+
+/* ── User cards (mobile list) ─────────────────────────────────────────────────
+   Same anatomy as the PMR cards: header + a grid where each value sits under
+   its column title. */
+
+.users__cards {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.users__card {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem;
+  background: white;
+  border: 1px solid var(--color-slate-100);
+  border-radius: 1rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.users__card--archived {
+  opacity: 0.55;
+}
+
+.users__card--skeleton {
+  min-height: 7rem;
+}
+
+.users__card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding-bottom: 0.875rem;
+  border-bottom: 1px solid var(--color-slate-100);
+}
+
+.users__card-link {
+  flex: 1;
+  min-width: 0;
+  gap: 0.75rem;
+}
+
+.users__card-link .user-link__avatar {
+  width: 2.5rem;
+  height: 2.5rem;
+  font-size: 0.875rem;
+}
+
+.users__card-link .user-link__name {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  font-size: 0.9375rem;
+  font-weight: 700;
+}
+
+.users__card-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.875rem 1rem;
+}
+
+.users__card-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: 0;
+  font-size: 0.875rem;
+  color: var(--color-slate-900);
+}
+
+.users__card-field--full {
+  grid-column: 1 / -1;
+}
+
+.users__card-field dt {
+  font-size: 0.625rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.users__card-text {
+  overflow-wrap: anywhere;
+  color: var(--color-slate-600);
+}
+
+.users__card .users__role-cell {
+  flex-wrap: wrap;
+}
+
+.users__empty--card {
+  background: white;
+  border: 1px solid var(--color-slate-100);
+  border-radius: 1rem;
+}

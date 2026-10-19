@@ -6,12 +6,15 @@ import type { BookingFilterValues } from '../../components/FilterBar/FilterBar';
 import BookingCard from '../../components/BookingCard/BookingCard';
 import type { MultiSelectOption } from '../../components/MultiSelect/MultiSelect';
 import ContractModal from '../../components/ContractModal/ContractModal';
+import MobileAddButton from '../../components/MobileAddButton/MobileAddButton';
 import {
   PlusCircle,
   CalendarDays,
   List,
   ArrowUp,
   ArrowDown,
+  ChevronDown,
+  SlidersHorizontal,
 } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -30,6 +33,9 @@ import './Dashboard.css';
 type SortKey = 'date' | 'startTime' | 'prmName' | 'status' | 'owner_name';
 
 type View = 'calendar' | 'list';
+
+// Mobile-only collapsible panels. Only one can be open at a time.
+type Panel = 'calendar' | 'filters' | null;
 
 // ─── View toggle ─────────────────────────────────────────────────────────────
 
@@ -76,6 +82,16 @@ export default function Dashboard() {
 
   // ── View toggle ────────────────────────────────────────────────────────────
   const [view, setView] = useState<View>('calendar');
+  const [openPanel, setOpenPanel] = useState<Panel>(null);
+
+  function handleViewChange(next: View) {
+    setView(next);
+    setOpenPanel(null);
+  }
+
+  function togglePanel(panel: Exclude<Panel, null>) {
+    setOpenPanel((current) => (current === panel ? null : panel));
+  }
 
   // ── Shared filter state ────────────────────────────────────────────────────
   const [filters, setFilters] = useState<BookingFilterValues>({
@@ -122,6 +138,11 @@ export default function Dashboard() {
 
   const dateStr = formatDateISO(selectedDate);
 
+  function handleDateSelect(date: Date) {
+    setSelectedDate(date);
+    setOpenPanel(null);
+  }
+
   const { data: bookings = [], isLoading } = useBookings(
     { date: dateStr, ...baseFilters },
     { enabled: view === 'calendar' },
@@ -167,6 +188,20 @@ export default function Dashboard() {
           month: 'long',
         }),
       });
+
+  // ── Mobile bar labels ──────────────────────────────────────────────────────
+  const mobileDateLabel = selectedDate.toLocaleDateString('es-ES', {
+    weekday: 'short',
+    day: 'numeric',
+    month: 'short',
+  });
+  const activeFilterCount =
+    filters.ownerIds.length +
+    filters.prmIds.length +
+    filters.statuses.length +
+    (view === 'list'
+      ? Number(Boolean(filters.dateFrom)) + Number(Boolean(filters.dateTo))
+      : 0);
 
   // ── List view state ────────────────────────────────────────────────────────
   const [sortKey, setSortKey] = useState<SortKey>('date');
@@ -235,24 +270,68 @@ export default function Dashboard() {
       <Header
         title={t('dashboard.title')}
         subtitle={t('dashboard.subtitle')}
-        actions={<ViewToggle view={view} onChange={setView} />}
+        actions={<ViewToggle view={view} onChange={handleViewChange} />}
       />
 
       <div className="dashboard__body">
-        {/* ── Mobile-only view toggle ── */}
+        {/* ── Mobile-only: view toggle + new booking ── */}
         <div className="dashboard__mobile-toolbar">
-          <ViewToggle view={view} onChange={setView} />
+          <ViewToggle view={view} onChange={handleViewChange} />
+          <MobileAddButton
+            to="/app/bookings/new"
+            state={view === 'calendar' ? { date: dateStr } : undefined}
+            label={t('dashboard.newBookingShort')}
+          />
+        </div>
+
+        {/* ── Mobile-only: date selector + filters toggle ── */}
+        <div className="dashboard__mobile-bar">
+          {view === 'calendar' && (
+            <button
+              type="button"
+              className="dashboard__mobile-chip dashboard__mobile-chip--date"
+              aria-expanded={openPanel === 'calendar'}
+              onClick={() => togglePanel('calendar')}
+            >
+              <CalendarDays size={16} />
+              <span className="dashboard__mobile-chip-text">
+                {mobileDateLabel}
+              </span>
+              <ChevronDown size={16} className="dashboard__chevron" />
+            </button>
+          )}
+          <button
+            type="button"
+            className="dashboard__mobile-chip dashboard__mobile-chip--filters"
+            aria-expanded={openPanel === 'filters'}
+            onClick={() => togglePanel('filters')}
+          >
+            <SlidersHorizontal size={16} />
+            <span>{t('dashboard.filtersToggle')}</span>
+            {activeFilterCount > 0 && (
+              <span className="dashboard__mobile-badge">
+                {activeFilterCount}
+              </span>
+            )}
+            <ChevronDown size={16} className="dashboard__chevron" />
+          </button>
         </div>
 
         {/* ── Calendar view ── */}
         {view === 'calendar' && (
           <div className="dashboard__grid">
             <div className="dashboard__left">
-              <CalendarWidget
-                onDateSelect={setSelectedDate}
-                onMonthChange={setCalendarMonth}
-                bookingsByDate={bookingsByDate}
-              />
+              {/* Kept mounted (only hidden via CSS on mobile) so the widget
+                  preserves its selected day and visible month. */}
+              <div
+                className={`dashboard__calendar${openPanel === 'calendar' ? ' dashboard__calendar--open' : ''}`}
+              >
+                <CalendarWidget
+                  onDateSelect={handleDateSelect}
+                  onMonthChange={setCalendarMonth}
+                  bookingsByDate={bookingsByDate}
+                />
+              </div>
               <div className="summary-card">
                 <h4 className="summary-card__title">
                   {t('dashboard.summary')}
@@ -288,13 +367,17 @@ export default function Dashboard() {
 
             <div className="dashboard__right">
               {/* Filter bar — calendar view (no date range) */}
-              <FilterBar
-                isAdmin={isAdmin}
-                singleOwnerId={singleOwnerId}
-                statusOptions={statusOptions}
-                values={filters}
-                onChange={handleFilterChange}
-              />
+              <div
+                className={`dashboard__filters${openPanel === 'filters' ? ' dashboard__filters--open' : ''}`}
+              >
+                <FilterBar
+                  isAdmin={isAdmin}
+                  singleOwnerId={singleOwnerId}
+                  statusOptions={statusOptions}
+                  values={filters}
+                  onChange={handleFilterChange}
+                />
+              </div>
 
               <div className="bookings-header">
                 <h3 className="bookings-header__title">{dateLabel}</h3>
@@ -341,7 +424,7 @@ export default function Dashboard() {
                 className="new-booking-btn"
               >
                 <PlusCircle size={20} />
-                <span>{t('dashboard.requestNewBooking')}</span>
+                <span>{t('dashboard.newBooking')}</span>
               </Link>
             </div>
           </div>
@@ -351,14 +434,18 @@ export default function Dashboard() {
         {view === 'list' && (
           <div className="dashboard__list-view">
             {/* Filter bar — list view (with date range) */}
-            <FilterBar
-              isAdmin={isAdmin}
-              showDateRange
-              singleOwnerId={singleOwnerId}
-              statusOptions={statusOptions}
-              values={filters}
-              onChange={handleFilterChange}
-            />
+            <div
+              className={`dashboard__filters${openPanel === 'filters' ? ' dashboard__filters--open' : ''}`}
+            >
+              <FilterBar
+                isAdmin={isAdmin}
+                showDateRange
+                singleOwnerId={singleOwnerId}
+                statusOptions={statusOptions}
+                values={filters}
+                onChange={handleFilterChange}
+              />
+            </div>
 
             {/* Sort controls */}
             <div className="booking-sort">
@@ -418,7 +505,7 @@ export default function Dashboard() {
 
             <Link to="/app/bookings/new" className="new-booking-btn">
               <PlusCircle size={20} />
-              <span>{t('dashboard.requestNewBooking')}</span>
+              <span>{t('dashboard.newBooking')}</span>
             </Link>
           </div>
         )}

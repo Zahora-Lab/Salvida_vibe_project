@@ -170,3 +170,19 @@
   color: var(--color-primary);
   background-color: var(--color-primary-05);
 }
+
+/* ── Mobile ───────────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .notifications__header {
+    height: 4rem;
+    padding: 0 1rem;
+  }
+
+  .notifications__body {
+    padding: 1rem;
+  }
+
+  .notifications__inner {
+    gap: 1.5rem;
+  }
+}

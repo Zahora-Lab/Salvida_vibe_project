@@ -261,6 +261,7 @@ export default function Settings() {
                   <UserSelector
                     value={notifTargetUser?.id ?? ''}
                     onChange={(_id, user) => setNotifTargetUser(user)}
+                    onClear={() => setNotifTargetUser(null)}
                     label="Gestionar usuario"
                     placeholder="Buscar usuario… (vacío = mis preferencias)"
                   />

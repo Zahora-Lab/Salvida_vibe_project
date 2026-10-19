@@ -9,7 +9,7 @@ import "swiper/swiper.css";
 import PLATFORM_ICONS from "../../lib/platformIcons";
 import { SalvidaLogo } from "../../assets/icons/SalvidaLogo";
 import { fetchWithRetry } from "../../lib/api";
-import AppLoader from "../../components/AppLoader";
+import Spinner from "../../components/Spinner";
 import "./LandingPage.css";
 import videoSrc from "../../assets/video/Y0S8F6SYMHLHC1WP.mp4";
 import WhatsAppFAB from "../../components/WhatsAppFAB/WhatsAppFAB";
@@ -190,12 +190,14 @@ const DEFAULT_KPIS: GlobalKpis = {
 // ---------------------------------------------------------------------------
 // Animated counter hook
 // ---------------------------------------------------------------------------
-function useCountUp(target: number, duration = 1400): number {
+function useCountUp(target: number, enabled = true, duration = 1400): number {
   const [value, setValue] = useState(0);
   const rafRef = useRef<number | null>(null);
 
   useEffect(() => {
-    if (target === 0) {
+    // While disabled (loading) keep the counter at 0 so the animation
+    // starts from 0 once the data is visible.
+    if (!enabled || target === 0) {
       setValue(0);
       return;
     }
@@ -212,7 +214,7 @@ function useCountUp(target: number, duration = 1400): number {
     return () => {
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
     };
-  }, [target, duration]);
+  }, [target, enabled, duration]);
 
   return value;
 }
@@ -225,19 +227,33 @@ function StatCard({
   target,
   label,
   sublabel,
+  loading,
 }: {
   icon: string;
   target: number;
   label: string;
   sublabel?: string;
+  loading: boolean;
 }) {
-  const value = useCountUp(target);
+  const { t } = useTranslation();
+  const value = useCountUp(target, !loading);
   return (
     <div className="lp-stats__card">
       <div className="lp-stats__icon-wrap">
         <span className="lp-material-icon lp-stats__icon">{icon}</span>
       </div>
-      <div className="lp-stats__value">{value.toLocaleString("es-ES")}</div>
+      {loading ? (
+        <div
+          className="lp-stats__value lp-stats__value--loading"
+          role="status"
+          aria-live="polite"
+          aria-label={t("landing.stats.loading")}
+        >
+          <Spinner />
+        </div>
+      ) : (
+        <div className="lp-stats__value">{value.toLocaleString("es-ES")}</div>
+      )}
       <div className="lp-stats__label">{label}</div>
       {sublabel && <div className="lp-stats__sublabel">{sublabel}</div>}
     </div>
@@ -289,14 +305,14 @@ export default function LandingPage() {
     return () => ac.abort();
   }, []);
 
-  // Fetch global KPIs on mount — blocks page render until data arrives or retries exhausted
+  // Fetch global KPIs on mount — only the stat counters and auth CTAs wait for it
   useEffect(() => {
     const ac = new AbortController();
     fetchWithRetry(`${BASE_URL}/globalKpis`, {}, ac.signal)
       .then((r) => (r.ok ? r.json() : Promise.reject(r.status)))
       .then((data: GlobalKpis) => setKpis(data))
       .catch(() => {
-        // fallback – keep zeros, but still unblock the page
+        // fallback – keep zeros, but still release counters and CTAs
       })
       .finally(() => setKpisLoading(false));
     return () => ac.abort();
@@ -382,8 +398,6 @@ export default function LandingPage() {
     }
   }
 
-  if (kpisLoading) return <AppLoader />;
-
   return (
     <div className="lp">
       {/* ── Nav ── */}
@@ -411,7 +425,12 @@ export default function LandingPage() {
             )}
           </div>
 
-          <button className="lp-nav__cta" onClick={() => navigate("/login")}>
+          <button
+            className="lp-nav__cta"
+            onClick={() => navigate("/login")}
+            disabled={kpisLoading}
+            aria-busy={kpisLoading}
+          >
             {t("landing.nav.login")}
           </button>
         </div>
@@ -434,12 +453,16 @@ export default function LandingPage() {
             <button
               className="lp-hero__btn-primary"
               onClick={() => navigate("/login")}
+              disabled={kpisLoading}
+              aria-busy={kpisLoading}
             >
               {t("landing.hero.loginBtn")}
             </button>
             <button
               className="lp-hero__btn-secondary"
               onClick={() => navigate("/login?register=true")}
+              disabled={kpisLoading}
+              aria-busy={kpisLoading}
             >
               {t("landing.hero.registerBtn")}
             </button>
@@ -453,16 +476,19 @@ export default function LandingPage() {
               icon="transfer_within_a_station"
               target={kpis.totalServices}
               label={t("landing.stats.services")}
+              loading={kpisLoading}
             />
             <StatCard
               icon="groups"
               target={kpis.totalUsers}
               label={t("landing.stats.users")}
+              loading={kpisLoading}
             />
             <StatCard
               icon="location_on"
               target={kpis.assistancePoints}
               label={t("landing.stats.points")}
+              loading={kpisLoading}
             />
           </div>
         </section>

@@ -3,23 +3,15 @@ import { useNavigate } from 'react-router-dom';
 import { Search, Plus, FlaskConical } from 'lucide-react';
 import Header from '../../components/Header/Header';
 import DropdownMenu from '../../components/DropdownMenu';
+import type { DropdownItem } from '../../components/DropdownMenu';
+import MobileAddButton from '../../components/MobileAddButton/MobileAddButton';
 import { useUsers, useArchiveUser, useToggleUserDemo, useProfile } from '../../hooks/useProfile';
+import { useMediaQuery } from '../../hooks/useMediaQuery';
 import CreateUserModal from './CreateUserModal';
+import UserCard from './UserCard';
+import { ROLE_LABEL, getDisplayName, getInitials } from './userDisplay';
 import type { UserProfile } from '../../types';
 import './Users.css';
-
-const ROLE_LABEL: Record<string, string> = {
-  superadmin: 'Super Admin',
-  admin: 'Admin',
-  user: 'Usuario',
-};
-
-function getInitials(u: UserProfile) {
-  if (u.firstName || u.lastName) {
-    return `${u.firstName?.charAt(0) ?? ''}${u.lastName?.charAt(0) ?? ''}`.toUpperCase();
-  }
-  return (u.email?.charAt(0) ?? '?').toUpperCase();
-}
 
 export default function Users() {
   const navigate = useNavigate();
@@ -31,6 +23,22 @@ export default function Users() {
   const [query, setQuery] = useState('');
   const [statusTab, setStatusTab] = useState<'active' | 'all' | 'archived'>('all');
   const [showCreateModal, setShowCreateModal] = useState(false);
+  const isMobile = useMediaQuery('(max-width: 768px)');
+
+  function buildMenuItems(u: UserProfile): DropdownItem[] {
+    return [
+      {
+        label: u.isActive === false ? 'Restaurar usuario' : 'Archivar usuario',
+        onClick: () => archiveUser.mutate(u.id),
+        variant: u.isActive === false ? 'default' : 'danger',
+      },
+      ...(isSuperAdmin ? [{
+        label: u.isDemo ? 'Quitar demo' : 'Marcar como demo',
+        onClick: () => toggleDemo.mutate({ userId: u.id, isDemo: !u.isDemo }),
+        variant: 'default' as const,
+      }] : []),
+    ];
+  }
 
   const filtered = users.filter((u) => {
     if (statusTab === 'active' && u.isActive === false) return false;
@@ -78,18 +86,51 @@ export default function Users() {
             </button>
           </div>
 
-          <div className="users__filter-tabs">
-            {(['all', 'active', 'archived'] as const).map((tab) => (
-              <button
-                key={tab}
-                className={`users__filter-tab${statusTab === tab ? ' users__filter-tab--active' : ''}`}
-                onClick={() => setStatusTab(tab)}
-              >
-                {tab === 'active' ? 'Activos' : tab === 'archived' ? 'Archivados' : 'Todos'}
-              </button>
-            ))}
+          <div className="users__filters-row">
+            <div className="users__filter-tabs">
+              {(['all', 'active', 'archived'] as const).map((tab) => (
+                <button
+                  key={tab}
+                  className={`users__filter-tab${statusTab === tab ? ' users__filter-tab--active' : ''}`}
+                  onClick={() => setStatusTab(tab)}
+                >
+                  {tab === 'active' ? 'Activos' : tab === 'archived' ? 'Archivados' : 'Todos'}
+                </button>
+              ))}
+            </div>
+            <MobileAddButton label="Nuevo usuario" onClick={() => setShowCreateModal(true)} />
           </div>
 
+          {/* Mobile: one card per user, every value labelled with its column title */}
+          {isMobile && (
+            isLoading ? (
+              <ul className="users__cards" aria-busy="true">
+                {Array.from({ length: 3 }).map((_, i) => (
+                  <li key={i} className="users__card users__card--skeleton">
+                    <div className="users__skeleton" style={{ width: '55%' }} />
+                    <div className="users__skeleton" style={{ width: '80%' }} />
+                    <div className="users__skeleton" style={{ width: '40%' }} />
+                  </li>
+                ))}
+              </ul>
+            ) : filtered.length === 0 ? (
+              <p className="users__empty users__empty--card">No se encontraron usuarios</p>
+            ) : (
+              <ul className="users__cards">
+                {filtered.map((u) => (
+                  <UserCard
+                    key={u.id}
+                    user={u}
+                    showDemo={isSuperAdmin}
+                    menuItems={buildMenuItems(u)}
+                    onOpen={() => navigate(`/app/settings?userId=${u.id}`)}
+                  />
+                ))}
+              </ul>
+            )
+          )}
+
+          {!isMobile && (
           <div className="users__table-wrap">
             <div className="users__table-scroll">
               <table className="users__table">
@@ -137,11 +178,7 @@ export default function Users() {
                                 ? <img src={u.avatar} alt={u.firstName} />
                                 : getInitials(u)}
                             </div>
-                            <span className="user-link__name">
-                              {u.firstName || u.lastName
-                                ? `${u.firstName ?? ''} ${u.lastName ?? ''}`.trim()
-                                : '—'}
-                            </span>
+                            <span className="user-link__name">{getDisplayName(u)}</span>
                           </button>
                         </td>
                         <td className="users__email">{u.email || '—'}</td>
@@ -165,20 +202,7 @@ export default function Users() {
                           </span>
                         </td>
                         <td>
-                          <DropdownMenu
-                            items={[
-                              {
-                                label: u.isActive === false ? 'Restaurar usuario' : 'Archivar usuario',
-                                onClick: () => archiveUser.mutate(u.id),
-                                variant: u.isActive === false ? 'default' : 'danger',
-                              },
-                              ...(isSuperAdmin ? [{
-                                label: u.isDemo ? 'Quitar demo' : 'Marcar como demo',
-                                onClick: () => toggleDemo.mutate({ userId: u.id, isDemo: !u.isDemo }),
-                                variant: 'default' as const,
-                              }] : []),
-                            ]}
-                          />
+                          <DropdownMenu items={buildMenuItems(u)} />
                         </td>
                       </tr>
                     ))
@@ -187,6 +211,7 @@ export default function Users() {
               </table>
             </div>
           </div>
+          )}
 
         </div>
       </div>

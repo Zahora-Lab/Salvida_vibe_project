@@ -9,7 +9,7 @@ interface BeforeInstallPromptEvent extends Event {
 }
 
 const DISMISSED_KEY = 'pwa-install-dismissed'
-const DISMISS_TTL_MS = 7 * 24 * 60 * 60 * 1000
+const DISMISS_TTL_MS = 48 * 60 * 60 * 1000
 
 function isIOS() {
   return /iPad|iPhone|iPod/.test(navigator.userAgent) &&
