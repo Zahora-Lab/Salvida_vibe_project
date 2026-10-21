@@ -828,17 +828,15 @@
 /* ============================================================
    AUTH MODAL
    ============================================================ */
-.lp-modal-backdrop {
-  position: fixed;
-  inset: 0;
-  z-index: 100;
-  background: rgba(30, 18, 38, 0.55);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 1.5rem;
+/* Modal theme: landing palette on the Modal mask (rootClassName) */
+.lp-modal-root {
+  --modal-backdrop: rgba(30, 18, 38, 0.55);
+  --modal-backdrop-filter: blur(4px);
+  --modal-gutter: 1.5rem;
+  --modal-width: 440px;
+  --modal-radius: 1.5rem;
+  --modal-shadow: 0 32px 64px rgba(30, 18, 38, 0.2);
+  --modal-bg: var(--lp-surface-bright);
 }
 
 .lp-modal {
@@ -862,25 +860,27 @@
   --btn-font-weight: 700;
   --btn-font-family: var(--lp-font);
   --btn-shadow: 0 8px 24px rgba(97, 51, 122, 0.2);
-  width: 100%;
-  max-width: 440px;
-  background: var(--lp-surface-bright);
-  border-radius: 1.5rem;
-  box-shadow: 0 32px 64px rgba(30, 18, 38, 0.2);
-  overflow: hidden;
+  /* IconButton theme (close) */
+  --icon-btn-color: var(--lp-on-surface-variant);
   animation: lp-modal-in 0.2s ease;
+}
+
+/* Spacing of the Modal slots, as the landing had it */
+.lp-modal .modal__header {
+  padding-top: 1.5rem;
+}
+
+.lp-modal .modal__body {
+  padding-top: 1.5rem;
+}
+
+.lp-modal .modal__close {
+  border-radius: 9999px;
 }
 
 @keyframes lp-modal-in {
   from { opacity: 0; transform: scale(0.96) translateY(8px); }
   to   { opacity: 1; transform: scale(1) translateY(0); }
-}
-
-.lp-modal__header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1.5rem 1.5rem 0;
 }
 
 .lp-modal__logo {
@@ -889,25 +889,6 @@
   font-weight: 800;
   color: var(--lp-primary);
   letter-spacing: -0.04em;
-}
-
-.lp-modal__close {
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: var(--lp-on-surface-variant);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 2.25rem;
-  height: 2.25rem;
-  border-radius: 9999px;
-  transition: background 0.15s, color 0.15s;
-}
-
-.lp-modal__close:hover {
-  background: var(--lp-surface-container-high);
-  color: var(--lp-on-surface);
 }
 
 .lp-modal__tabs {
@@ -939,10 +920,6 @@
 .lp-modal__tab--active {
   color: var(--lp-primary);
   border-bottom-color: var(--lp-primary);
-}
-
-.lp-modal__body {
-  padding: 1.5rem;
 }
 
 .lp-modal__title {

@@ -1,12 +1,12 @@
 import { useState } from 'react';
-import { X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useCreateUser } from '../../hooks/useProfile';
 import { useProfile } from '../../hooks/useProfile';
 import type { UserRole } from '../../types';
 import { Input } from '../../components/ui/input';
 import { FormField } from '../../components/ui/form-field';
-import { Button, IconButton } from '../../components/ui/button';
+import { Button } from '../../components/ui/button';
+import { Modal } from '../../components/ui/modal';
 import { Select } from '../../components/ui/select';
 import { Switch } from '../../components/ui/switch';
 import './CreateUserModal.css';
@@ -66,160 +66,159 @@ export default function CreateUserModal({ onClose }: Props) {
   }
 
   return (
-    <div className="cum-overlay"       onClick={(event) => event.target === event.currentTarget && onClose()}>
-      <div className="cum-modal" role="dialog" aria-modal="true">
-        <div className="cum-header">
-          <h2 className="cum-title">{t('users.create.title')}</h2>
-          <IconButton label="Cerrar" icon={<X size={18} />} onClick={onClose} />
-        </div>
+    <Modal
+      open
+      onCancel={onClose}
+      title={t('users.create.title')}
+      size="md"
+      styles={{ body: { padding: 0 } }}
+    >
+      <div className="cum-tabs">
+        <button
+          className={`cum-tab${method === 'invite' ? ' cum-tab--active' : ''}`}
+          onClick={() => setMethod('invite')}
+          type="button"
+        >
+          Invitar por email
+        </button>
+        <button
+          className={`cum-tab${method === 'direct' ? ' cum-tab--active' : ''}`}
+          onClick={() => setMethod('direct')}
+          type="button"
+        >
+          Crear con contraseña
+        </button>
+      </div>
 
-        <div className="cum-tabs">
-          <button
-            className={`cum-tab${method === 'invite' ? ' cum-tab--active' : ''}`}
-            onClick={() => setMethod('invite')}
-            type="button"
-          >
-            Invitar por email
-          </button>
-          <button
-            className={`cum-tab${method === 'direct' ? ' cum-tab--active' : ''}`}
-            onClick={() => setMethod('direct')}
-            type="button"
-          >
-            Crear con contraseña
-          </button>
-        </div>
+      <form className="cum-form" onSubmit={handleSubmit} noValidate>
+        <FormField
+          variant="small"
+          label="Email"
+          htmlFor="cum-email"
+          required
+          error={errors.email}
+        >
+          {(field) => (
+            <Input
+              {...field}
+              size="sm"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              autoComplete="off"
+            />
+          )}
+        </FormField>
 
-        <form className="cum-form" onSubmit={handleSubmit} noValidate>
+        {method === 'direct' && (
           <FormField
             variant="small"
-            label="Email"
-            htmlFor="cum-email"
+            label="Contraseña"
+            htmlFor="cum-password"
             required
-            error={errors.email}
+            error={errors.password}
           >
             {(field) => (
               <Input
                 {...field}
                 size="sm"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                autoComplete="off"
+                type="password"
+                showLabel="Mostrar contraseña"
+                hideLabel="Ocultar contraseña"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                autoComplete="new-password"
               />
             )}
           </FormField>
+        )}
 
-          {method === 'direct' && (
-            <FormField
-              variant="small"
-              label="Contraseña"
-              htmlFor="cum-password"
-              required
-              error={errors.password}
-            >
-              {(field) => (
-                <Input
-                  {...field}
-                  size="sm"
-                  type="password"
-                  showLabel="Mostrar contraseña"
-                  hideLabel="Ocultar contraseña"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  autoComplete="new-password"
-                />
-              )}
-            </FormField>
-          )}
-
-          <div className="cum-row">
-            <FormField variant="small" label="Nombre" htmlFor="cum-first">
-              {(field) => (
-                <Input
-                  {...field}
-                  size="sm"
-                  type="text"
-                  value={firstName}
-                  onChange={(e) => setFirstName(e.target.value)}
-                />
-              )}
-            </FormField>
-            <FormField variant="small" label="Apellido" htmlFor="cum-last">
-              {(field) => (
-                <Input
-                  {...field}
-                  size="sm"
-                  type="text"
-                  value={lastName}
-                  onChange={(e) => setLastName(e.target.value)}
-                />
-              )}
-            </FormField>
-          </div>
-
-          <div className="cum-row">
-            <FormField variant="small" label="Teléfono" htmlFor="cum-phone">
-              {(field) => (
-                <Input
-                  {...field}
-                  size="sm"
-                  type="tel"
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                />
-              )}
-            </FormField>
-            <FormField variant="small" label="Organización" htmlFor="cum-org">
-              {(field) => (
-                <Input
-                  {...field}
-                  size="sm"
-                  type="text"
-                  value={organization}
-                  onChange={(e) => setOrganization(e.target.value)}
-                />
-              )}
-            </FormField>
-          </div>
-
-          <FormField variant="small" label="Rol">
+        <div className="cum-row">
+          <FormField variant="small" label="Nombre" htmlFor="cum-first">
             {(field) => (
-              <Select
+              <Input
                 {...field}
                 size="sm"
-                value={role}
-                onChange={(e) => setRole(e.target.value as UserRole)}
-              >
-                <option value="user">{t('userRoles.user')}</option>
-                {isSuperAdmin && <option value="admin">Admin</option>}
-              </Select>
+                type="text"
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+              />
             )}
           </FormField>
+          <FormField variant="small" label="Apellido" htmlFor="cum-last">
+            {(field) => (
+              <Input
+                {...field}
+                size="sm"
+                type="text"
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
+              />
+            )}
+          </FormField>
+        </div>
 
-          {isSuperAdmin && (
-            <label className="cum-toggle">
-              <span className="cum-toggle-label">{t('users.demo')}</span>
-              <Switch label={t('users.demo')} checked={isDemo} onChange={setIsDemo} />
-            </label>
+        <div className="cum-row">
+          <FormField variant="small" label="Teléfono" htmlFor="cum-phone">
+            {(field) => (
+              <Input
+                {...field}
+                size="sm"
+                type="tel"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+              />
+            )}
+          </FormField>
+          <FormField variant="small" label="Organización" htmlFor="cum-org">
+            {(field) => (
+              <Input
+                {...field}
+                size="sm"
+                type="text"
+                value={organization}
+                onChange={(e) => setOrganization(e.target.value)}
+              />
+            )}
+          </FormField>
+        </div>
+
+        <FormField variant="small" label="Rol">
+          {(field) => (
+            <Select
+              {...field}
+              size="sm"
+              value={role}
+              onChange={(e) => setRole(e.target.value as UserRole)}
+            >
+              <option value="user">{t('userRoles.user')}</option>
+              {isSuperAdmin && <option value="admin">Admin</option>}
+            </Select>
           )}
+        </FormField>
 
-          {method === 'invite' && (
-            <p className="cum-hint">
-              {t('users.create.inviteNote')}
-            </p>
-          )}
+        {isSuperAdmin && (
+          <label className="cum-toggle">
+            <span className="cum-toggle-label">{t('users.demo')}</span>
+            <Switch label={t('users.demo')} checked={isDemo} onChange={setIsDemo} />
+          </label>
+        )}
 
-          <div className="cum-actions">
-            <Button variant="secondary" size="sm" onClick={onClose}>
-              Cancelar
-            </Button>
-            <Button type="submit" size="sm" loading={createUser.isPending}>
-              {createUser.isPending ? 'Creando…' : method === 'invite' ? 'Enviar invitación' : t('users.create.submit')}
-            </Button>
-          </div>
-        </form>
-      </div>
-    </div>
+        {method === 'invite' && (
+          <p className="cum-hint">
+            {t('users.create.inviteNote')}
+          </p>
+        )}
+
+        <div className="cum-actions">
+          <Button variant="secondary" size="sm" onClick={onClose}>
+            Cancelar
+          </Button>
+          <Button type="submit" size="sm" loading={createUser.isPending}>
+            {createUser.isPending ? 'Creando…' : method === 'invite' ? 'Enviar invitación' : t('users.create.submit')}
+          </Button>
+        </div>
+      </form>
+    </Modal>
   );
 }

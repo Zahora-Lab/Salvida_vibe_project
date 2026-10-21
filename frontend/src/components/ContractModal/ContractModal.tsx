@@ -1,9 +1,10 @@
 import { useRef, useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Loader2, X } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 import { toast } from 'react-toastify';
 import SignatureCanvas from '../SignatureCanvas/SignatureCanvas';
-import { Button, IconButton } from '../ui/button';
+import { Button } from '../ui/button';
+import { Modal } from '../ui/modal';
 import { useSignBooking } from '../../hooks/useBookings';
 import type { Booking } from '../../types';
 import './ContractModal.css';
@@ -42,25 +43,17 @@ export default function ContractModal({ booking, onClose, onSigned }: ContractMo
   }, [isEmpty, booking.id, signBooking, t, onSigned]);
 
   return (
-    <div className="contract-modal-overlay" onClick={onClose}>
-      <div className="contract-modal" onClick={(event) => event.stopPropagation()}>
-        <div className="contract-modal__header">
-          <h2 className="contract-modal__title">{t('contract.modalTitle')}</h2>
-          <IconButton label="Cerrar" icon={<X size={20} />} onClick={onClose} />
-        </div>
-
-        <div className="contract-modal__body">
-          <h3 className="contract-modal__contract-title">{t('contract.title')}</h3>
-          <p className="contract-modal__text">{t('contract.body1')}</p>
-          <p className="contract-modal__text">{t('contract.body2')}</p>
-
-          <div className="contract-modal__sig-section">
-            <p className="contract-modal__sig-label">{t('contract.signatureLabel')}</p>
-            <SignatureCanvas canvasRef={canvasRef} onEmpty={setIsEmpty} />
-          </div>
-        </div>
-
-        <div className="contract-modal__footer">
+    <Modal
+      open
+      onCancel={onClose}
+      title={t('contract.modalTitle')}
+      size="lg"
+      styles={{
+        header: { paddingBottom: '1rem', borderBottom: '1px solid var(--color-slate-100)' },
+        footer: { paddingTop: '1rem', borderTop: '1px solid var(--color-slate-100)' },
+      }}
+      footer={
+        <>
           <Button
             variant="secondary"
             size="sm"
@@ -78,8 +71,19 @@ export default function ContractModal({ booking, onClose, onSigned }: ContractMo
           >
             {signBooking.isPending ? t('contract.submitting') : t('contract.submitSignature')}
           </Button>
+        </>
+      }
+    >
+      <div className="contract-modal__body">
+        <h3 className="contract-modal__contract-title">{t('contract.title')}</h3>
+        <p className="contract-modal__text">{t('contract.body1')}</p>
+        <p className="contract-modal__text">{t('contract.body2')}</p>
+
+        <div className="contract-modal__sig-section">
+          <p className="contract-modal__sig-label">{t('contract.signatureLabel')}</p>
+          <SignatureCanvas canvasRef={canvasRef} onEmpty={setIsEmpty} />
         </div>
       </div>
-    </div>
+    </Modal>
   );
 }

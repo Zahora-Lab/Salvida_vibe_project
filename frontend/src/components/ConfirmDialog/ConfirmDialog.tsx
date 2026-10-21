@@ -1,5 +1,5 @@
-import { useEffect } from 'react';
 import { Button } from '../ui/button';
+import { Modal } from '../ui/modal';
 import './ConfirmDialog.css';
 
 interface ConfirmDialogProps {
@@ -23,39 +23,26 @@ export default function ConfirmDialog({
   onConfirm,
   onCancel,
 }: ConfirmDialogProps) {
-  useEffect(() => {
-    if (!open) return;
-    const handleKey = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') onCancel();
-    };
-    document.addEventListener('keydown', handleKey);
-    return () => document.removeEventListener('keydown', handleKey);
-  }, [open, onCancel]);
-
-  if (!open) return null;
-
   return (
-    <div className="confirm-overlay" onMouseDown={onCancel}>
-      <div
-        className="confirm-dialog"
-        role="alertdialog"
-        aria-modal="true"
-        aria-labelledby="confirm-title"
-        onMouseDown={(event) => event.stopPropagation()}
-      >
-        <h3 className="confirm-dialog__title" id="confirm-title">{title}</h3>
-        {description && (
-          <p className="confirm-dialog__desc">{description}</p>
-        )}
-        <div className="confirm-dialog__actions">
+    <Modal
+      open={open}
+      onCancel={onCancel}
+      title={title}
+      size="sm"
+      role="alertdialog"
+      closable={false}
+      footer={
+        <>
           <Button variant="secondary" onClick={onCancel}>
             {cancelLabel}
           </Button>
           <Button variant={variant === 'danger' ? 'danger' : 'primary'} onClick={onConfirm}>
             {confirmLabel}
           </Button>
-        </div>
-      </div>
-    </div>
+        </>
+      }
+    >
+      {description && <p className="confirm-dialog__desc">{description}</p>}
+    </Modal>
   );
 }
