@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next';
+import { Button } from '../../components/ui/button';
 
 interface HistoryItem {
   date: string;
@@ -43,7 +44,7 @@ export default function PrmRecentHistory({ items = [] }: PrmRecentHistoryProps) 
     <div className="prm-history">
       <div className="prm-history__header">
         <h3 className="prm-history__title">{t('prmDetail.recentHistory')}</h3>
-        <button className="prm-history__view-btn">{t('prmDetail.viewAll')}</button>
+        <Button variant="link" size="sm">{t('prmDetail.viewAll')}</Button>
       </div>
       <div className="prm-history__list">
         {items.map((item, i) => (

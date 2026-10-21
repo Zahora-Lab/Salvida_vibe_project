@@ -224,53 +224,30 @@
   gap: 1rem;
 }
 
-.booking-actions__cancel {
+/* Bottom-bar call to action: Button plus its own typography and proportions */
+.btn.booking-actions__cancel,
+.btn.booking-actions__submit {
+  height: 3rem;
+  font-weight: 900;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.btn.booking-actions__cancel {
   flex: 1;
-  height: 3rem;
-  border-radius: 1rem;
-  color: var(--color-slate-500);
-  font-weight: 900;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  font-size: 0.75rem;
-  transition: background-color 0.15s;
 }
 
-.booking-actions__cancel:hover {
-  background-color: var(--color-slate-50);
-}
-
-.booking-actions__submit {
+.btn.booking-actions__submit {
   flex: 2;
-  height: 3rem;
-  border-radius: 1rem;
-  background-color: var(--color-primary);
-  color: white;
-  font-weight: 900;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  font-size: 0.75rem;
-  box-shadow: 0 20px 25px -5px var(--color-primary-30);
-  display: flex;
-  align-items: center;
-  justify-content: center;
   gap: 0.75rem;
-  transition: transform 0.15s;
 }
 
-.booking-actions__submit:hover {
-  transform: scale(1.02);
-}
-
-.booking-actions__submit:active {
-  transform: scale(0.98);
-}
-
-.booking-actions__submit--disabled {
+/* Looks disabled but stays clickable, so a click can reveal the missing fields */
+.btn.booking-actions__submit--disabled,
+.btn.booking-actions__submit--disabled:hover:not(:disabled) {
   opacity: 0.5;
   cursor: not-allowed;
-  transform: none !important;
-  box-shadow: none;
 }
 
 /* Date & Time section */

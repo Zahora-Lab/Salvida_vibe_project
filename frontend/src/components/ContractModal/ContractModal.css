@@ -35,19 +35,6 @@
   margin: 0;
 }
 
-.contract-modal__close {
-  padding: 4px;
-  background: transparent;
-  border: none;
-  color: var(--color-slate-400, #94a3b8);
-  cursor: pointer;
-  border-radius: 6px;
-}
-
-.contract-modal__close:hover {
-  background: var(--color-slate-100, #f1f5f9);
-}
-
 .contract-modal__body {
   padding: 20px 24px;
   overflow-y: auto;

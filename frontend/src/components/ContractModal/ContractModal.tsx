@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Loader2, X } from 'lucide-react';
 import { toast } from 'react-toastify';
 import SignatureCanvas from '../SignatureCanvas/SignatureCanvas';
-import { Button } from '../ui/button';
+import { Button, IconButton } from '../ui/button';
 import { useSignBooking } from '../../hooks/useBookings';
 import type { Booking } from '../../types';
 import './ContractModal.css';
@@ -46,9 +46,7 @@ export default function ContractModal({ booking, onClose, onSigned }: ContractMo
       <div className="contract-modal" onClick={(event) => event.stopPropagation()}>
         <div className="contract-modal__header">
           <h2 className="contract-modal__title">{t('contract.modalTitle')}</h2>
-          <button type="button" className="contract-modal__close" onClick={onClose}>
-            <X size={20} />
-          </button>
+          <IconButton label="Cerrar" icon={<X size={20} />} onClick={onClose} />
         </div>
 
         <div className="contract-modal__body">

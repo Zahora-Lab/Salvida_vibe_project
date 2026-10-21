@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Plus, Trash2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useCreatePrm } from '../../hooks/usePrms';
@@ -11,6 +11,8 @@ import DateInput from '../../components/DateInput/DateInput';
 import type { Address } from '../../types';
 import { Input } from '../../components/ui/input';
 import { FormField } from '../../components/ui/form-field';
+import { Button, IconButton } from '../../components/ui/button';
+import { Select } from '../../components/ui/select';
 import './NewPrm.css';
 
 interface ContactDraft {
@@ -130,9 +132,14 @@ export default function NewPrm() {
   return (
     <div className="new-prm">
       <div className="new-prm__header">
-        <Link to="/app/prms" className="new-prm__back-btn">
-          <ArrowLeft size={20} />
-        </Link>
+        <IconButton
+          to="/app/prms"
+          className="new-prm__back-btn"
+          label="Volver"
+          icon={<ArrowLeft size={20} />}
+          tone="primary"
+          size="lg"
+        />
         <div>
           <h1 className="new-prm__title">{t('prms.newPrm.title')}</h1>
           <p className="new-prm__subtitle">{t('prms.newPrm.subtitle')}</p>
@@ -229,15 +236,16 @@ export default function NewPrm() {
               </FormField>
 
               <FormField label={t('prms.newPrm.status')} htmlFor="status">
-                <select
-                  id="status"
-                  className="new-prm__select"
-                  value={status}
-                  onChange={(e) => setStatus(e.target.value as 'Activo' | 'Inactivo')}
-                >
-                  <option value="Activo">{t('prms.newPrm.statusActive')}</option>
-                  <option value="Inactivo">{t('prms.newPrm.statusInactive')}</option>
-                </select>
+                {(field) => (
+                  <Select
+                    {...field}
+                    value={status}
+                    onChange={(e) => setStatus(e.target.value as 'Activo' | 'Inactivo')}
+                  >
+                    <option value="Activo">{t('prms.newPrm.statusActive')}</option>
+                    <option value="Inactivo">{t('prms.newPrm.statusInactive')}</option>
+                  </Select>
+                )}
               </FormField>
             </div>
           </section>
@@ -249,17 +257,18 @@ export default function NewPrm() {
             </h2>
             <div className="new-prm__grid">
               <FormField label={t('prms.newPrm.bloodType')} htmlFor="bloodType">
-                <select
-                  id="bloodType"
-                  className="new-prm__select"
-                  value={bloodType}
-                  onChange={(e) => setBloodType(e.target.value)}
-                >
-                  <option value="">{t('prms.newPrm.bloodTypePlaceholder')}</option>
-                  {['A+','A-','B+','B-','AB+','AB-','O+','O-'].map(g => (
-                    <option key={g} value={g}>{g}</option>
-                  ))}
-                </select>
+                {(field) => (
+                  <Select
+                    {...field}
+                    value={bloodType}
+                    onChange={(e) => setBloodType(e.target.value)}
+                  >
+                    <option value="">{t('prms.newPrm.bloodTypePlaceholder')}</option>
+                    {['A+','A-','B+','B-','AB+','AB-','O+','O-'].map(g => (
+                      <option key={g} value={g}>{g}</option>
+                    ))}
+                  </Select>
+                )}
               </FormField>
 
               <FormField label={t('prms.newPrm.height')} htmlFor="height">
@@ -331,22 +340,25 @@ export default function NewPrm() {
                     )}
                   </FormField>
                 </div>
-                <button
-                  type="button"
+                <IconButton
                   className="new-prm__contact-remove"
+                  label={t('common.remove')}
+                  icon={<Trash2 size={16} />}
+                  tone="danger"
                   onClick={() => removeContact(index)}
-                  title={t('common.remove')}
-                >
-                  <Trash2 size={16} />
-                </button>
+                />
               </div>
             ))}
 
             {contacts.length < 2 ? (
-              <button type="button" className="new-prm__add-contact-btn" onClick={addContact}>
-                <Plus size={16} />
+              <Button
+                variant="dashed"
+                className="new-prm__add-contact-btn"
+                icon={<Plus size={16} />}
+                onClick={addContact}
+              >
                 {t('prms.newPrm.contactAdd')}
-              </button>
+              </Button>
             ) : (
               <p className="new-prm__contact-max">{t('prms.newPrm.contactMax')}</p>
             )}
@@ -372,38 +384,37 @@ export default function NewPrm() {
                     maxLength={40}
                   />
                 </div>
-                <button
-                  type="button"
+                <IconButton
                   className="new-prm__contact-remove"
+                  label={t('common.remove')}
+                  icon={<Trash2 size={16} />}
+                  tone="danger"
                   onClick={() => removeAddressDraft(index)}
-                  title={t('common.remove')}
-                >
-                  <Trash2 size={16} />
-                </button>
+                />
               </div>
             ))}
 
-            <button type="button" className="new-prm__add-contact-btn" onClick={addAddressDraft}>
-              <Plus size={16} />
+            <Button
+              variant="dashed"
+              className="new-prm__add-contact-btn"
+              icon={<Plus size={16} />}
+              onClick={addAddressDraft}
+            >
               {t('prms.newPrm.addAddress')}
-            </button>
+            </Button>
           </section>
 
           {formError && <p className="new-prm__form-error">{formError}</p>}
 
           <div className="new-prm__actions">
-            <Link to="/app/prms" className="new-prm__cancel-btn">
+            <Button to="/app/prms" variant="outline" size="lg">
               {t('prms.newPrm.cancel')}
-            </Link>
-            <button
-              type="submit"
-              className="new-prm__submit-btn"
-              disabled={createPrm.isPending}
-            >
+            </Button>
+            <Button type="submit" size="lg" loading={createPrm.isPending}>
               {createPrm.isPending
                 ? t('prms.newPrm.submitting')
                 : t('prms.newPrm.submit')}
-            </button>
+            </Button>
           </div>
         </form>
       </div>

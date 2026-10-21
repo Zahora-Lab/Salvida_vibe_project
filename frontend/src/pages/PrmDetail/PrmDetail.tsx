@@ -36,6 +36,9 @@ import DateInput from '../../components/DateInput/DateInput';
 import type { Address } from '../../types';
 import PrmRecentHistory from './PrmRecentHistory';
 import { Input } from '../../components/ui/input';
+import { Button } from '../../components/ui/button';
+import { Select } from '../../components/ui/select';
+import { Badge } from '../../components/ui/badge';
 import './PrmDetail.css';
 
 function formatBirthDate(iso: string) {
@@ -296,11 +299,9 @@ export default function PrmDetail() {
                 <h1 className="prm-profile__name">{prm.name}</h1>
               )}
               <div className="prm-profile__badges">
-                <span
-                  className={`prm-profile__status ${prm.status === 'Activo' ? 'prm-profile__status--active' : 'prm-profile__status--inactive'}`}
-                >
+                <Badge tone={prm.status === 'Activo' ? 'success' : 'neutral'}>
                   {prm.status === 'Activo' ? t('common.active') : t('common.archived')}
-                </span>
+                </Badge>
               </div>
             </div>
           </div>
@@ -310,8 +311,10 @@ export default function PrmDetail() {
             {editing ? (
               <>
                 <div className="prm-stat">
-                  <select
-                    className="prm-edit-input prm-edit-input--stat"
+                  <Select
+                    variant="compact"
+                    size="xs"
+                    className="prm-edit-input--stat"
                     value={draft.bloodType}
                     onChange={(event) =>
                       setDraft({ ...draft, bloodType: event.target.value })
@@ -325,7 +328,7 @@ export default function PrmDetail() {
                         </option>
                       ),
                     )}
-                  </select>
+                  </Select>
                   <p className="prm-stat__label">{t('prmDetail.blood')}</p>
                 </div>
                 <div className="prm-stat">
@@ -377,26 +380,28 @@ export default function PrmDetail() {
               <h3 className="prm-info__title">{t('prmDetail.personalInfo')}</h3>
               {editing ? (
                 <div className="prm-edit-actions">
-                  <button
-                    className="prm-edit-actions__cancel"
+                  <Button
+                    variant="ghost"
+                    size="xs"
+                    icon={<X size={16} />}
                     onClick={() => setEditing(false)}
                   >
-                    <X size={16} />
                     {t('prmDetail.cancelEdit')}
-                  </button>
-                  <button
-                    className="prm-edit-actions__save"
+                  </Button>
+                  <Button
+                    variant="primary"
+                    size="xs"
+                    icon={<Check size={16} />}
                     onClick={handleSave}
                     disabled={updatePrm.isPending}
                   >
-                    <Check size={16} />
                     {t('prmDetail.saveChanges')}
-                  </button>
+                  </Button>
                 </div>
               ) : (
-                <button className="prm-info__edit-btn" onClick={startEditing}>
+                <Button variant="link" size="sm" onClick={startEditing}>
                   {t('prmDetail.edit')}
-                </button>
+                </Button>
               )}
             </div>
             <div className="prm-info__rows">
@@ -513,13 +518,14 @@ export default function PrmDetail() {
                 {t('prmDetail.emergencyContacts')}
               </h3>
               {!showAddContact && (
-                <button
-                  className="prm-info__edit-btn"
-                  style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}
+                <Button
+                  variant="link"
+                  size="sm"
+                  icon={<Plus size={14} />}
                   onClick={() => setShowAddContact(true)}
                 >
-                  <Plus size={14} /> {t('prmDetail.addContact')}
-                </button>
+                  {t('prmDetail.addContact')}
+                </Button>
               )}
             </div>
 
@@ -532,13 +538,28 @@ export default function PrmDetail() {
                       <Input variant="compact" size="xs" type="tel" placeholder={t('prmDetail.contactPhone')} value={editContactDraft.phone} onChange={(event) => setEditContactDraft({ ...editContactDraft, phone: event.target.value })} style={{ maxWidth: '100%', width: '100%' }} />
                       <Input variant="compact" size="xs" type="text" placeholder={t('prmDetail.contactRelationshipPlaceholder')} value={editContactDraft.relationship} onChange={(event) => setEditContactDraft({ ...editContactDraft, relationship: event.target.value })} style={{ maxWidth: '100%', width: '100%' }} />
                       <div className="prm-edit-actions" style={{ justifyContent: 'flex-end' }}>
-                        <button type="button" className="prm-edit-actions__cancel" onClick={() => setEditingContactId(null)}><X size={14} /> {t('common.cancel')}</button>
-                        <button type="button" className="prm-edit-actions__save" disabled={!editContactDraft.name.trim() || updateEmergencyContact.isPending}
+                        <Button
+                          variant="ghost"
+                          size="xs"
+                          icon={<X size={14} />}
+                          type="button"
+                          onClick={() => setEditingContactId(null)}
+                        >
+                          {t('common.cancel')}
+                        </Button>
+                        <Button
+                          variant="primary"
+                          size="xs"
+                          icon={<Check size={14} />}
+                          type="button"
+                          disabled={!editContactDraft.name.trim() || updateEmergencyContact.isPending}
                           onClick={async () => {
                             await updateEmergencyContact.mutateAsync({ prmId: id!, ecId: contact.id, ...editContactDraft });
                             setEditingContactId(null);
                           }}
-                        ><Check size={14} /> {t('common.save')}</button>
+                        >
+                          {t('common.save')}
+                        </Button>
                       </div>
                     </div>
                   ) : (
@@ -597,16 +618,20 @@ export default function PrmDetail() {
                   style={{ maxWidth: '100%', width: '100%' }}
                 />
                 <div className="prm-edit-actions" style={{ justifyContent: 'flex-end' }}>
-                  <button
+                  <Button
+                    variant="ghost"
+                    size="xs"
+                    icon={<X size={14} />}
                     type="button"
-                    className="prm-edit-actions__cancel"
                     onClick={() => { setShowAddContact(false); setNewContact({ name: '', phone: '', relationship: '' }); }}
                   >
-                    <X size={14} /> {t('common.cancel')}
-                  </button>
-                  <button
+                    {t('common.cancel')}
+                  </Button>
+                  <Button
+                    variant="primary"
+                    size="xs"
+                    icon={<Check size={14} />}
                     type="button"
-                    className="prm-edit-actions__save"
                     disabled={!newContact.name.trim() || !newContact.phone.trim() || addEmergencyContact.isPending}
                     onClick={async () => {
                       await addEmergencyContact.mutateAsync({
@@ -619,8 +644,8 @@ export default function PrmDetail() {
                       setNewContact({ name: '', phone: '', relationship: '' });
                     }}
                   >
-                    <Check size={14} /> {t('common.save')}
-                  </button>
+                    {t('common.save')}
+                  </Button>
                 </div>
               </div>
             )}
@@ -631,17 +656,14 @@ export default function PrmDetail() {
             <div className="prm-info__header">
               <h3 className="prm-info__title">{t('prmDetail.addresses')}</h3>
               {!showAddAddr && (
-                <button
-                  className="prm-info__edit-btn"
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '0.25rem',
-                  }}
+                <Button
+                  variant="link"
+                  size="sm"
+                  icon={<Plus size={14} />}
                   onClick={() => setShowAddAddr(true)}
                 >
-                  <Plus size={14} /> {t('prmDetail.addAddress')}
-                </button>
+                  {t('prmDetail.addAddress')}
+                </Button>
               )}
             </div>
 
@@ -700,13 +722,28 @@ export default function PrmDetail() {
                             </div>
                           )}
                           <div className="prm-edit-actions" style={{ justifyContent: 'flex-end' }}>
-                            <button type="button" className="prm-edit-actions__cancel" onClick={() => setEditingAddressId(null)}><X size={14} /> {t('common.cancel')}</button>
-                            <button type="button" className="prm-edit-actions__save" disabled={!editAddrDraft.value.full_address || updatePrmAddress.isPending}
+                            <Button
+                              variant="ghost"
+                              size="xs"
+                              icon={<X size={14} />}
+                              type="button"
+                              onClick={() => setEditingAddressId(null)}
+                            >
+                              {t('common.cancel')}
+                            </Button>
+                            <Button
+                              variant="primary"
+                              size="xs"
+                              icon={<Check size={14} />}
+                              type="button"
+                              disabled={!editAddrDraft.value.full_address || updatePrmAddress.isPending}
                               onClick={async () => {
                                 await updatePrmAddress.mutateAsync({ prmId: id!, addressId: addr.id, full_address: editAddrDraft.value.full_address, lat: editAddrDraft.value.lat, lng: editAddrDraft.value.lng, is_accessible: editAddrDraft.value.is_accessible, alias: editAddrDraft.alias });
                                 setEditingAddressId(null);
                               }}
-                            ><Check size={14} /> {t('common.save')}</button>
+                            >
+                              {t('common.save')}
+                            </Button>
                           </div>
                         </div>
                       ) : (
@@ -854,9 +891,11 @@ export default function PrmDetail() {
                       className="prm-edit-actions"
                       style={{ justifyContent: 'flex-end' }}
                     >
-                      <button
+                      <Button
+                        variant="ghost"
+                        size="xs"
+                        icon={<X size={14} />}
                         type="button"
-                        className="prm-edit-actions__cancel"
                         onClick={() => {
                           setShowAddAddr(false);
                           setNewAddrValue({});
@@ -864,11 +903,13 @@ export default function PrmDetail() {
                           setNewAddrIsAccessible(null);
                         }}
                       >
-                        <X size={14} /> {t('common.cancel')}
-                      </button>
-                      <button
+                        {t('common.cancel')}
+                      </Button>
+                      <Button
+                        variant="primary"
+                        size="xs"
+                        icon={<Check size={14} />}
                         type="button"
-                        className="prm-edit-actions__save"
                         disabled={
                           !newAddrValue.full_address || addPrmAddress.isPending
                         }
@@ -888,8 +929,8 @@ export default function PrmDetail() {
                           setNewAddrIsAccessible(null);
                         }}
                       >
-                        <Check size={14} /> {t('common.save')}
-                      </button>
+                        {t('common.save')}
+                      </Button>
                     </div>
                   </div>
                 )}

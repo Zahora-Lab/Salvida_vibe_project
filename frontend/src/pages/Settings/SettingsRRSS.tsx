@@ -6,6 +6,8 @@ import { apiClient } from "../../lib/api";
 import PLATFORM_ICONS from "../../lib/platformIcons";
 import { Input } from "../../components/ui/input";
 import { FormField } from "../../components/ui/form-field";
+import { Button, IconButton } from "../../components/ui/button";
+import { Select } from "../../components/ui/select";
 import { useTranslation } from "react-i18next";
 
 // ── Types ──────────────────────────────────────────────────────────────────
@@ -166,20 +168,20 @@ export default function SettingsRRSS() {
               </span>
               <span className="settings-rrss__url">{link.url}</span>
               <div className="settings-rrss__actions">
-                <button
-                  className="settings-rrss__btn-icon"
+                <IconButton
+                  label={t("settings.rrss.edit")}
+                  icon={<Pencil size={15} />}
+                  tone="primary"
+                  size="md"
                   onClick={() => openEdit(link)}
-                  title={t("settings.rrss.edit")}
-                >
-                  <Pencil size={15} />
-                </button>
-                <button
-                  className="settings-rrss__btn-icon settings-rrss__btn-icon--danger"
+                />
+                <IconButton
+                  label={t("settings.rrss.delete")}
+                  icon={<Trash2 size={15} />}
+                  tone="danger"
+                  size="md"
                   onClick={() => deleteLink.mutate(link.id)}
-                  title={t("settings.rrss.delete")}
-                >
-                  <Trash2 size={15} />
-                </button>
+                />
               </div>
             </li>
           ))}
@@ -191,9 +193,9 @@ export default function SettingsRRSS() {
         <form className="settings-rrss__form" onSubmit={handleSubmit}>
           <FormField variant="eyebrow" label={t("settings.rrss.platform")}>
             {(field) => (
-              <select
-                id={field.id}
-                className="settings-form__input"
+              <Select
+                {...field}
+                variant="filled"
                 value={form.platform}
                 onChange={handlePlatformChange}
               >
@@ -202,7 +204,7 @@ export default function SettingsRRSS() {
                     {p.label}
                   </option>
                 ))}
-              </select>
+              </Select>
             )}
           </FormField>
 
@@ -247,22 +249,25 @@ export default function SettingsRRSS() {
           </FormField>
 
           <div className="settings-rrss__form-actions">
-            <button type="submit" className="settings-save-btn" disabled={isSaving}>
-              <Save size={16} />
-              <span>{isSaving ? t("settings.rrss.saving") : t("settings.rrss.save")}</span>
-            </button>
-            <button type="button" className="settings-rrss__btn-cancel" onClick={handleCancel}>
+            <Button type="submit" size="lg" icon={<Save size={16} />} loading={isSaving}>
+              {isSaving ? t("settings.rrss.saving") : t("settings.rrss.save")}
+            </Button>
+            <Button variant="ghost" size="sm" onClick={handleCancel}>
               {t("settings.rrss.cancel")}
-            </button>
+            </Button>
           </div>
         </form>
       )}
 
       {!showForm && (
-        <button className="settings-rrss__btn-add" onClick={openAdd}>
-          <Plus size={16} />
-          <span>{t("settings.rrss.add")}</span>
-        </button>
+        <Button
+          variant="dashed"
+          className="settings-rrss__btn-add"
+          icon={<Plus size={16} />}
+          onClick={openAdd}
+        >
+          {t("settings.rrss.add")}
+        </Button>
       )}
     </div>
   );

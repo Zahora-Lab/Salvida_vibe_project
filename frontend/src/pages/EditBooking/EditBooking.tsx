@@ -8,6 +8,7 @@ import TimeInput from '../../components/TimeInput/TimeInput';
 import ContractModal from '../../components/ContractModal/ContractModal';
 import { useBooking, useUpdateBooking } from '../../hooks/useBookings';
 import type { Address } from '../../types';
+import { Button } from '../../components/ui/button';
 import '../NewBooking/NewBooking.css';
 
 function cardState(
@@ -186,15 +187,15 @@ export default function EditBooking() {
                 <span className="field-card__label">{t('contract.title')}</span>
               </div>
               <div className="field-card__content">
-                <button
-                  type="button"
+                <Button
+                  size="lg"
+                  fullWidth
                   className="booking-actions__submit"
-                  style={{ width: '100%', justifyContent: 'center', gap: '8px' }}
+                  icon={<FileSignature size={18} />}
                   onClick={() => setShowSignModal(true)}
                 >
-                  <FileSignature size={18} />
                   {t('contract.signButton')}
-                </button>
+                </Button>
               </div>
             </div>
           )}
@@ -215,14 +216,20 @@ export default function EditBooking() {
       <div className="booking-actions">
         <div className="booking-actions__inner booking-actions__inner--stacked">
           <div className="booking-actions__row">
-            <button onClick={() => navigate(-1)} className="booking-actions__cancel">
+            <Button
+              variant="ghost"
+              size="lg"
+              className="booking-actions__cancel"
+              onClick={() => navigate(-1)}
+            >
               {t('common.cancel')}
-            </button>
-            <button
+            </Button>
+            <Button
+              size="lg"
+              className={`booking-actions__submit${!canSubmit || updateBooking.isPending ? ' booking-actions__submit--disabled' : ''}`}
               onClick={handleSubmit}
               disabled={updateBooking.isPending}
               aria-disabled={!canSubmit || updateBooking.isPending}
-              className={`booking-actions__submit${!canSubmit || updateBooking.isPending ? ' booking-actions__submit--disabled' : ''}`}
             >
               {updateBooking.isPending ? (
                 <>
@@ -235,7 +242,7 @@ export default function EditBooking() {
                   <Send size={18} />
                 </>
               )}
-            </button>
+            </Button>
           </div>
           {submitAttempted && missingFields.length > 0 && (
             <div className="booking-submit__hint">

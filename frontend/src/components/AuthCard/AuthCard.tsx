@@ -5,6 +5,7 @@ import { supabase } from '../../lib/supabaseClient';
 import { useAuthStore } from '../../store/useAuthStore';
 import { Input } from '../ui/input';
 import { FormField } from '../ui/form-field';
+import { Button } from '../ui/button';
 import './AuthCard.css';
 
 interface AuthCardProps {
@@ -159,9 +160,9 @@ export default function AuthCard({ showRegister = false }: AuthCardProps) {
 
           {loginError && <p className="auth-card__error">{loginError}</p>}
 
-          <button type="submit" className="auth-card__submit" disabled={loginLoading}>
+          <Button type="submit" size="lg" fullWidth className="auth-card__submit" loading={loginLoading}>
             {loginLoading ? t('login.submitting') : t('login.submit')}
-          </button>
+          </Button>
         </form>
       ) : (
         <form className="auth-card__form" onSubmit={handleRegister}>
@@ -272,18 +273,19 @@ export default function AuthCard({ showRegister = false }: AuthCardProps) {
           {regSuccess ? (
             <>
               <p className="auth-card__success">{regSuccess}</p>
-              <button
-                type="button"
+              <Button
+                size="lg"
+                fullWidth
                 className="auth-card__submit"
                 onClick={() => setTab('login')}
               >
                 {t('login.goToLogin')}
-              </button>
+              </Button>
             </>
           ) : (
-            <button type="submit" className="auth-card__submit" disabled={regLoading}>
+            <Button type="submit" size="lg" fullWidth className="auth-card__submit" loading={regLoading}>
               {regLoading ? t('login.registerSubmitting') : t('login.registerSubmit')}
-            </button>
+            </Button>
           )}
         </form>
       )}

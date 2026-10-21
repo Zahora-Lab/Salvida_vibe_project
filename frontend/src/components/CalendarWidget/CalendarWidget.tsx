@@ -3,6 +3,7 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Tooltip, ConfigProvider } from 'antd';
 import { useTranslation } from 'react-i18next';
 import type { Booking } from '../../types';
+import { IconButton } from '../ui/button';
 import './CalendarWidget.css';
 
 function getDaysInMonth(year: number, month: number) {
@@ -143,12 +144,18 @@ export default function CalendarWidget({
       <div className="calendar__header">
         <h3 className="calendar__month">{months[month]} {year}</h3>
         <div className="calendar__nav">
-          <button className="calendar__nav-btn" onClick={prevMonth} aria-label="Mes anterior">
-            <ChevronLeft size={18} />
-          </button>
-          <button className="calendar__nav-btn" onClick={nextMonth} aria-label="Mes siguiente">
-            <ChevronRight size={18} />
-          </button>
+          <IconButton
+            label="Mes anterior"
+            icon={<ChevronLeft size={18} />}
+            tone="primary"
+            onClick={prevMonth}
+          />
+          <IconButton
+            label="Mes siguiente"
+            icon={<ChevronRight size={18} />}
+            tone="primary"
+            onClick={nextMonth}
+          />
         </div>
       </div>
 

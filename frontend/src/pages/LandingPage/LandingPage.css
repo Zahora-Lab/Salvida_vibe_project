@@ -855,6 +855,13 @@
   /* FormField theme */
   --field-label-color: var(--lp-on-surface);
   --field-label-letter-spacing: -0.01em;
+  /* Button theme */
+  --btn-primary-bg: linear-gradient(135deg, var(--lp-primary) 0%, var(--lp-primary-container) 100%);
+  --btn-primary-color: var(--lp-on-primary);
+  --btn-radius: 9999px;
+  --btn-font-weight: 700;
+  --btn-font-family: var(--lp-font);
+  --btn-shadow: 0 8px 24px rgba(97, 51, 122, 0.2);
   width: 100%;
   max-width: 440px;
   background: var(--lp-surface-bright);
@@ -985,30 +992,16 @@
   margin-bottom: 1rem;
 }
 
-.lp-modal__submit {
-  width: 100%;
-  background: linear-gradient(135deg, var(--lp-primary) 0%, var(--lp-primary-container) 100%);
-  color: var(--lp-on-primary);
-  font-family: var(--lp-font);
-  font-size: 0.9375rem;
-  font-weight: 700;
-  padding: 0.875rem;
-  border-radius: 9999px;
-  border: none;
-  cursor: pointer;
-  box-shadow: 0 8px 24px rgba(97, 51, 122, 0.2);
-  transition: transform 0.15s, box-shadow 0.15s, opacity 0.15s;
+/* Landing submit: Button themed through the tokens above, plus its own lift on hover */
+.btn.lp-modal__submit {
   margin-top: 0.25rem;
+  transition: transform 0.15s, box-shadow 0.15s, opacity 0.15s;
 }
 
-.lp-modal__submit:hover:not(:disabled) {
+.btn.lp-modal__submit:hover:not(:disabled) {
+  opacity: 1;
   transform: scale(1.02);
   box-shadow: 0 12px 28px rgba(97, 51, 122, 0.28);
-}
-
-.lp-modal__submit:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
 }
 
 .lp-modal__field-row {

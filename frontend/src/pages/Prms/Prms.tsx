@@ -6,6 +6,7 @@ import Header from '../../components/Header/Header';
 import DropdownMenu from '../../components/DropdownMenu';
 import { ListToolbar } from '../../components/ui/list-toolbar';
 import { FilterTabs } from '../../components/ui/filter-tabs';
+import { Badge } from '../../components/ui/badge';
 import type { DropdownItem } from '../../components/DropdownMenu';
 import { usePrms, useUpdatePrm } from '../../hooks/usePrms';
 import type { PrmListItem } from '../../hooks/usePrms';
@@ -166,9 +167,9 @@ export default function Prms() {
                           {formatLastVisit(prm.last_booking_date)}
                         </td>
                         <td>
-                          <span className={`prm-status ${prm.status === 'Activo' ? 'prm-status--active' : 'prm-status--inactive'}`}>
+                          <Badge tone={prm.status === 'Activo' ? 'success' : 'neutral'}>
                             {prm.status === 'Activo' ? t('common.active') : t('common.archived')}
-                          </span>
+                          </Badge>
                         </td>
                         <td>
                           <DropdownMenu items={buildMenuItems(prm)} />

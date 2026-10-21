@@ -32,6 +32,9 @@ import { toast } from "react-toastify";
 import { useDebounce } from "../../hooks/useDebounce";
 import { Input } from "../../components/ui/input";
 import { FormField } from "../../components/ui/form-field";
+import { Button } from "../../components/ui/button";
+import { Badge } from "../../components/ui/badge";
+import { Switch } from "../../components/ui/switch";
 import "./Settings.css";
 
 const GEOAPIFY_KEY = import.meta.env.VITE_GEOAPIFY_API_KEY as string;
@@ -289,18 +292,12 @@ export default function Settings() {
                         )}
                       </span>
                     </div>
-                    <button
-                      type="button"
-                      role="switch"
-                      aria-checked={notifPrefs.email}
+                    <Switch
+                      label={t("settings.notifications.emailLabel")}
+                      checked={notifPrefs.email}
                       disabled={!(notifTargetUser ? notifTargetUser.email : profile?.email)}
-                      className={`settings-toggle${notifPrefs.email ? " settings-toggle--on" : ""}${!profile?.email ? " settings-toggle--disabled" : ""}`}
-                      onClick={() =>
-                        setNotifPrefs((p) => ({ ...p, email: !p.email }))
-                      }
-                    >
-                      <span className="settings-toggle__thumb" />
-                    </button>
+                      onChange={(next) => setNotifPrefs((p) => ({ ...p, email: next }))}
+                    />
                   </div>
 
                   <div className="settings-notif-row">
@@ -312,22 +309,17 @@ export default function Settings() {
                         {t("settings.notifications.pushDesc")}
                       </span>
                     </div>
-                    <button
-                      type="button"
-                      role="switch"
-                      aria-checked={notifPrefs.push}
-                      className={`settings-toggle${notifPrefs.push ? " settings-toggle--on" : ""}`}
-                      onClick={() => {
-                        const next = !notifPrefs.push;
+                    <Switch
+                      label={t("settings.notifications.pushLabel")}
+                      checked={notifPrefs.push}
+                      onChange={(next) => {
                         setNotifPrefs((p) => ({ ...p, push: next }));
                         if (!notifTargetUser) {
                           if (next) subscribePush();
                           else unsubscribePush();
                         }
                       }}
-                    >
-                      <span className="settings-toggle__thumb" />
-                    </button>
+                    />
                   </div>
                   {isAdminUser && notifTargetUser && (
                     <p className="settings-notif-row__sub" style={{ marginTop: '-8px', marginBottom: '8px' }}>
@@ -350,27 +342,20 @@ export default function Settings() {
                         Aviso 2 horas antes de cada servicio programado
                       </span>
                     </div>
-                    <button
-                      type="button"
-                      role="switch"
-                      aria-checked={notifPrefs.booking_reminder}
-                      className={`settings-toggle${notifPrefs.booking_reminder ? " settings-toggle--on" : ""}`}
-                      onClick={() =>
-                        setNotifPrefs((p) => ({
-                          ...p,
-                          booking_reminder: !p.booking_reminder,
-                        }))
+                    <Switch
+                      label={t("settings.notifications.reminderLabel")}
+                      checked={notifPrefs.booking_reminder}
+                      onChange={(next) =>
+                        setNotifPrefs((p) => ({ ...p, booking_reminder: next }))
                       }
-                    >
-                      <span className="settings-toggle__thumb" />
-                    </button>
+                    />
                   </div>
                 </div>
 
                 <div className="settings-profile__footer">
-                  <button
-                    type="button"
-                    className="settings-save-btn"
+                  <Button
+                    size="lg"
+                    icon={<Save size={20} />}
                     disabled={isSavingPrefs || isPending}
                     onClick={() => {
                       if (notifTargetUser) {
@@ -380,13 +365,10 @@ export default function Settings() {
                       }
                     }}
                   >
-                    <Save size={20} />
-                    <span>
-                      {isSavingPrefs
-                        ? t("common.saving")
-                        : t("settings.notifications.save")}
-                    </span>
-                  </button>
+                    {isSavingPrefs
+                      ? t("common.saving")
+                      : t("settings.notifications.save")}
+                  </Button>
                 </div>
               </div>
             ) : activeSection === "profile" ? (
@@ -428,13 +410,11 @@ export default function Settings() {
                         ? selectedUser.isActive === false
                         : false;
                       return (
-                        <span
-                          className={`settings-user-status-badge${isArchived ? " settings-user-status-badge--archived" : " settings-user-status-badge--active"}`}
-                        >
+                        <Badge tone={isArchived ? "neutral" : "success"}>
                           {isArchived
                             ? t("settings.profile.statusArchived")
                             : t("settings.profile.statusActive")}
-                        </span>
+                        </Badge>
                       );
                     })()}
                   </div>
@@ -519,16 +499,14 @@ export default function Settings() {
                         </button>
                       </div>
                       <div className="settings-avatar__info">
-                        <button
-                          type="button"
-                          className="settings-avatar__change-btn"
-                          disabled={uploadingAvatar}
+                        <Button
+                          loading={uploadingAvatar}
                           onClick={() => fileInputRef.current?.click()}
                         >
                           {uploadingAvatar
                             ? t("settings.profile.uploading")
                             : t("settings.profile.changePhoto")}
-                        </button>
+                        </Button>
                         <p className="settings-avatar__hint">
                           {t("settings.profile.photoHint")}
                         </p>
@@ -666,18 +644,16 @@ export default function Settings() {
                         </div>
 
                       <div className="settings-profile__footer">
-                        <button
+                        <Button
                           type="submit"
-                          className="settings-save-btn"
-                          disabled={isPending}
+                          size="lg"
+                          icon={<Save size={20} />}
+                          loading={isPending}
                         >
-                          <Save size={20} />
-                          <span>
-                            {isPending
-                              ? t("settings.profile.saving")
-                              : t("settings.profile.save")}
-                          </span>
-                        </button>
+                          {isPending
+                            ? t("settings.profile.saving")
+                            : t("settings.profile.save")}
+                        </Button>
                       </div>
                     </form>
                   </>

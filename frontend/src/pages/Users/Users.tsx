@@ -16,7 +16,8 @@ import {
 import { useMediaQuery } from '../../hooks/useMediaQuery';
 import CreateUserModal from './CreateUserModal';
 import UserCard from './UserCard';
-import { ROLE_LABEL, getDisplayName, getInitials } from './userDisplay';
+import { ROLE_LABEL, getDisplayName, getInitials, roleTone } from './userDisplay';
+import { Badge } from '../../components/ui/badge';
 import type { UserProfile } from '../../types';
 import './Users.css';
 
@@ -227,30 +228,27 @@ export default function Users() {
                           </td>
                           <td>
                             <div className="users__role-cell">
-                              <span
-                                className={`user-role-badge user-role-badge--${u.role}`}
-                              >
+                              <Badge size="md" tone={roleTone(u.role)}>
                                 {u.role === 'user'
                                   ? t('userRoles.user')
                                   : (ROLE_LABEL[u.role ?? ''] ?? u.role)}
-                              </span>
+                              </Badge>
                               {isSuperAdmin && u.isDemo && (
-                                <span
-                                  className="user-demo-badge"
+                                <Badge
+                                  size="md"
+                                  tone="warning"
+                                  icon={<FlaskConical size={12} />}
                                   title={t('users.demo')}
                                 >
-                                  <FlaskConical size={12} />
                                   demo
-                                </span>
+                                </Badge>
                               )}
                             </div>
                           </td>
                           <td>
-                            <span
-                              className={`user-status-badge${u.isActive === false ? ' user-status-badge--archived' : ' user-status-badge--active'}`}
-                            >
+                            <Badge tone={u.isActive === false ? 'neutral' : 'success'}>
                               {u.isActive === false ? 'Archivado' : 'Activo'}
-                            </span>
+                            </Badge>
                           </td>
                           <td>
                             <DropdownMenu items={buildMenuItems(u)} />

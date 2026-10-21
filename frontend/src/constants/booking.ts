@@ -1,9 +1,11 @@
+import type { BadgeTone } from '../components/ui/badge';
 import type { Booking } from '../types';
 
-export const STATUS_CLASS: Record<Booking['status'], string> = {
-  Approved: 'booking-status--approved',
-  Pending: 'booking-status--pending',
-  Completed: 'booking-status--completed',
-  Cancelled: 'booking-status--cancelled',
-  SignPending: 'booking-status--sign-pending',
+/** Badge tone that represents each booking status. */
+export const STATUS_TONE: Record<Booking['status'], BadgeTone> = {
+  Approved: 'success',
+  Pending: 'warning',
+  Completed: 'neutral',
+  Cancelled: 'danger',
+  SignPending: 'info',
 };

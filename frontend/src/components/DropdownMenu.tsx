@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { MoreVertical } from 'lucide-react';
+import { IconButton } from './ui/button';
 import './DropdownMenu.css';
 
 export interface DropdownItem {
@@ -51,14 +52,14 @@ export default function DropdownMenu({ items, align = 'right' }: DropdownMenuPro
 
   return (
     <div ref={ref} className="dropdown">
-      <button
+      <IconButton
         ref={triggerRef}
+        label="Más opciones"
+        icon={<MoreVertical size={18} />}
+        tone="primary"
+        size="xs"
         onClick={handleToggle}
-        className="dropdown__trigger"
-        aria-label="Más opciones"
-      >
-        <MoreVertical size={18} />
-      </button>
+      />
 
       {open && (
         <div

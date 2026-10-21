@@ -3,6 +3,7 @@ import type { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useUIStore } from '../../store/useUIStore';
+import { IconButton } from '../ui/button';
 import './Header.css';
 
 interface HeaderProps {
@@ -21,9 +22,13 @@ export default function Header({ title, subtitle, actions }: HeaderProps) {
   return (
     <header className="header">
       <div className="header__left">
-        <button className="header__menu-btn" onClick={toggleSidebar} aria-label="Toggle menu">
-          <Menu size={22} />
-        </button>
+        <IconButton
+          className="header__menu-btn"
+          label="Toggle menu"
+          icon={<Menu size={22} />}
+          size="md"
+          onClick={toggleSidebar}
+        />
         <div>
           <h2 className="header__title">{title}</h2>
           {subtitle && <p className="header__subtitle">{subtitle}</p>}

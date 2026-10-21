@@ -6,6 +6,7 @@ import { useAuthStore } from '../../store/useAuthStore';
 import { useAuthFormStore } from '../../store/useAuthFormStore';
 import { Input } from '../../components/ui/input';
 import { FormField } from '../../components/ui/form-field';
+import { Button } from '../../components/ui/button';
 
 interface AuthModalProps {
   open: boolean;
@@ -208,14 +209,14 @@ export default function AuthModal({ open, onClose }: AuthModalProps) {
             {success ? (
               <>
                 <p className="lp-modal__success">{success}</p>
-                <button type="button" className="lp-modal__submit" onClick={() => { onClose(); navigate('/login'); }}>
+                <Button size="lg" fullWidth className="lp-modal__submit" onClick={() => { onClose(); navigate('/login'); }}>
                   {t('login.goToLogin')}
-                </button>
+                </Button>
               </>
             ) : (
-              <button type="submit" className="lp-modal__submit" disabled={loading}>
+              <Button type="submit" size="lg" fullWidth className="lp-modal__submit" loading={loading}>
                 {loading ? t('login.registerSubmitting') : t('login.registerSubmit')}
-              </button>
+              </Button>
             )}
           </form>
 

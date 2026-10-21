@@ -2,7 +2,14 @@ import type { ButtonHTMLAttributes, MouseEventHandler, ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import './Button.css';
 
-export type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'outline' | 'dashed' | 'danger';
+export type ButtonVariant =
+  | 'primary'
+  | 'secondary'
+  | 'ghost'
+  | 'outline'
+  | 'dashed'
+  | 'danger'
+  | 'link';
 export type ButtonSize = 'lg' | 'md' | 'sm' | 'xs';
 
 interface ButtonCommonProps {

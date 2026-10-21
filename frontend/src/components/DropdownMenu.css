@@ -2,24 +2,6 @@
   position: relative;
 }
 
-.dropdown__trigger {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--color-slate-400);
-  padding: 0.25rem;
-  border-radius: 0.5rem;
-  transition: color 0.15s, background-color 0.15s;
-  cursor: pointer;
-  background: none;
-  border: none;
-}
-
-.dropdown__trigger:hover {
-  color: var(--color-primary);
-  background-color: var(--color-slate-50);
-}
-
 .dropdown__menu {
   position: fixed;
   z-index: var(--z-dropdown);

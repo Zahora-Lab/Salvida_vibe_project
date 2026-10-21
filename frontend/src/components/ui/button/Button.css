@@ -4,6 +4,7 @@
  *   --btn-primary-color   primary text color
  *   --btn-radius          overrides the radius of every size
  *   --btn-font-weight     font weight
+ *   --btn-font-family     font family
  *   --btn-shadow          primary box-shadow
  */
 .btn {
@@ -15,6 +16,7 @@
   padding: var(--_btn-py) var(--_btn-px);
   border: none;
   border-radius: var(--btn-radius, var(--_btn-radius));
+  font-family: var(--btn-font-family, inherit);
   font-size: var(--_btn-font);
   font-weight: var(--btn-font-weight, 600);
   text-decoration: none;
@@ -101,6 +103,17 @@
 
 .btn--ghost:hover:not(:disabled) {
   background: var(--color-slate-100);
+}
+
+/* ── variant: link (inline text action, no box) ────────────────────────── */
+.btn--link {
+  padding: 0;
+  background: none;
+  color: var(--color-primary);
+}
+
+.btn--link:hover:not(:disabled) {
+  text-decoration: underline;
 }
 
 /* ── variant: outline (1.5px border drawn inside, so it adds no height) ── */

@@ -12,6 +12,7 @@ import { usePrms } from '../../hooks/usePrms';
 import { useAuthStore } from '../../store/useAuthStore';
 import { todayIso, cardState } from '../../utils';
 import type { Address, UserProfile } from '../../types';
+import { Button } from '../../components/ui/button';
 import './NewBooking.css';
 
 export default function NewBooking() {
@@ -272,17 +273,20 @@ export default function NewBooking() {
       <div className="booking-actions">
         <div className="booking-actions__inner booking-actions__inner--stacked">
           <div className="booking-actions__row">
-            <button
-              onClick={() => navigate(-1)}
+            <Button
+              variant="ghost"
+              size="lg"
               className="booking-actions__cancel"
+              onClick={() => navigate(-1)}
             >
               {t('booking.cancel')}
-            </button>
-            <button
+            </Button>
+            <Button
+              size="lg"
+              className={`booking-actions__submit${!canSubmit || createBooking.isPending ? ' booking-actions__submit--disabled' : ''}`}
               onClick={handleSubmit}
               disabled={createBooking.isPending}
               aria-disabled={!canSubmit || createBooking.isPending}
-              className={`booking-actions__submit${!canSubmit || createBooking.isPending ? ' booking-actions__submit--disabled' : ''}`}
             >
               {createBooking.isPending ? (
                 <>
@@ -295,7 +299,7 @@ export default function NewBooking() {
                   <Send size={18} />
                 </>
               )}
-            </button>
+            </Button>
           </div>
           {submitAttempted && missingFields.length > 0 && (
             <div className="booking-submit__hint">

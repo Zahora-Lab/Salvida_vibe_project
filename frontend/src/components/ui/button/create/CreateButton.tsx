@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Plus, PlusCircle } from 'lucide-react';
+import Button from '../Button';
 import './CreateButton.css';
 
 export type CreateButtonVariant = 'solid' | 'dashed';
@@ -33,32 +34,60 @@ export default function CreateButton({
   display = 'responsive',
   className,
 }: CreateButtonProps) {
-  const mode: CreateButtonDisplay = variant === 'dashed' ? 'full' : display;
-  const classes = ['create-btn', `create-btn--${variant}`, `create-btn--${mode}`, className]
-    .filter(Boolean)
-    .join(' ');
+  if (variant === 'dashed') {
+    return <DashedCreateButton label={label} to={to} state={state} onClick={onClick} className={className} />;
+  }
 
-  const icon =
-    variant === 'dashed' ? <PlusCircle size={20} /> : <Plus size={mode === 'icon' ? 20 : 16} />;
-  const content = (
-    <>
-      {icon}
-      {mode !== 'icon' && <span className="create-btn__label">{label}</span>}
-    </>
-  );
+  const classes = [`create-btn--${display}`, className].filter(Boolean).join(' ');
+  const showLabel = display !== 'icon';
   // The text is hidden (display: none) at some widths, so keep an explicit accessible name.
-  const a11y = mode !== 'full' ? { 'aria-label': label, title: label } : {};
+  const a11y = display !== 'full' ? { 'aria-label': label, title: label } : {};
+  const icon = <Plus size={display === 'icon' ? 20 : 16} />;
+  const content = showLabel ? <span className="create-btn__label">{label}</span> : null;
 
   if (to) {
     return (
-      <Link to={to} state={state} className={classes} {...a11y}>
+      <Button to={to} state={state} size="sm" icon={icon} className={classes} {...a11y}>
+        {content}
+      </Button>
+    );
+  }
+
+  return (
+    <Button size="sm" icon={icon} className={classes} onClick={onClick} {...a11y}>
+      {content}
+    </Button>
+  );
+}
+
+/** Full-width dashed call to action (the "new booking" card). It has its own look, so it is not a Button. */
+function DashedCreateButton({
+  label,
+  to,
+  state,
+  onClick,
+  className,
+}: Pick<CreateButtonProps, 'label' | 'to' | 'state' | 'onClick' | 'className'>) {
+  const classes = ['create-btn', 'create-btn--dashed', 'create-btn--full', className]
+    .filter(Boolean)
+    .join(' ');
+  const content = (
+    <>
+      <PlusCircle size={20} />
+      <span className="create-btn__label">{label}</span>
+    </>
+  );
+
+  if (to) {
+    return (
+      <Link to={to} state={state} className={classes}>
         {content}
       </Link>
     );
   }
 
   return (
-    <button type="button" className={classes} onClick={onClick} {...a11y}>
+    <button type="button" className={classes} onClick={onClick}>
       {content}
     </button>
   );

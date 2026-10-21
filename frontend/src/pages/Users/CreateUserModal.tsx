@@ -6,7 +6,9 @@ import { useProfile } from '../../hooks/useProfile';
 import type { UserRole } from '../../types';
 import { Input } from '../../components/ui/input';
 import { FormField } from '../../components/ui/form-field';
-import { Button } from '../../components/ui/button';
+import { Button, IconButton } from '../../components/ui/button';
+import { Select } from '../../components/ui/select';
+import { Switch } from '../../components/ui/switch';
 import './CreateUserModal.css';
 
 interface Props {
@@ -68,9 +70,7 @@ export default function CreateUserModal({ onClose }: Props) {
       <div className="cum-modal" role="dialog" aria-modal="true">
         <div className="cum-header">
           <h2 className="cum-title">{t('users.create.title')}</h2>
-          <button className="cum-close" onClick={onClose} aria-label="Cerrar">
-            <X size={18} />
-          </button>
+          <IconButton label="Cerrar" icon={<X size={18} />} onClick={onClose} />
         </div>
 
         <div className="cum-tabs">
@@ -183,30 +183,24 @@ export default function CreateUserModal({ onClose }: Props) {
             </FormField>
           </div>
 
-          <FormField variant="small" label="Rol" htmlFor="cum-role">
-            <select
-              id="cum-role"
-              className="cum-select"
-              value={role}
-              onChange={(e) => setRole(e.target.value as UserRole)}
-            >
-              <option value="user">{t('userRoles.user')}</option>
-              {isSuperAdmin && <option value="admin">Admin</option>}
-            </select>
+          <FormField variant="small" label="Rol">
+            {(field) => (
+              <Select
+                {...field}
+                size="sm"
+                value={role}
+                onChange={(e) => setRole(e.target.value as UserRole)}
+              >
+                <option value="user">{t('userRoles.user')}</option>
+                {isSuperAdmin && <option value="admin">Admin</option>}
+              </Select>
+            )}
           </FormField>
 
           {isSuperAdmin && (
             <label className="cum-toggle">
               <span className="cum-toggle-label">{t('users.demo')}</span>
-              <button
-                type="button"
-                role="switch"
-                aria-checked={isDemo}
-                className={`cum-switch${isDemo ? ' cum-switch--on' : ''}`}
-                onClick={() => setIsDemo((v) => !v)}
-              >
-                <span className="cum-switch-thumb" />
-              </button>
+              <Switch label={t('users.demo')} checked={isDemo} onChange={setIsDemo} />
             </label>
           )}
 

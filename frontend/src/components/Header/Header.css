@@ -87,17 +87,10 @@
   gap: 0.75rem;
 }
 
-.header__menu-btn {
+/* Mobile-only menu toggle: an IconButton shown from 768px down, darker than the default */
+.icon-btn.header__menu-btn {
   display: none;
-  padding: 0.5rem;
-  border-radius: 0.75rem;
-  color: var(--color-slate-600);
-  transition: background-color 0.15s;
-  flex-shrink: 0;
-}
-
-.header__menu-btn:hover {
-  background-color: var(--color-slate-100);
+  --icon-btn-color: var(--color-slate-600);
 }
 
 @media (max-width: 1024px) {
@@ -111,10 +104,8 @@
 }
 
 @media (max-width: 768px) {
-  .header__menu-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  .icon-btn.header__menu-btn {
+    display: inline-flex;
   }
 
   .header {

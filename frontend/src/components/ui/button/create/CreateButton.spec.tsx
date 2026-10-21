@@ -11,7 +11,7 @@ describe('CreateButton', () => {
   it('is responsive by default: text in the DOM plus an accessible name', () => {
     renderBtn(<CreateButton label="Nuevo" onClick={() => {}} />);
     const btn = screen.getByRole('button', { name: 'Nuevo' });
-    expect(btn).toHaveClass('create-btn', 'create-btn--solid', 'create-btn--responsive');
+    expect(btn).toHaveClass('btn', 'btn--primary', 'btn--sm', 'create-btn--responsive');
     expect(btn).toHaveAttribute('type', 'button');
     expect(btn).toHaveAttribute('aria-label', 'Nuevo');
     expect(btn).toHaveTextContent('Nuevo');
@@ -53,6 +53,24 @@ describe('CreateButton', () => {
 
   it('appends a custom className', () => {
     renderBtn(<CreateButton label="Nuevo" className="custom" onClick={() => {}} />);
-    expect(screen.getByRole('button')).toHaveClass('create-btn', 'custom');
+    expect(screen.getByRole('button')).toHaveClass('btn', 'create-btn--responsive', 'custom');
+  });
+
+  it('the solid button is a Button; the dashed one is not', () => {
+    renderBtn(
+      <>
+        <CreateButton label="Solido" onClick={() => {}} />
+        <CreateButton label="Punteado" variant="dashed" onClick={() => {}} />
+      </>,
+    );
+    expect(screen.getByRole('button', { name: 'Solido' })).toHaveClass('btn');
+    expect(screen.getByRole('button', { name: 'Punteado' })).not.toHaveClass('btn');
+  });
+
+  it('dashed keeps its text visible and has no aria-label', () => {
+    renderBtn(<CreateButton label="Nueva reserva" variant="dashed" onClick={() => {}} />);
+    const btn = screen.getByRole('button', { name: 'Nueva reserva' });
+    expect(btn).not.toHaveAttribute('aria-label');
+    expect(btn).toHaveTextContent('Nueva reserva');
   });
 });

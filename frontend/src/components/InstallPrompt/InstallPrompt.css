@@ -70,47 +70,13 @@
 }
 
 .install-prompt__close {
-  flex-shrink: 0;
   margin: -0.25rem -0.25rem 0 0;
-  padding: 0.375rem;
-  border-radius: 0.5rem;
-  color: #9ca3af;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background-color 0.15s, color 0.15s;
-  cursor: pointer;
-}
-
-.install-prompt__close:hover {
-  background-color: #f3f4f6;
-  color: #374151;
 }
 
 .install-prompt__actions {
   margin-top: 0.75rem;
   padding-top: 0.75rem;
   border-top: 1px solid #f3f4f6;
-}
-
-.install-prompt__btn {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  padding: 0.5rem 1rem;
-  border-radius: 0.625rem;
-  background-color: var(--color-primary);
-  color: #ffffff;
-  font-size: 0.8125rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background-color 0.15s;
-}
-
-.install-prompt__btn:hover {
-  background-color: var(--color-primary-dark);
 }
 
 .install-prompt__ios {

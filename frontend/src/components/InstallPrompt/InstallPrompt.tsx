@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { X, Download, Share2 } from 'lucide-react'
+import { Button, IconButton } from '../ui/button'
 import './InstallPrompt.css'
 
 interface BeforeInstallPromptEvent extends Event {
@@ -84,13 +85,12 @@ export default function InstallPrompt() {
               <p className="install-prompt__desc">{t('installPrompt.description')}</p>
             </div>
 
-            <button
+            <IconButton
               className="install-prompt__close"
+              label={t('installPrompt.dismiss')}
+              icon={<X size={14} />}
               onClick={handleDismiss}
-              aria-label={t('installPrompt.dismiss')}
-            >
-              <X size={14} />
-            </button>
+            />
           </div>
 
           <div className="install-prompt__actions">
@@ -102,10 +102,9 @@ export default function InstallPrompt() {
                 <span>{t('installPrompt.iosThen')}</span>
               </p>
             ) : (
-              <button className="install-prompt__btn" onClick={handleInstall}>
-                <Download size={14} />
+              <Button size="sm" fullWidth icon={<Download size={14} />} onClick={handleInstall}>
                 {t('installPrompt.installBtn')}
-              </button>
+              </Button>
             )}
           </div>
         </div>

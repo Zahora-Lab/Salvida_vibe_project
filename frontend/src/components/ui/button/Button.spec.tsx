@@ -23,7 +23,7 @@ describe('Button (native)', () => {
     expect(screen.getByRole('button')).toHaveAttribute('type', 'submit');
   });
 
-  it.each(['primary', 'secondary', 'ghost', 'outline', 'dashed', 'danger'] as const)(
+  it.each(['primary', 'secondary', 'ghost', 'outline', 'dashed', 'danger', 'link'] as const)(
     'applies variant="%s"',
     (variant) => {
       renderBtn(<Button variant={variant}>x</Button>);

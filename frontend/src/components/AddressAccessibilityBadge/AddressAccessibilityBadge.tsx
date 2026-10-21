@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
+import { Badge } from '../ui/badge';
 import type { Address } from '../../types';
-import './AddressAccessibilityBadge.css';
 
 interface Props {
   value: Address['is_accessible'];
@@ -12,23 +12,23 @@ export default function AddressAccessibilityBadge({ value, className }: Props) {
 
   if (value === null || value === undefined) {
     return (
-      <span className={`addr-access-badge addr-access-badge--pending ${className ?? ''}`}>
+      <Badge tone="neutral" className={className}>
         {t('addresses.access.pending')}
-      </span>
+      </Badge>
     );
   }
 
   if (value) {
     return (
-      <span className={`addr-access-badge addr-access-badge--yes ${className ?? ''}`}>
+      <Badge tone="success" className={className}>
         ♿ {t('addresses.access.yes')}
-      </span>
+      </Badge>
     );
   }
 
   return (
-    <span className={`addr-access-badge addr-access-badge--no ${className ?? ''}`}>
+    <Badge tone="danger" className={className}>
       {t('addresses.access.no')}
-    </span>
+    </Badge>
   );
 }

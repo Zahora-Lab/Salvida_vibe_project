@@ -3,7 +3,8 @@ import { useTranslation } from 'react-i18next';
 import DropdownMenu from '../../components/DropdownMenu';
 import type { DropdownItem } from '../../components/DropdownMenu';
 import type { UserProfile } from '../../types';
-import { ROLE_LABEL, getDisplayName, getInitials } from './userDisplay';
+import { ROLE_LABEL, getDisplayName, getInitials, roleTone } from './userDisplay';
+import { Badge } from '../../components/ui/badge';
 
 interface UserCardProps {
   user: UserProfile;
@@ -44,14 +45,18 @@ export default function UserCard({ user, showDemo, menuItems, onOpen }: UserCard
           <dt>Rol</dt>
           <dd>
             <div className="users__role-cell">
-              <span className={`user-role-badge user-role-badge--${user.role}`}>
+              <Badge size="md" tone={roleTone(user.role)}>
                 {user.role === 'user' ? t('userRoles.user') : (ROLE_LABEL[user.role ?? ''] ?? user.role)}
-              </span>
+              </Badge>
               {showDemo && user.isDemo && (
-                <span className="user-demo-badge" title={t('users.demo')}>
-                  <FlaskConical size={12} />
+                <Badge
+                  size="md"
+                  tone="warning"
+                  icon={<FlaskConical size={12} />}
+                  title={t('users.demo')}
+                >
                   demo
-                </span>
+                </Badge>
               )}
             </div>
           </dd>
@@ -60,9 +65,9 @@ export default function UserCard({ user, showDemo, menuItems, onOpen }: UserCard
         <div className="users__card-field">
           <dt>Estado</dt>
           <dd>
-            <span className={`user-status-badge${isArchived ? ' user-status-badge--archived' : ' user-status-badge--active'}`}>
+            <Badge tone={isArchived ? 'neutral' : 'success'}>
               {isArchived ? 'Archivado' : 'Activo'}
-            </span>
+            </Badge>
           </dd>
         </div>
       </dl>

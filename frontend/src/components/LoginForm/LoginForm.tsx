@@ -5,6 +5,7 @@ import { supabase } from '../../lib/supabaseClient';
 import { useAuthStore } from '../../store/useAuthStore';
 import { Input } from '../ui/input';
 import { FormField } from '../ui/form-field';
+import { Button } from '../ui/button';
 import './LoginForm.css';
 
 interface LoginFormProps {
@@ -84,9 +85,9 @@ export default function LoginForm({ onSuccess }: LoginFormProps) {
 
       {error && <p className="login__error">{error}</p>}
 
-      <button type="submit" className="login__submit" disabled={loading}>
+      <Button type="submit" size="lg" fullWidth className="login__submit" loading={loading}>
         {loading ? t('login.submitting') : t('login.submit')}
-      </button>
+      </Button>
     </form>
   );
 }

@@ -1,4 +1,10 @@
+import type { BadgeTone } from '../../components/ui/badge';
 import type { UserProfile } from '../../types';
+
+/** Badge tone for a role: administrators stand out, regular users stay neutral. */
+export function roleTone(role: UserProfile['role']): BadgeTone {
+  return role === 'admin' || role === 'superadmin' ? 'primary' : 'neutral';
+}
 
 export const ROLE_LABEL: Record<string, string> = {
   superadmin: 'Super Admin',

@@ -5,7 +5,8 @@ import {
 } from 'lucide-react';
 import DropdownMenu from '../DropdownMenu';
 import { formatDateShort } from '../../utils';
-import { STATUS_CLASS } from '../../constants/booking';
+import { STATUS_TONE } from '../../constants/booking';
+import { Badge } from '../ui/badge';
 import type { Booking } from '../../types';
 import './BookingCard.css';
 
@@ -48,11 +49,11 @@ export default function BookingCard({
           <div className="booking-card__right">
             <div className="booking-card__badges">
               {booking.created_by_admin && (
-                <span className="booking-admin-badge">{t('dashboard.createdByAdmin')}</span>
+                <Badge tone="primary" bordered>{t('dashboard.createdByAdmin')}</Badge>
               )}
-              <span className={`booking-status ${STATUS_CLASS[booking.status]}`}>
+              <Badge tone={STATUS_TONE[booking.status]}>
                 {t(`bookingStatuses.${booking.status}`)}
-              </span>
+              </Badge>
               {booking.status === 'SignPending' && (
                 <button
                   type="button"

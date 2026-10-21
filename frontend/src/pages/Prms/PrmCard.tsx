@@ -5,6 +5,7 @@ import DropdownMenu from '../../components/DropdownMenu';
 import type { DropdownItem } from '../../components/DropdownMenu';
 import type { PrmListItem } from '../../hooks/usePrms';
 import { formatLastVisit } from '../../utils';
+import { Badge } from '../../components/ui/badge';
 
 interface PrmCardProps {
   prm: PrmListItem;
@@ -24,9 +25,9 @@ export default function PrmCard({ prm, isAdmin, menuItems }: PrmCardProps) {
           <div className="prm-link__avatar">{prm.name.charAt(0)}</div>
           <div className="prms__card-id">
             <span className="prm-link__name">{prm.name}</span>
-            <span className={`prm-status ${isActive ? 'prm-status--active' : 'prm-status--inactive'}`}>
+            <Badge tone={isActive ? 'success' : 'neutral'}>
               {isActive ? t('common.active') : t('common.archived')}
-            </span>
+            </Badge>
           </div>
         </Link>
         <DropdownMenu items={menuItems} />

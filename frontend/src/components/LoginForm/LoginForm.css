@@ -14,28 +14,5 @@
 }
 
 .login__submit {
-  width: 100%;
-  padding: 0.875rem 1rem;
-  background: var(--color-primary);
-  color: white;
-  border-radius: 0.875rem;
-  font-size: 0.9375rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: opacity 0.15s, transform 0.1s;
   margin-top: 0.25rem;
-  border: none;
-}
-
-.login__submit:hover:not(:disabled) {
-  opacity: 0.9;
-}
-
-.login__submit:active:not(:disabled) {
-  transform: scale(0.99);
-}
-
-.login__submit:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
 }

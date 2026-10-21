@@ -1,0 +1,67 @@
+/*
+ * Theming tokens (a container can redefine them once, like --input-*):
+ *   --badge-bg      background
+ *   --badge-color   text and border color
+ */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  border: 1px solid transparent;
+  border-radius: 9999px;
+  background: var(--badge-bg);
+  color: var(--badge-color);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.badge--uppercase {
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.badge--bordered {
+  border-color: var(--badge-color);
+}
+
+/* ── size ──────────────────────────────────────────────────────────────── */
+.badge--sm {
+  padding: calc(0.25rem - 1px) calc(0.75rem - 1px);
+  font-size: 0.625rem;
+}
+
+.badge--md {
+  padding: calc(0.2rem - 1px) calc(0.6rem - 1px);
+  font-size: 0.72rem;
+}
+
+/* ── tone: one pair per meaning ────────────────────────────────────────── */
+.badge--success {
+  --badge-bg: var(--color-emerald-50);
+  --badge-color: var(--color-emerald-600);
+}
+
+.badge--warning {
+  --badge-bg: #fef3c7;
+  --badge-color: #92400e;
+}
+
+.badge--danger {
+  --badge-bg: #fef2f2;
+  --badge-color: var(--color-red-500);
+}
+
+.badge--info {
+  --badge-bg: #dbeafe;
+  --badge-color: #1d4ed8;
+}
+
+.badge--neutral {
+  --badge-bg: var(--color-slate-100);
+  --badge-color: var(--color-slate-500);
+}
+
+.badge--primary {
+  --badge-bg: var(--color-primary-10);
+  --badge-color: var(--color-primary);
+}
