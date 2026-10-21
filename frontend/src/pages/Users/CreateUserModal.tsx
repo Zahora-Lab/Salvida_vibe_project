@@ -6,6 +6,7 @@ import { useProfile } from '../../hooks/useProfile';
 import type { UserRole } from '../../types';
 import { Input } from '../../components/ui/input';
 import { FormField } from '../../components/ui/form-field';
+import { Button } from '../../components/ui/button';
 import './CreateUserModal.css';
 
 interface Props {
@@ -216,12 +217,12 @@ export default function CreateUserModal({ onClose }: Props) {
           )}
 
           <div className="cum-actions">
-            <button type="button" className="cum-btn cum-btn--secondary" onClick={onClose}>
+            <Button variant="secondary" size="sm" onClick={onClose}>
               Cancelar
-            </button>
-            <button type="submit" className="cum-btn cum-btn--primary" disabled={createUser.isPending}>
+            </Button>
+            <Button type="submit" size="sm" loading={createUser.isPending}>
               {createUser.isPending ? 'Creando…' : method === 'invite' ? 'Enviar invitación' : t('users.create.submit')}
-            </button>
+            </Button>
           </div>
         </form>
       </div>

@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Loader2, X } from 'lucide-react';
 import { toast } from 'react-toastify';
 import SignatureCanvas from '../SignatureCanvas/SignatureCanvas';
+import { Button } from '../ui/button';
 import { useSignBooking } from '../../hooks/useBookings';
 import type { Booking } from '../../types';
 import './ContractModal.css';
@@ -62,29 +63,23 @@ export default function ContractModal({ booking, onClose, onSigned }: ContractMo
         </div>
 
         <div className="contract-modal__footer">
-          <button
-            type="button"
-            className="contract-modal__btn contract-modal__btn--secondary"
+          <Button
+            variant="secondary"
+            size="sm"
             onClick={onClose}
             disabled={signBooking.isPending}
           >
             {t('booking.cancel')}
-          </button>
-          <button
-            type="button"
-            className="contract-modal__btn contract-modal__btn--primary"
+          </Button>
+          <Button
+            size="sm"
             onClick={handleSubmit}
-            disabled={isEmpty || signBooking.isPending}
+            disabled={isEmpty}
+            loading={signBooking.isPending}
+            icon={signBooking.isPending ? <Loader2 size={16} className="animate-spin" /> : undefined}
           >
-            {signBooking.isPending ? (
-              <>
-                <Loader2 size={16} className="animate-spin" />
-                {t('contract.submitting')}
-              </>
-            ) : (
-              t('contract.submitSignature')
-            )}
-          </button>
+            {signBooking.isPending ? t('contract.submitting') : t('contract.submitSignature')}
+          </Button>
         </div>
       </div>
     </div>

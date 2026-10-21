@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { Button } from '../ui/button';
 import './ConfirmDialog.css';
 
 interface ConfirmDialogProps {
@@ -47,20 +48,12 @@ export default function ConfirmDialog({
           <p className="confirm-dialog__desc">{description}</p>
         )}
         <div className="confirm-dialog__actions">
-          <button
-            type="button"
-            className="confirm-dialog__btn confirm-dialog__btn--cancel"
-            onClick={onCancel}
-          >
+          <Button variant="secondary" onClick={onCancel}>
             {cancelLabel}
-          </button>
-          <button
-            type="button"
-            className={`confirm-dialog__btn confirm-dialog__btn--confirm${variant === 'danger' ? ' confirm-dialog__btn--danger' : ''}`}
-            onClick={onConfirm}
-          >
+          </Button>
+          <Button variant={variant === 'danger' ? 'danger' : 'primary'} onClick={onConfirm}>
             {confirmLabel}
-          </button>
+          </Button>
         </div>
       </div>
     </div>
