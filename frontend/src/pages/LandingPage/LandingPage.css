@@ -852,6 +852,9 @@
   --input-placeholder-color: #757575;
   --input-toggle-color: var(--lp-on-surface-variant, #888);
   --input-toggle-hover-color: var(--lp-primary);
+  /* FormField theme */
+  --field-label-color: var(--lp-on-surface);
+  --field-label-letter-spacing: -0.01em;
   width: 100%;
   max-width: 440px;
   background: var(--lp-surface-bright);
@@ -961,17 +964,7 @@
 }
 
 .lp-modal__field {
-  display: flex;
-  flex-direction: column;
-  gap: 0.375rem;
   margin-bottom: 1rem;
-}
-
-.lp-modal__label {
-  font-size: 0.8125rem;
-  font-weight: 600;
-  color: var(--lp-on-surface);
-  letter-spacing: -0.01em;
 }
 
 .lp-modal__error {

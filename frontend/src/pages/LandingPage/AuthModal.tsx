@@ -5,6 +5,7 @@ import { supabase } from '../../lib/supabaseClient';
 import { useAuthStore } from '../../store/useAuthStore';
 import { useAuthFormStore } from '../../store/useAuthFormStore';
 import { Input } from '../../components/ui/input';
+import { FormField } from '../../components/ui/form-field';
 
 interface AuthModalProps {
   open: boolean;
@@ -101,104 +102,107 @@ export default function AuthModal({ open, onClose }: AuthModalProps) {
 
           <form onSubmit={handleRegister}>
             <div className="lp-modal__field-row">
-              <div className="lp-modal__field">
-                <label className="lp-modal__label" htmlFor="modal-reg-firstname">
-                  {t('login.firstName')}
-                </label>
+              <FormField variant="small" label={t('login.firstName')} htmlFor="modal-reg-firstname" className="lp-modal__field">
+                {(field) => (
+                  <Input
+                    {...field}
+                    type="text"
+                    placeholder={t('login.firstNamePlaceholder')}
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
+                    required
+                    autoComplete="given-name"
+                  />
+                )}
+              </FormField>
+              <FormField variant="small" label={t('login.lastName')} htmlFor="modal-reg-lastname" className="lp-modal__field">
+                {(field) => (
+                  <Input
+                    {...field}
+                    type="text"
+                    placeholder={t('login.lastNamePlaceholder')}
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
+                    required
+                    autoComplete="family-name"
+                  />
+                )}
+              </FormField>
+            </div>
+
+            <FormField variant="small" label={t('login.dni')} htmlFor="modal-reg-dni" className="lp-modal__field">
+              {(field) => (
                 <Input
-                  id="modal-reg-firstname"
+                  {...field}
                   type="text"
-                  placeholder={t('login.firstNamePlaceholder')}
-                  value={firstName}
-                  onChange={(e) => setFirstName(e.target.value)}
+                  placeholder={t('login.dniPlaceholder')}
+                  value={dni}
+                  onChange={(e) => setDni(e.target.value)}
                   required
-                  autoComplete="given-name"
+                  autoComplete="off"
                 />
-              </div>
-              <div className="lp-modal__field">
-                <label className="lp-modal__label" htmlFor="modal-reg-lastname">
-                  {t('login.lastName')}
-                </label>
+              )}
+            </FormField>
+
+            <FormField variant="small" label={t('login.phone')} htmlFor="modal-reg-phone" className="lp-modal__field">
+              {(field) => (
                 <Input
-                  id="modal-reg-lastname"
-                  type="text"
-                  placeholder={t('login.lastNamePlaceholder')}
-                  value={lastName}
-                  onChange={(e) => setLastName(e.target.value)}
+                  {...field}
+                  type="tel"
+                  placeholder={t('login.phonePlaceholder')}
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
                   required
-                  autoComplete="family-name"
+                  autoComplete="tel"
                 />
-              </div>
-            </div>
+              )}
+            </FormField>
 
-            <div className="lp-modal__field">
-              <label className="lp-modal__label" htmlFor="modal-reg-dni">{t('login.dni')}</label>
-              <Input
-                id="modal-reg-dni"
-                type="text"
-                placeholder={t('login.dniPlaceholder')}
-                value={dni}
-                onChange={(e) => setDni(e.target.value)}
-                required
-                autoComplete="off"
-              />
-            </div>
+            <FormField variant="small" label={t('login.email')} htmlFor="modal-reg-email" className="lp-modal__field">
+              {(field) => (
+                <Input
+                  {...field}
+                  type="email"
+                  placeholder={t('login.emailPlaceholder')}
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  autoComplete="email"
+                />
+              )}
+            </FormField>
 
-            <div className="lp-modal__field">
-              <label className="lp-modal__label" htmlFor="modal-reg-phone">{t('login.phone')}</label>
-              <Input
-                id="modal-reg-phone"
-                type="tel"
-                placeholder={t('login.phonePlaceholder')}
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-                required
-                autoComplete="tel"
-              />
-            </div>
+            <FormField variant="small" label={t('login.password')} htmlFor="modal-reg-password" className="lp-modal__field">
+              {(field) => (
+                <Input
+                  {...field}
+                  type="password"
+                  placeholder={t('login.passwordPlaceholder')}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  autoComplete="new-password"
+                  showLabel={t('login.showPassword')}
+                  hideLabel={t('login.hidePassword')}
+                />
+              )}
+            </FormField>
 
-            <div className="lp-modal__field">
-              <label className="lp-modal__label" htmlFor="modal-reg-email">{t('login.email')}</label>
-              <Input
-                id="modal-reg-email"
-                type="email"
-                placeholder={t('login.emailPlaceholder')}
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                autoComplete="email"
-              />
-            </div>
-
-            <div className="lp-modal__field">
-              <label className="lp-modal__label" htmlFor="modal-reg-password">{t('login.password')}</label>
-              <Input
-                id="modal-reg-password"
-                type="password"
-                placeholder={t('login.passwordPlaceholder')}
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-                autoComplete="new-password"
-                showLabel={t('login.showPassword')}
-                hideLabel={t('login.hidePassword')}
-              />
-            </div>
-
-            <div className="lp-modal__field">
-              <label className="lp-modal__label" htmlFor="modal-reg-confirm">{t('login.confirmPassword')}</label>
-              <Input
-                id="modal-reg-confirm"
-                type="password"
-                placeholder={t('login.confirmPasswordPlaceholder')}
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                required
-                autoComplete="new-password"
-                showLabel={t('login.showPassword')}
-                hideLabel={t('login.hidePassword')}
-              />
-            </div>
+            <FormField variant="small" label={t('login.confirmPassword')} htmlFor="modal-reg-confirm" className="lp-modal__field">
+              {(field) => (
+                <Input
+                  {...field}
+                  type="password"
+                  placeholder={t('login.confirmPasswordPlaceholder')}
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  required
+                  autoComplete="new-password"
+                  showLabel={t('login.showPassword')}
+                  hideLabel={t('login.hidePassword')}
+                />
+              )}
+            </FormField>
 
             {error && <p className="lp-modal__error">{error}</p>}
             {success ? (
