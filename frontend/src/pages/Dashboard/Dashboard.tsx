@@ -1,11 +1,11 @@
 import { useState, useMemo } from 'react';
-import Header from '../../components/Header/Header';
-import CalendarWidget from '../../components/CalendarWidget/CalendarWidget';
-import FilterBar from '../../components/FilterBar/FilterBar';
-import type { BookingFilterValues } from '../../components/FilterBar/FilterBar';
-import BookingCard from '../../components/BookingCard/BookingCard';
-import type { MultiSelectOption } from '../../components/MultiSelect/MultiSelect';
-import ContractModal from '../../components/ContractModal/ContractModal';
+import Header from '../../components/layout/header/Header';
+import CalendarWidget from '../../components/features/booking/calendar-widget/CalendarWidget';
+import FilterBar from '../../components/features/booking/filter-bar/FilterBar';
+import type { BookingFilterValues } from '../../components/features/booking/filter-bar/FilterBar';
+import BookingCard from '../../components/features/booking/booking-card/BookingCard';
+import type { MultiSelectOption } from '../../components/ui/multi-select/MultiSelect';
+import ContractModal from '../../components/features/booking/contract-modal/ContractModal';
 import { CreateButton } from '../../components/ui/button';
 import {
   CalendarDays,

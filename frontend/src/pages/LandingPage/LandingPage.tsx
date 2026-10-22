@@ -9,10 +9,10 @@ import "swiper/swiper.css";
 import PLATFORM_ICONS from "../../lib/platformIcons";
 import { SalvidaLogo } from "../../assets/icons/SalvidaLogo";
 import { fetchWithRetry } from "../../lib/api";
-import Spinner from "../../components/Spinner";
+import Spinner from "../../components/ui/spinner/Spinner";
 import "./LandingPage.css";
 import videoSrc from "../../assets/video/Y0S8F6SYMHLHC1WP.mp4";
-import WhatsAppFAB from "../../components/WhatsAppFAB/WhatsAppFAB";
+import WhatsAppFAB from "../../components/features/app/whatsapp-fab/WhatsAppFAB";
 
 // ---------------------------------------------------------------------------
 // Social link type from API

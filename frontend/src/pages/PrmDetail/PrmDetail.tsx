@@ -19,7 +19,7 @@ import {
 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { usePrm, useUpdatePrm, useAddEmergencyContact, useDeleteEmergencyContact, useUpdateEmergencyContact } from '../../hooks/usePrms';
-import DropdownMenu from '../../components/DropdownMenu';
+import DropdownMenu from '../../components/ui/dropdown-menu/DropdownMenu';
 import { useAuthStore } from '../../store/useAuthStore';
 import { supabase } from '../../lib/supabaseClient';
 import { toast } from 'react-toastify';
@@ -29,10 +29,10 @@ import {
   useDeletePrmAddress,
   useUpdatePrmAddress,
 } from '../../hooks/usePrmAddresses';
-import AddressSelector from '../../components/AddressSelector';
-import PrmAddressesMap from '../../components/PrmAddressesMap/PrmAddressesMap';
-import AddressAccessibilityBadge from '../../components/AddressAccessibilityBadge/AddressAccessibilityBadge';
-import DateInput from '../../components/DateInput/DateInput';
+import AddressSelector from '../../components/features/address/address-selector/AddressSelector';
+import PrmAddressesMap from '../../components/features/prm/prm-addresses-map/PrmAddressesMap';
+import AddressAccessibilityBadge from '../../components/features/address/address-accessibility-badge/AddressAccessibilityBadge';
+import DateInput from '../../components/ui/date-input/DateInput';
 import type { Address } from '../../types';
 import PrmRecentHistory from './PrmRecentHistory';
 import { Input } from '../../components/ui/input';

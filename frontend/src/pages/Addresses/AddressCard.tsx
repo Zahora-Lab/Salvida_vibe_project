@@ -1,6 +1,6 @@
 import { MapPin, ChevronDown, ChevronUp, User } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import AddressAccessibilityBadge from '../../components/AddressAccessibilityBadge/AddressAccessibilityBadge';
+import AddressAccessibilityBadge from '../../components/features/address/address-accessibility-badge/AddressAccessibilityBadge';
 import type { Address } from '../../types';
 import AddressActions from './AddressActions';
 import AddressMapPreview from './AddressMapPreview';

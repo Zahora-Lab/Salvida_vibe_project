@@ -5,7 +5,7 @@ import 'leaflet/dist/leaflet.css';
 import { Check, X, RotateCcw, MapPin, User } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import type { Address } from '../../types';
-import AddressAccessibilityBadge from '../../components/AddressAccessibilityBadge/AddressAccessibilityBadge';
+import AddressAccessibilityBadge from '../../components/features/address/address-accessibility-badge/AddressAccessibilityBadge';
 
 delete (L.Icon.Default.prototype as unknown as Record<string, unknown>)._getIconUrl;
 L.Icon.Default.mergeOptions({

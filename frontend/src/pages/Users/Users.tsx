@@ -2,9 +2,9 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { FlaskConical } from 'lucide-react';
-import Header from '../../components/Header/Header';
-import DropdownMenu from '../../components/DropdownMenu';
-import type { DropdownItem } from '../../components/DropdownMenu';
+import Header from '../../components/layout/header/Header';
+import DropdownMenu from '../../components/ui/dropdown-menu/DropdownMenu';
+import type { DropdownItem } from '../../components/ui/dropdown-menu/DropdownMenu';
 import { ListToolbar } from '../../components/ui/list-toolbar';
 import { FilterTabs } from '../../components/ui/filter-tabs';
 import {

@@ -1,7 +1,7 @@
 import { FlaskConical } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import DropdownMenu from '../../components/DropdownMenu';
-import type { DropdownItem } from '../../components/DropdownMenu';
+import DropdownMenu from '../../components/ui/dropdown-menu/DropdownMenu';
+import type { DropdownItem } from '../../components/ui/dropdown-menu/DropdownMenu';
 import type { UserProfile } from '../../types';
 import { ROLE_LABEL, getDisplayName, getInitials, roleTone } from './userDisplay';
 import { Badge } from '../../components/ui/badge';

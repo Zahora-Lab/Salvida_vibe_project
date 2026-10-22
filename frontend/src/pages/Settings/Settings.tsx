@@ -1,4 +1,4 @@
-import Header from "../../components/Header/Header";
+import Header from "../../components/layout/header/Header";
 import {
   User,
   Bell,
@@ -22,9 +22,9 @@ import {
   useUsers,
   useArchiveUser,
 } from "../../hooks/useProfile";
-import DropdownMenu from "../../components/DropdownMenu";
-import ConfirmDialog from "../../components/ConfirmDialog/ConfirmDialog";
-import UserSelector from "../../components/UserSelector/UserSelector";
+import DropdownMenu from "../../components/ui/dropdown-menu/DropdownMenu";
+import ConfirmDialog from "../../components/ui/confirm-dialog/ConfirmDialog";
+import UserSelector from "../../components/features/user/user-selector/UserSelector";
 import SettingsRRSS from "./SettingsRRSS";
 import { usePushNotifications } from "../../hooks/usePushNotifications";
 import { supabase } from "../../lib/supabaseClient";

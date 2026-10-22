@@ -1,5 +1,5 @@
 import { ShieldCheck } from 'lucide-react';
-import Header from '../../components/Header/Header';
+import Header from '../../components/layout/header/Header';
 import { useAuthStore } from '../../store/useAuthStore';
 import { useDemoMode } from '../../hooks/useProfile';
 import './SuperAdmin.css';
