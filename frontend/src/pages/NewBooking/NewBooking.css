@@ -5,7 +5,6 @@
   overflow: hidden;
 }
 
-
 .new-booking__header {
   height: 5rem;
   display: flex;
@@ -46,65 +45,7 @@
   padding-bottom: 2rem;
 }
 
-.location-field__input {
-  width: 100%;
-  padding: 0.875rem 1rem;
-  border-radius: 0.75rem;
-  border: none;
-  background-color: var(--color-slate-50);
-  font-size: 0.875rem;
-  font-weight: 500;
-  outline: none;
-  transition: box-shadow 0.15s;
-}
-
-.location-field__input:focus {
-  box-shadow: 0 0 0 2px var(--color-primary);
-}
-
 /* Passenger card */
-.passenger-card {
-  background-color: white;
-  padding: 1.5rem;
-  border-radius: 1.5rem;
-  border: 1px solid var(--color-slate-100);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.passenger-card__left {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.passenger-card__icon {
-  width: 3rem;
-  height: 3rem;
-  border-radius: 1rem;
-  background-color: var(--color-primary-05);
-  color: var(--color-primary);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-
-.passenger-card__title {
-  font-weight: 700;
-  color: var(--color-slate-900);
-}
-
-.passenger-card__sub {
-  font-size: 0.625rem;
-  font-weight: 700;
-  color: var(--color-slate-400);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  margin-top: 0.125rem;
-}
 
 /* Toggle */
 .toggle-label {
@@ -125,80 +66,7 @@
   border: 0;
 }
 
-.toggle-track {
-  width: 3.5rem;
-  height: 2rem;
-  background-color: var(--color-slate-100);
-  border-radius: 9999px;
-  position: relative;
-  transition: background-color 0.2s;
-}
-
-.toggle-label input:checked + .toggle-track {
-  background-color: var(--color-primary);
-}
-
-.toggle-thumb {
-  position: absolute;
-  top: 0.25rem;
-  left: 0.25rem;
-  width: 1.5rem;
-  height: 1.5rem;
-  background-color: white;
-  border-radius: 50%;
-  transition: transform 0.2s;
-}
-
-.toggle-label input:checked ~ .toggle-track .toggle-thumb {
-  transform: translateX(1.5rem);
-}
-
 /* Urgency */
-.urgency-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: 1rem;
-  padding-bottom: 8rem;
-}
-
-.urgency-btn {
-  padding: 1.5rem;
-  border-radius: 1.5rem;
-  border: 2px solid var(--color-slate-100);
-  background-color: white;
-  color: var(--color-slate-400);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.75rem;
-  transition: border-color 0.15s, background-color 0.15s, color 0.15s, box-shadow 0.15s;
-  cursor: pointer;
-}
-
-.urgency-btn:hover {
-  border-color: var(--color-primary-30);
-}
-
-.urgency-btn--routine-active {
-  background-color: var(--color-primary);
-  border-color: var(--color-primary);
-  color: white;
-  box-shadow: 0 20px 25px -5px var(--color-primary-30);
-}
-
-.urgency-btn--urgent-active {
-  background-color: var(--color-red-500);
-  border-color: var(--color-red-500);
-  color: white;
-  box-shadow: 0 20px 25px -5px rgba(239, 68, 68, 0.3);
-}
-
-.urgency-btn__label {
-  font-weight: 900;
-  font-size: 0.875rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-}
 
 /* Bottom actions */
 .booking-actions {
@@ -265,7 +133,6 @@
   letter-spacing: 0.05em;
 }
 
-
 /* Standard empty placeholder — dashed, matches Dirección empty style */
 .field-card-placeholder {
   width: 100%;
@@ -301,12 +168,6 @@
 }
 
 /* PRM dropdown */
-.prm-dropdown-trigger {
-  text-align: left;
-  cursor: pointer;
-  color: var(--color-slate-400);
-  font-weight: 500;
-}
 
 .prm-dropdown-list {
   position: absolute;
@@ -543,9 +404,7 @@
     padding: 1rem;
   }
 
-  .passenger-card {
-    padding: 1rem;
-  }
+  
 
   .booking-actions {
     padding: 1rem;

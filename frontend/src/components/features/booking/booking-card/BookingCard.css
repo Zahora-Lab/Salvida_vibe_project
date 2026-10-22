@@ -91,16 +91,6 @@
   gap: 0.4rem;
 }
 
-.booking-card__more-btn {
-  color: var(--color-slate-400);
-  transition: color 0.15s;
-  display: flex;
-}
-
-.booking-card__more-btn:hover {
-  color: var(--color-primary);
-}
-
 .booking-card__map-icon {
   display: inline-flex;
   align-items: center;

@@ -95,19 +95,6 @@
   color: var(--color-slate-900);
 }
 
-.bookings-header__view-all {
-  font-size: 0.875rem;
-  font-weight: 700;
-  color: var(--color-primary);
-  background: none;
-  border: none;
-  cursor: pointer;
-}
-
-.bookings-header__view-all:hover {
-  text-decoration: underline;
-}
-
 .booking-list {
   display: flex;
   flex-direction: column;
@@ -205,16 +192,6 @@
   align-items: center;
   gap: 0.4rem;
   flex-wrap: wrap;
-}
-
-.booking-card__more-btn {
-  color: var(--color-slate-400);
-  transition: color 0.15s;
-  display: flex;
-}
-
-.booking-card__more-btn:hover {
-  color: var(--color-primary);
 }
 
 .booking-card__map-icon {

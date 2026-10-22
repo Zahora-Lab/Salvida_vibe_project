@@ -258,16 +258,6 @@
   letter-spacing: 0.05em;
 }
 
-.addr-popup__accessible--yes {
-  background: var(--color-emerald-50);
-  color: var(--color-emerald-600);
-}
-
-.addr-popup__accessible--no {
-  background: var(--color-slate-100);
-  color: var(--color-slate-500);
-}
-
 /* Notas de validación */
 .addr-popup__notes {
   margin: 0;
@@ -355,48 +345,8 @@
 }
 
 /* Badges — tri-state accessibility */
-.addresses__access-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.25rem;
-  padding: 0.25rem 0.625rem;
-  border-radius: 9999px;
-  font-size: 0.6875rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  white-space: nowrap;
-}
-
-.addresses__access-badge--pending {
-  background: var(--color-slate-100);
-  color: var(--color-slate-500);
-}
-
-.addresses__access-badge--yes {
-  background: var(--color-emerald-50);
-  color: var(--color-emerald-600);
-}
-
-.addresses__access-badge--no {
-  background: #fff5f5;
-  color: #c53030;
-}
 
 /* Keep status badge for backward compat (used in map popup) */
-.addresses__status-badge {
-  display: inline-block;
-  padding: 0.25rem 0.625rem;
-  border-radius: 9999px;
-  font-size: 0.6875rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-.addresses__status-badge--pending  { background: #fff7ed; color: #c05621; }
-.addresses__status-badge--validated { background: var(--color-emerald-50); color: var(--color-emerald-600); }
-.addresses__status-badge--rejected  { background: #fff5f5; color: #c53030; }
 
 /* Action buttons */
 .addresses__action-group {

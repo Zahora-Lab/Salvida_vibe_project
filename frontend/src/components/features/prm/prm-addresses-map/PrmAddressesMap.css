@@ -45,26 +45,6 @@
   margin-top: 0.125rem;
 }
 
-.prm-addresses-map__popup-accessible {
-  display: inline-block;
-  padding: 0.2rem 0.5rem;
-  border-radius: 0.5rem;
-  font-size: 0.625rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-}
-
-.prm-addresses-map__popup-accessible--yes {
-  background-color: var(--color-emerald-50);
-  color: var(--color-emerald-600);
-}
-
-.prm-addresses-map__popup-accessible--no {
-  background-color: var(--color-slate-100);
-  color: var(--color-slate-500);
-}
-
 .prm-addresses-map__popup-notes {
   font-size: 0.7rem;
   color: var(--color-slate-500);
