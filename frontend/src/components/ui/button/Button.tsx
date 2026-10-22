@@ -9,11 +9,16 @@ export type ButtonVariant =
   | 'outline'
   | 'dashed'
   | 'danger'
-  | 'link';
+  | 'link'
+  | 'soft';
 export type ButtonSize = 'lg' | 'md' | 'sm' | 'xs';
+/** Meaning of a `soft` or `outline` button. Same palette as `Badge`. */
+export type ButtonTone = 'neutral' | 'primary' | 'success' | 'danger' | 'warning';
 
 interface ButtonCommonProps {
   variant?: ButtonVariant;
+  /** Only affects `soft` and `outline`: tints the button with the tone's colors. */
+  tone?: ButtonTone;
   /** Same scale as `Input`, so a field and its button line up. */
   size?: ButtonSize;
   fullWidth?: boolean;
@@ -43,10 +48,19 @@ export type ButtonProps = NativeButtonProps | LinkButtonProps;
 
 /** Action button. `type` defaults to "button" so it never submits a form by accident. */
 export default function Button(props: ButtonProps) {
-  const { variant = 'primary', size = 'md', fullWidth = false, icon, className, children } = props;
+  const {
+    variant = 'primary',
+    tone = 'neutral',
+    size = 'md',
+    fullWidth = false,
+    icon,
+    className,
+    children,
+  } = props;
   const classes = [
     'btn',
     `btn--${variant}`,
+    `btn--tone-${tone}`,
     `btn--${size}`,
     fullWidth && 'btn--full',
     className,
@@ -80,6 +94,7 @@ export default function Button(props: ButtonProps) {
     type = 'button',
     disabled,
     variant: _variant,
+    tone: _tone,
     size: _size,
     fullWidth: _fullWidth,
     icon: _icon,

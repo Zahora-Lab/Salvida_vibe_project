@@ -23,13 +23,36 @@ describe('Button (native)', () => {
     expect(screen.getByRole('button')).toHaveAttribute('type', 'submit');
   });
 
-  it.each(['primary', 'secondary', 'ghost', 'outline', 'dashed', 'danger', 'link'] as const)(
+  it.each(['primary', 'secondary', 'ghost', 'outline', 'dashed', 'danger', 'link', 'soft'] as const)(
     'applies variant="%s"',
     (variant) => {
       renderBtn(<Button variant={variant}>x</Button>);
       expect(screen.getByRole('button')).toHaveClass(`btn--${variant}`);
     },
   );
+
+  it('is neutral-toned by default', () => {
+    renderBtn(<Button variant="soft">x</Button>);
+    expect(screen.getByRole('button')).toHaveClass('btn--soft', 'btn--tone-neutral');
+  });
+
+  it.each(['neutral', 'primary', 'success', 'danger', 'warning'] as const)(
+    'applies tone="%s"',
+    (tone) => {
+      renderBtn(<Button variant="soft" tone={tone}>x</Button>);
+      expect(screen.getByRole('button')).toHaveClass(`btn--tone-${tone}`);
+    },
+  );
+
+  it('does not leak the tone prop to the DOM', () => {
+    renderBtn(<Button variant="outline" tone="primary">x</Button>);
+    expect(screen.getByRole('button')).not.toHaveAttribute('tone');
+  });
+
+  it('tones also work on links', () => {
+    renderBtn(<Button to="/x" variant="outline" tone="success">x</Button>);
+    expect(screen.getByRole('link')).toHaveClass('btn--outline', 'btn--tone-success');
+  });
 
   it.each(['lg', 'md', 'sm', 'xs'] as const)('applies size="%s"', (size) => {
     renderBtn(<Button size={size}>x</Button>);

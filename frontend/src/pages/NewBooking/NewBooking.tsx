@@ -111,13 +111,14 @@ export default function NewBooking() {
                         <span className="prm-selected-card__dni">{selectedOwner.email}</span>
                       )}
                     </div>
-                    <button
-                      type="button"
-                      className="prm-selected-card__change"
+                    <Button
+                      variant="outline"
+                      tone="primary"
+                      size="xs"
                       onClick={() => { setSelectedOwnerId(''); setSelectedOwner(null); setManualPrm(null); setAddress({}); }}
                     >
                       {t('booking.changePrm')}
-                    </button>
+                    </Button>
                   </div>
                 ) : (
                   <UserSelector
@@ -169,13 +170,14 @@ export default function NewBooking() {
                         )}
                       </div>
                       {prms.length > 1 && (
-                        <button
-                          type="button"
-                          className="prm-selected-card__change"
-                           onClick={() => { setManualPrm(null); setAddress({}); }}
+                        <Button
+                          variant="outline"
+                          tone="primary"
+                          size="xs"
+                          onClick={() => { setManualPrm(null); setAddress({}); }}
                         >
                           {t('booking.changePrm')}
-                        </button>
+                        </Button>
                       )}
                     </div>
                   ) : (

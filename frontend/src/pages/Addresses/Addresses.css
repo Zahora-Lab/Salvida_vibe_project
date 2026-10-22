@@ -288,37 +288,6 @@
   flex-wrap: wrap;
 }
 
-.addr-popup__btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.2rem;
-  padding: 0.3rem 0.625rem;
-  border-radius: 0.5rem;
-  font-size: 0.7rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.15s;
-  border: 1px solid transparent;
-}
-
-.addr-popup__btn--validate {
-  background: var(--color-emerald-50);
-  color: var(--color-emerald-600);
-}
-.addr-popup__btn--validate:hover { background: #d1fae5; }
-
-.addr-popup__btn--reject {
-  background: #fff5f5;
-  color: #c53030;
-}
-.addr-popup__btn--reject:hover { background: #fed7d7; }
-
-.addr-popup__btn--reset {
-  background: var(--color-slate-100);
-  color: var(--color-slate-600);
-}
-.addr-popup__btn--reset:hover { background: var(--color-slate-200); }
-
 /* Table */
 .addresses__table-wrap {
   background: white;
@@ -435,48 +404,6 @@
   align-items: center;
   gap: 0.375rem;
   flex-wrap: wrap;
-}
-
-.addresses__action-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.25rem;
-  padding: 0.375rem 0.625rem;
-  border-radius: 0.5rem;
-  font-size: 0.75rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.15s;
-}
-
-.addresses__action-btn--validate {
-  background: var(--color-emerald-50);
-  color: var(--color-emerald-600);
-  border: 1px solid transparent;
-}
-
-.addresses__action-btn--validate:hover {
-  background: var(--color-emerald-100, #d1fae5);
-}
-
-.addresses__action-btn--reject {
-  background: #fff5f5;
-  color: #c53030;
-  border: 1px solid transparent;
-}
-
-.addresses__action-btn--reject:hover {
-  background: #fed7d7;
-}
-
-.addresses__action-btn--reset {
-  background: var(--color-slate-100);
-  color: var(--color-slate-600);
-  border: 1px solid transparent;
-}
-
-.addresses__action-btn--reset:hover {
-  background: var(--color-slate-200);
 }
 
 /* Expand button */
@@ -644,7 +571,7 @@
   gap: 0.5rem;
 }
 
-.addresses__card-row--actions .addresses__action-btn {
+.addresses__card-row--actions .btn {
   flex: 1 1 0;
   justify-content: center;
   min-height: 2.5rem;

@@ -7,6 +7,7 @@ import DropdownMenu from '@/components/ui/dropdown-menu/DropdownMenu';
 import { formatDateShort } from '@/utils';
 import { STATUS_TONE } from '@/constants/booking';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import type { Booking } from '@/types';
 import './BookingCard.css';
 
@@ -55,14 +56,13 @@ export default function BookingCard({
                 {t(`bookingStatuses.${booking.status}`)}
               </Badge>
               {booking.status === 'SignPending' && (
-                <button
-                  type="button"
-                  className="booking-sign-btn"
+                <Button
+                  size="xs"
+                  icon={<FileSignature size={14} />}
                   onClick={(event) => { event.stopPropagation(); onSign(); }}
                 >
-                  <FileSignature size={14} />
                   {t('contract.signButton')}
-                </button>
+                </Button>
               )}
             </div>
             <DropdownMenu

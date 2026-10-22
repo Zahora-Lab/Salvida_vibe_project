@@ -36,32 +36,33 @@
 }
 
 /* ── tone: one pair per meaning ────────────────────────────────────────── */
+/* The pairs live in index.css (--tone-*), shared with Button's soft and outline variants. */
 .badge--success {
-  --badge-bg: var(--color-emerald-50);
-  --badge-color: var(--color-emerald-600);
+  --badge-bg: var(--tone-success-bg);
+  --badge-color: var(--tone-success-color);
 }
 
 .badge--warning {
-  --badge-bg: #fef3c7;
-  --badge-color: #92400e;
+  --badge-bg: var(--tone-warning-bg);
+  --badge-color: var(--tone-warning-color);
 }
 
 .badge--danger {
-  --badge-bg: #fef2f2;
-  --badge-color: var(--color-red-500);
+  --badge-bg: var(--tone-danger-bg);
+  --badge-color: var(--tone-danger-color);
 }
 
 .badge--info {
-  --badge-bg: #dbeafe;
-  --badge-color: #1d4ed8;
+  --badge-bg: var(--tone-info-bg);
+  --badge-color: var(--tone-info-color);
 }
 
 .badge--neutral {
-  --badge-bg: var(--color-slate-100);
-  --badge-color: var(--color-slate-500);
+  --badge-bg: var(--tone-neutral-bg);
+  --badge-color: var(--tone-neutral-color);
 }
 
 .badge--primary {
-  --badge-bg: var(--color-primary-10);
-  --badge-color: var(--color-primary);
+  --badge-bg: var(--tone-primary-bg);
+  --badge-color: var(--tone-primary-color);
 }

@@ -423,22 +423,6 @@
   color: #64748b;
 }
 
-.prm-selected-card__change {
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: #6b4691;
-  background: none;
-  border: 1px solid #6b4691;
-  border-radius: 0.5rem;
-  padding: 0.25rem 0.6rem;
-  cursor: pointer;
-  transition: background-color 0.1s;
-}
-
-.prm-selected-card__change:hover {
-  background-color: #f3eefb;
-}
-
 /* ── Booking cards ────────────────────────────────── */
 /* bc-empty is the base state (no modifier class needed — base .field-card covers it) */
 .field-card {

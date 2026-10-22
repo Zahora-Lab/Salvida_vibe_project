@@ -11,9 +11,6 @@ interface AuthFormState {
   lastName: string;
   dni: string;
   phone: string;
-  showLoginPassword: boolean;
-  showRegPassword: boolean;
-  showConfirmPassword: boolean;
   loading: boolean;
   error: string | null;
   success: string | null;
@@ -26,9 +23,6 @@ interface AuthFormState {
   setLastName: (v: string) => void;
   setDni: (v: string) => void;
   setPhone: (v: string) => void;
-  toggleShowLoginPassword: () => void;
-  toggleShowRegPassword: () => void;
-  toggleShowConfirmPassword: () => void;
   setLoading: (v: boolean) => void;
   setError: (v: string | null) => void;
   setSuccess: (v: string | null) => void;
@@ -43,9 +37,6 @@ const initialFields = {
   lastName: '',
   dni: '',
   phone: '',
-  showLoginPassword: false,
-  showRegPassword: false,
-  showConfirmPassword: false,
   loading: false,
   error: null,
   success: null,
@@ -63,9 +54,6 @@ export const useAuthFormStore = create<AuthFormState>((set) => ({
   setLastName: (v) => set({ lastName: v }),
   setDni: (v) => set({ dni: v }),
   setPhone: (v) => set({ phone: v }),
-  toggleShowLoginPassword: () => set((s) => ({ showLoginPassword: !s.showLoginPassword })),
-  toggleShowRegPassword: () => set((s) => ({ showRegPassword: !s.showRegPassword })),
-  toggleShowConfirmPassword: () => set((s) => ({ showConfirmPassword: !s.showConfirmPassword })),
   setLoading: (v) => set({ loading: v }),
   setError: (v) => set({ error: v }),
   setSuccess: (v) => set({ success: v }),

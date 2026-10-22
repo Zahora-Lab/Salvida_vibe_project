@@ -1,46 +1,62 @@
 import { Check, X, RotateCcw } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { Button } from '../../components/ui/button';
 import type { Address } from '../../types';
 
 interface AddressActionsProps {
   address: Address;
   onAssess: (address: Address, isAccessible: boolean | null) => void;
+  /** Icon size; the map popup is narrower and uses a smaller one. */
+  iconSize?: number;
+  className?: string;
 }
 
-export default function AddressActions({ address, onAssess }: AddressActionsProps) {
+/** Mark an address as accessible / not accessible, or send it back to pending. */
+export default function AddressActions({
+  address,
+  onAssess,
+  iconSize = 14,
+  className,
+}: AddressActionsProps) {
   const { t } = useTranslation();
+  const classes = ['addresses__action-group', className].filter(Boolean).join(' ');
 
   return (
-    <div className="addresses__action-group">
+    <div className={classes}>
       {address.is_accessible !== true && (
-        <button
-          className="addresses__action-btn addresses__action-btn--validate"
+        <Button
+          variant="soft"
+          tone="success"
+          size="xs"
+          icon={<Check size={iconSize} />}
           onClick={() => onAssess(address, true)}
           title={t('addresses.actions.markAccessible')}
         >
-          <Check size={14} />
           {t('addresses.actions.markAccessible')}
-        </button>
+        </Button>
       )}
       {address.is_accessible !== false && (
-        <button
-          className="addresses__action-btn addresses__action-btn--reject"
+        <Button
+          variant="soft"
+          tone="danger"
+          size="xs"
+          icon={<X size={iconSize} />}
           onClick={() => onAssess(address, false)}
           title={t('addresses.actions.markNotAccessible')}
         >
-          <X size={14} />
           {t('addresses.actions.markNotAccessible')}
-        </button>
+        </Button>
       )}
       {address.is_accessible !== null && (
-        <button
-          className="addresses__action-btn addresses__action-btn--reset"
+        <Button
+          variant="soft"
+          size="xs"
+          icon={<RotateCcw size={iconSize} />}
           onClick={() => onAssess(address, null)}
           title={t('addresses.actions.resetPending')}
         >
-          <RotateCcw size={14} />
           {t('addresses.actions.resetPending')}
-        </button>
+        </Button>
       )}
     </div>
   );

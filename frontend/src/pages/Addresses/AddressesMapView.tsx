@@ -2,10 +2,11 @@ import { useEffect } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import { Check, X, RotateCcw, MapPin, User } from 'lucide-react';
+import { MapPin, User } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import type { Address } from '../../types';
 import AddressAccessibilityBadge from '../../components/features/address/address-accessibility-badge/AddressAccessibilityBadge';
+import AddressActions from './AddressActions';
 
 delete (L.Icon.Default.prototype as unknown as Record<string, unknown>)._getIconUrl;
 L.Icon.Default.mergeOptions({
@@ -121,23 +122,12 @@ export default function AddressesMapView({ addresses, onAssess }: AddressesMapVi
                 </div>
 
                 {/* Acciones */}
-                <div className="addr-popup__actions">
-                  {address.is_accessible !== true && (
-                    <button className="addr-popup__btn addr-popup__btn--validate" onClick={() => onAssess(address, true)}>
-                      <Check size={12} /> {t('addresses.actions.markAccessible')}
-                    </button>
-                  )}
-                  {address.is_accessible !== false && (
-                    <button className="addr-popup__btn addr-popup__btn--reject" onClick={() => onAssess(address, false)}>
-                      <X size={12} /> {t('addresses.actions.markNotAccessible')}
-                    </button>
-                  )}
-                  {address.is_accessible !== null && (
-                    <button className="addr-popup__btn addr-popup__btn--reset" onClick={() => onAssess(address, null)}>
-                      <RotateCcw size={12} /> {t('addresses.actions.resetPending')}
-                    </button>
-                  )}
-                </div>
+                <AddressActions
+                  address={address}
+                  onAssess={onAssess}
+                  iconSize={12}
+                  className="addr-popup__actions"
+                />
 
               </div>
             </Popup>
