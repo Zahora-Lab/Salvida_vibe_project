@@ -56,8 +56,8 @@ Hay tres capas. Usa la primera que alcance:
 3. **Tokens CSS**: define una variable en un contenedor y todo lo que haya dentro cambia, sin tocar el componente.
 
 ```css
-/* La landing re-tematiza sus inputs, botones y etiquetas en un solo sitio */
-.lp-modal {
+/* Una pantalla re-tematiza sus inputs, botones y etiquetas en un solo sitio */
+.mi-pantalla {
   --input-border-color: var(--lp-outline-variant);
   --input-focus-color: var(--lp-primary);
   --btn-primary-bg: linear-gradient(135deg, var(--lp-primary), var(--lp-primary-container));
