@@ -354,15 +354,6 @@
   animation: skeleton-shimmer 1.4s ease infinite;
 }
 
-@keyframes skeleton-shimmer {
-  0% {
-    background-position: 200% 0;
-  }
-  100% {
-    background-position: -200% 0;
-  }
-}
-
 .prm-detail__not-found {
   align-items: center;
   justify-content: center;

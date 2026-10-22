@@ -131,3 +131,13 @@ select {
 ::-webkit-scrollbar-thumb:hover {
   background-color: var(--color-slate-300);
 }
+
+/* Shared by every skeleton placeholder (.prms__skeleton, .booking-card--skeleton, ...) */
+@keyframes skeleton-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}

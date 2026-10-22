@@ -228,11 +228,6 @@
   animation: skeleton-shimmer 1.4s ease infinite;
 }
 
-@keyframes skeleton-shimmer {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
-}
-
 /* ── Mobile toolbar ──────────────────────────────────────────────────────── */
 
 .dashboard__mobile-toolbar {

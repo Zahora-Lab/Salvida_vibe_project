@@ -146,11 +146,6 @@
   animation: skeleton-shimmer 1.4s ease infinite;
 }
 
-@keyframes skeleton-shimmer {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
-}
-
 .prms__empty {
   text-align: center;
   padding: 3rem 1.5rem;
