@@ -1,7 +1,7 @@
 import { lazy, Suspense } from 'react';
 import { Navigate } from 'react-router-dom';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import AppLoader from './components/ui/app-loader/AppLoader';
+import { AppLoader } from './components/ui/app-loader';
 import ProtectedRoute from './components/guards/protected-route/ProtectedRoute';
 import RoleGuard from './components/guards/role-guard/RoleGuard';
 import InstallPrompt from './components/features/app/install-prompt/InstallPrompt';

@@ -22,8 +22,8 @@ import {
   useUsers,
   useArchiveUser,
 } from "../../hooks/useProfile";
-import DropdownMenu from "../../components/ui/dropdown-menu/DropdownMenu";
-import ConfirmDialog from "../../components/ui/confirm-dialog/ConfirmDialog";
+import { DropdownMenu } from "../../components/ui/dropdown-menu";
+import { ConfirmDialog } from "../../components/ui/confirm-dialog";
 import UserSelector from "../../components/features/user/user-selector/UserSelector";
 import SettingsRRSS from "./SettingsRRSS";
 import { usePushNotifications } from "../../hooks/usePushNotifications";

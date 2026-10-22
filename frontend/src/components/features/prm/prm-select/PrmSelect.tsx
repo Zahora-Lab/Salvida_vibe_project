@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { usePrms } from '@/hooks/usePrms';
-import Autocomplete from '@/components/ui/autocomplete/Autocomplete';
-import type { AutocompleteOption } from '@/components/ui/autocomplete/Autocomplete';
+import { Autocomplete } from '@/components/ui/autocomplete';
+import type { AutocompleteOption } from '@/components/ui/autocomplete';
 import './PrmSelect.css';
 
 interface PrmSelectProps {

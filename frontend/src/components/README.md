@@ -23,7 +23,7 @@ components/
    Es la regla que mantiene `ui/` reutilizable. Una feature sí puede (y debe) componerse sobre `ui/`.
 4. **Imports:** relativos para rutas cortas; si habría que subir 3 o más niveles, usa el alias `@/`
    (`@/store/useUIStore`).
-5. **Barrels:** los componentes nuevos de `ui/` exponen un `index.ts` (`import { Input } from '@/components/ui/input'`).
+5. **Barrels:** todos los componentes de `ui/` exponen un `index.ts` (`import { Input } from '@/components/ui/input'`).
    Los antiguos movidos (`autocomplete`, `multi-select`, `date-input`, `time-input`, `dropdown-menu`,
    `confirm-dialog`, `signature-canvas`, `spinner`, `app-loader`) se importan por archivo.
 

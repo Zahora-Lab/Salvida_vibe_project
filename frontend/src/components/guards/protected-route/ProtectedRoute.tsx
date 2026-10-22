@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 import { useAuthStore } from '@/store/useAuthStore';
 import { useProfile } from '@/hooks/useProfile';
-import AppLoader from '../../ui/app-loader/AppLoader';
+import { AppLoader } from '../../ui/app-loader';
 
 function ProfileSync() {
   const { data: profile } = useProfile();

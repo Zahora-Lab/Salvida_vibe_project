@@ -2,7 +2,7 @@ import { useRef, useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Loader2 } from 'lucide-react';
 import { toast } from 'react-toastify';
-import SignatureCanvas from '@/components/ui/signature-canvas/SignatureCanvas';
+import { SignatureCanvas } from '@/components/ui/signature-canvas';
 import { Button } from '@/components/ui/button';
 import { Modal } from '@/components/ui/modal';
 import { useSignBooking } from '@/hooks/useBookings';

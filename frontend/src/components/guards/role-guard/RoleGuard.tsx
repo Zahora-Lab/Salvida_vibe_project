@@ -1,6 +1,6 @@
 import { Navigate, Outlet } from 'react-router-dom';
 import { useAuthStore } from '@/store/useAuthStore';
-import AppLoader from '../../ui/app-loader/AppLoader';
+import { AppLoader } from '../../ui/app-loader';
 import type { UserRole } from '@/types';
 
 interface RoleGuardProps {

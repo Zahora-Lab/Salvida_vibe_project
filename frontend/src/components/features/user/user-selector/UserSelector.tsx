@@ -1,8 +1,8 @@
 import { useTranslation } from 'react-i18next';
 import { useUsers } from '@/hooks/useProfile';
 import type { UserProfile } from '@/types';
-import Autocomplete from '@/components/ui/autocomplete/Autocomplete';
-import type { AutocompleteOption } from '@/components/ui/autocomplete/Autocomplete';
+import { Autocomplete } from '@/components/ui/autocomplete';
+import type { AutocompleteOption } from '@/components/ui/autocomplete';
 import './UserSelector.css';
 
 interface UserSelectorProps {

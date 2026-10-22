@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { usePrms } from '@/hooks/usePrms';
-import MultiSelect from '@/components/ui/multi-select/MultiSelect';
-import type { MultiSelectOption } from '@/components/ui/multi-select/MultiSelect';
+import { MultiSelect } from '@/components/ui/multi-select';
+import type { MultiSelectOption } from '@/components/ui/multi-select';
 
 interface PrmMultiSelectProps {
   values: string[];

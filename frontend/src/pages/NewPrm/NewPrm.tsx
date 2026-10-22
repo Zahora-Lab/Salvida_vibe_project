@@ -7,7 +7,7 @@ import { useAddPrmAddress } from '../../hooks/usePrmAddresses';
 import AddressSelector from '../../components/features/address/address-selector/AddressSelector';
 import UserSelector from '../../components/features/user/user-selector/UserSelector';
 import { useAuthStore } from '../../store/useAuthStore';
-import DateInput from '../../components/ui/date-input/DateInput';
+import { DateInput } from '../../components/ui/date-input';
 import type { Address } from '../../types';
 import { Input } from '../../components/ui/input';
 import { FormField } from '../../components/ui/form-field';

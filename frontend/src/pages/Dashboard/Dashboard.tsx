@@ -4,7 +4,7 @@ import CalendarWidget from '../../components/features/booking/calendar-widget/Ca
 import FilterBar from '../../components/features/booking/filter-bar/FilterBar';
 import type { BookingFilterValues } from '../../components/features/booking/filter-bar/FilterBar';
 import BookingCard from '../../components/features/booking/booking-card/BookingCard';
-import type { MultiSelectOption } from '../../components/ui/multi-select/MultiSelect';
+import type { MultiSelectOption } from '../../components/ui/multi-select';
 import ContractModal from '../../components/features/booking/contract-modal/ContractModal';
 import { CreateButton } from '../../components/ui/button';
 import {

@@ -3,7 +3,7 @@ import {
   Clock, MapPin, Pencil, Trash2, CheckCircle, X, FileSignature,
   CalendarDays, User,
 } from 'lucide-react';
-import DropdownMenu from '@/components/ui/dropdown-menu/DropdownMenu';
+import { DropdownMenu } from '@/components/ui/dropdown-menu';
 import { formatDateShort } from '@/utils';
 import { STATUS_TONE } from '@/constants/booking';
 import { Badge } from '@/components/ui/badge';
