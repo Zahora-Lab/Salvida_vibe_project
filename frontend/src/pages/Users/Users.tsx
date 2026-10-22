@@ -14,9 +14,9 @@ import {
   useProfile,
 } from '../../hooks/useProfile';
 import { useMediaQuery } from '../../hooks/useMediaQuery';
-import CreateUserModal from './CreateUserModal';
-import UserCard from './UserCard';
-import { ROLE_LABEL, getDisplayName, getInitials, roleTone } from './userDisplay';
+import CreateUserModal from '@/components/features/user/create-user-modal/CreateUserModal';
+import UserCard from '@/components/features/user/user-card/UserCard';
+import { ROLE_LABEL, getDisplayName, getInitials, roleTone } from '@/components/features/user/user-display/userDisplay';
 import { Badge } from '../../components/ui/badge';
 import type { UserProfile } from '../../types';
 import './Users.css';

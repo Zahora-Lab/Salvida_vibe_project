@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useCreateUser } from '../../hooks/useProfile';
-import { useProfile } from '../../hooks/useProfile';
-import type { UserRole } from '../../types';
-import { Input } from '../../components/ui/input';
-import { FormField } from '../../components/ui/form-field';
-import { Button } from '../../components/ui/button';
-import { Modal } from '../../components/ui/modal';
-import { Select } from '../../components/ui/select';
-import { Switch } from '../../components/ui/switch';
+import { useCreateUser } from '@/hooks/useProfile';
+import { useProfile } from '@/hooks/useProfile';
+import type { UserRole } from '@/types';
+import { Input } from '@/components/ui/input';
+import { FormField } from '@/components/ui/form-field';
+import { Button } from '@/components/ui/button';
+import { Modal } from '@/components/ui/modal';
+import { Select } from '@/components/ui/select';
+import { Switch } from '@/components/ui/switch';
 import './CreateUserModal.css';
 
 interface Props {

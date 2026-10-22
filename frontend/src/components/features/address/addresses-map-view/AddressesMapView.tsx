@@ -4,9 +4,9 @@ import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { MapPin, User } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import type { Address } from '../../types';
-import AddressAccessibilityBadge from '../../components/features/address/address-accessibility-badge/AddressAccessibilityBadge';
-import AddressActions from './AddressActions';
+import type { Address } from '@/types';
+import AddressAccessibilityBadge from '@/components/features/address/address-accessibility-badge/AddressAccessibilityBadge';
+import AddressActions from '@/components/features/address/address-actions/AddressActions';
 
 delete (L.Icon.Default.prototype as unknown as Record<string, unknown>)._getIconUrl;
 L.Icon.Default.mergeOptions({

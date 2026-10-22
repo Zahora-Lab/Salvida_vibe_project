@@ -14,7 +14,7 @@ import { useAuthStore } from '../../store/useAuthStore';
 import { useDebounce } from '../../hooks/useDebounce';
 import { useMediaQuery } from '../../hooks/useMediaQuery';
 import { formatLastVisit } from '../../utils';
-import PrmCard from './PrmCard';
+import PrmCard from '@/components/features/prm/prm-card/PrmCard';
 import './Prms.css';
 
 export default function Prms() {

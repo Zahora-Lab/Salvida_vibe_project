@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom';
 import { Mail, Phone, User } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import DropdownMenu from '../../components/ui/dropdown-menu/DropdownMenu';
-import type { DropdownItem } from '../../components/ui/dropdown-menu/DropdownMenu';
-import type { PrmListItem } from '../../hooks/usePrms';
-import { formatLastVisit } from '../../utils';
-import { Badge } from '../../components/ui/badge';
+import DropdownMenu from '@/components/ui/dropdown-menu/DropdownMenu';
+import type { DropdownItem } from '@/components/ui/dropdown-menu/DropdownMenu';
+import type { PrmListItem } from '@/hooks/usePrms';
+import { formatLastVisit } from '@/utils';
+import { Badge } from '@/components/ui/badge';
 
 interface PrmCardProps {
   prm: PrmListItem;

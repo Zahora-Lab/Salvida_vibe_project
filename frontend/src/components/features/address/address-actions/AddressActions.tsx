@@ -1,7 +1,7 @@
 import { Check, X, RotateCcw } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { Button } from '../../components/ui/button';
-import type { Address } from '../../types';
+import { Button } from '@/components/ui/button';
+import type { Address } from '@/types';
 
 interface AddressActionsProps {
   address: Address;

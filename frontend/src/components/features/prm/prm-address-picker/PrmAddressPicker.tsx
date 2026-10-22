@@ -4,7 +4,7 @@ import { MapPin } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import type { Address } from '@/types';
 import { usePrmAddresses } from '@/hooks/usePrmAddresses';
-import AddressMapPreview from '@/pages/Addresses/AddressMapPreview';
+import AddressMapPreview from '@/components/features/address/address-map-preview/AddressMapPreview';
 import './PrmAddressPicker.css';
 
 interface PrmAddressPickerProps {

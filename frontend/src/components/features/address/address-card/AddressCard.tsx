@@ -1,10 +1,10 @@
 import { MapPin, ChevronDown, ChevronUp, User } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import AddressAccessibilityBadge from '../../components/features/address/address-accessibility-badge/AddressAccessibilityBadge';
-import { IconButton } from '../../components/ui/button';
-import type { Address } from '../../types';
-import AddressActions from './AddressActions';
-import AddressMapPreview from './AddressMapPreview';
+import AddressAccessibilityBadge from '@/components/features/address/address-accessibility-badge/AddressAccessibilityBadge';
+import { IconButton } from '@/components/ui/button';
+import type { Address } from '@/types';
+import AddressActions from '@/components/features/address/address-actions/AddressActions';
+import AddressMapPreview from '@/components/features/address/address-map-preview/AddressMapPreview';
 
 interface AddressCardProps {
   address: Address;

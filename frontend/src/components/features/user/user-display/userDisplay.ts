@@ -1,5 +1,5 @@
-import type { BadgeTone } from '../../components/ui/badge';
-import type { UserProfile } from '../../types';
+import type { BadgeTone } from '@/components/ui/badge';
+import type { UserProfile } from '@/types';
 
 /** Badge tone for a role: administrators stand out, regular users stay neutral. */
 export function roleTone(role: UserProfile['role']): BadgeTone {
