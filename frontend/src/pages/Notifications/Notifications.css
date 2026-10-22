@@ -18,16 +18,7 @@
 }
 
 .notifications__back-btn {
-  padding: 0.625rem;
-  border-radius: 0.75rem;
-  color: var(--color-primary);
-  transition: background-color 0.15s;
   margin-right: 1rem;
-  display: flex;
-}
-
-.notifications__back-btn:hover {
-  background-color: var(--color-slate-50);
 }
 
 .notifications__title {

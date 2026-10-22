@@ -1,4 +1,4 @@
-import { ArrowLeft, Send, Loader2 } from 'lucide-react';
+import { Send, Loader2 } from 'lucide-react';
 import { toast } from 'react-toastify';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useState, useMemo } from 'react';
@@ -12,7 +12,7 @@ import { usePrms } from '../../hooks/usePrms';
 import { useAuthStore } from '../../store/useAuthStore';
 import { todayIso, cardState } from '../../utils';
 import type { Address, UserProfile } from '../../types';
-import { Button } from '../../components/ui/button';
+import { Button, BackButton } from '../../components/ui/button';
 import './NewBooking.css';
 
 export default function NewBooking() {
@@ -78,12 +78,7 @@ export default function NewBooking() {
   return (
     <div className="new-booking">
       <div className="new-booking__header">
-        <button
-          onClick={() => navigate(-1)}
-          className="new-booking__back-btn"
-        >
-          <ArrowLeft size={20} />
-        </button>
+        <BackButton className="new-booking__back-btn" onClick={() => navigate(-1)} />
         <h2 className="new-booking__title">{t('booking.title')}</h2>
       </div>
 

@@ -14,6 +14,7 @@ import AddressesMapView from './AddressesMapView';
 import UserMultiSelect from '../../components/features/user/user-multi-select/UserMultiSelect';
 import PrmMultiSelect from '../../components/features/prm/prm-multi-select/PrmMultiSelect';
 import AddressAccessibilityBadge from '../../components/features/address/address-accessibility-badge/AddressAccessibilityBadge';
+import { IconButton } from '../../components/ui/button';
 import './Addresses.css';
 
 type ViewMode = 'list' | 'map';
@@ -201,25 +202,25 @@ export default function Addresses() {
                           </td>
                           <td>
                             {address.lat && address.lng && (
-                              <button
+                              <IconButton
                                 className="addresses__expand-btn"
+                                label={t('addresses.viewMap')}
+                                icon={expandedId === address.id ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+                                tone="primary"
+                                aria-expanded={expandedId === address.id}
                                 onClick={() => toggleExpand(address.id)}
-                              >
-                                {expandedId === address.id
-                                  ? <ChevronUp size={16} />
-                                  : <ChevronDown size={16} />}
-                              </button>
+                              />
                             )}
                           </td>
                           <td>
                             {address.prm_id && (
-                              <button
-                                className="addresses__expand-btn addresses__prm-link"
+                              <IconButton
+                                className="addresses__expand-btn"
+                                label={address.prm_name ? t('addresses.viewPrmProfile', { name: address.prm_name }) : t('addresses.viewPrmProfileGeneric')}
+                                icon={<User size={15} />}
+                                tone="primary"
                                 onClick={() => navigate(`/app/prms/${address.prm_id}`)}
-                                title={address.prm_name ? t('addresses.viewPrmProfile', { name: address.prm_name }) : t('addresses.viewPrmProfileGeneric')}
-                              >
-                                <User size={15} />
-                              </button>
+                              />
                             )}
                           </td>
                         </tr>

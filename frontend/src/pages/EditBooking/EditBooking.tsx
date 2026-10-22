@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Send, Loader2, FileSignature } from 'lucide-react';
+import { Send, Loader2, FileSignature } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import PrmAddressPicker from '../../components/features/prm/prm-address-picker/PrmAddressPicker';
 import DateInput from '../../components/ui/date-input/DateInput';
@@ -8,7 +8,7 @@ import TimeInput from '../../components/ui/time-input/TimeInput';
 import ContractModal from '../../components/features/booking/contract-modal/ContractModal';
 import { useBooking, useUpdateBooking } from '../../hooks/useBookings';
 import type { Address } from '../../types';
-import { Button } from '../../components/ui/button';
+import { Button, BackButton } from '../../components/ui/button';
 import '../NewBooking/NewBooking.css';
 
 function cardState(
@@ -76,9 +76,7 @@ export default function EditBooking() {
     return (
       <div className="new-booking">
         <div className="new-booking__header">
-          <button onClick={() => navigate(-1)} className="new-booking__back-btn">
-            <ArrowLeft size={20} />
-          </button>
+          <BackButton className="new-booking__back-btn" onClick={() => navigate(-1)} />
           <h2 className="new-booking__title">{t('booking.editTitle')}</h2>
         </div>
         <div className="new-booking__body">
@@ -94,9 +92,7 @@ export default function EditBooking() {
     return (
       <div className="new-booking">
         <div className="new-booking__header">
-          <button onClick={() => navigate(-1)} className="new-booking__back-btn">
-            <ArrowLeft size={20} />
-          </button>
+          <BackButton className="new-booking__back-btn" onClick={() => navigate(-1)} />
           <h2 className="new-booking__title">{t('booking.editTitle')}</h2>
         </div>
         <div className="new-booking__body">
@@ -109,9 +105,7 @@ export default function EditBooking() {
   return (
     <div className="new-booking">
       <div className="new-booking__header">
-        <button onClick={() => navigate(-1)} className="new-booking__back-btn">
-          <ArrowLeft size={20} />
-        </button>
+        <BackButton className="new-booking__back-btn" onClick={() => navigate(-1)} />
         <h2 className="new-booking__title">{t('booking.editTitle')}</h2>
       </div>
 

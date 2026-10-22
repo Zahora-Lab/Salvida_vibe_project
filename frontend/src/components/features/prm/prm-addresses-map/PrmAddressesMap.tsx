@@ -3,6 +3,7 @@ import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import type { Address } from '@/types';
+import AddressAccessibilityBadge from '@/components/features/address/address-accessibility-badge/AddressAccessibilityBadge';
 import './PrmAddressesMap.css';
 
 delete (L.Icon.Default.prototype as unknown as Record<string, unknown>)._getIconUrl;
@@ -103,21 +104,10 @@ export default function PrmAddressesMap({
                   </p>
                 )}
                 <div className="prm-addresses-map__popup-row">
-                  {addr.is_accessible === null && (
-                    <span className="prm-addresses-map__popup-badge prm-addresses-map__popup-badge--pending">
-                      Pendiente de revisión
-                    </span>
-                  )}
-                  {addr.is_accessible === true && (
-                    <span className="prm-addresses-map__popup-badge prm-addresses-map__popup-badge--accessible">
-                      ♿ Apta para el servicio
-                    </span>
-                  )}
-                  {addr.is_accessible === false && (
-                    <span className="prm-addresses-map__popup-badge prm-addresses-map__popup-badge--not-accessible">
-                      No apta para el servicio
-                    </span>
-                  )}
+                  <AddressAccessibilityBadge
+                    value={addr.is_accessible}
+                    className="prm-addresses-map__popup-badge"
+                  />
                 </div>
                 {addr.validation_notes && (
                   <p className="prm-addresses-map__popup-notes">{addr.validation_notes}</p>

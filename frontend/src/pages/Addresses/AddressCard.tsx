@@ -1,6 +1,7 @@
 import { MapPin, ChevronDown, ChevronUp, User } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import AddressAccessibilityBadge from '../../components/features/address/address-accessibility-badge/AddressAccessibilityBadge';
+import { IconButton } from '../../components/ui/button';
 import type { Address } from '../../types';
 import AddressActions from './AddressActions';
 import AddressMapPreview from './AddressMapPreview';
@@ -43,24 +44,23 @@ export default function AddressCard({
         <AddressAccessibilityBadge value={address.is_accessible} />
         <div className="addresses__card-icons">
           {hasCoords && (
-            <button
+            <IconButton
               className="addresses__expand-btn"
-              onClick={() => onToggleExpand(address.id)}
+              label={t('addresses.viewMap')}
+              icon={expanded ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+              tone="primary"
               aria-expanded={expanded}
-              aria-label={t('addresses.viewMap')}
-            >
-              {expanded ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
-            </button>
+              onClick={() => onToggleExpand(address.id)}
+            />
           )}
           {prmId && (
-            <button
-              className="addresses__expand-btn addresses__prm-link"
+            <IconButton
+              className="addresses__expand-btn"
+              label={prmLabel}
+              icon={<User size={18} />}
+              tone="primary"
               onClick={() => onOpenPrm(prmId)}
-              title={prmLabel}
-              aria-label={prmLabel}
-            >
-              <User size={18} />
-            </button>
+            />
           )}
         </div>
       </div>

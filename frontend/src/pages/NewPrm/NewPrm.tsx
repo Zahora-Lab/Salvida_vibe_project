@@ -1,6 +1,6 @@
 import { useState, type FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Plus, Trash2 } from 'lucide-react';
+import { Plus, Trash2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useCreatePrm } from '../../hooks/usePrms';
 import { useAddPrmAddress } from '../../hooks/usePrmAddresses';
@@ -11,7 +11,7 @@ import DateInput from '../../components/ui/date-input/DateInput';
 import type { Address } from '../../types';
 import { Input } from '../../components/ui/input';
 import { FormField } from '../../components/ui/form-field';
-import { Button, IconButton } from '../../components/ui/button';
+import { BackButton, Button, IconButton } from '../../components/ui/button';
 import { Select } from '../../components/ui/select';
 import './NewPrm.css';
 
@@ -132,14 +132,7 @@ export default function NewPrm() {
   return (
     <div className="new-prm">
       <div className="new-prm__header">
-        <IconButton
-          to="/app/prms"
-          className="new-prm__back-btn"
-          label="Volver"
-          icon={<ArrowLeft size={20} />}
-          tone="primary"
-          size="lg"
-        />
+        <BackButton to="/app/prms" />
         <div>
           <h1 className="new-prm__title">{t('prms.newPrm.title')}</h1>
           <p className="new-prm__subtitle">{t('prms.newPrm.subtitle')}</p>
