@@ -18,6 +18,7 @@ import { IconButton } from '../../components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { SegmentedControl } from '@/components/ui/segmented-control';
 import { EmptyState } from '@/components/ui/empty-state';
+import { Card } from '@/components/ui/card';
 import './Addresses.css';
 
 type ViewMode = 'list' | 'map';
@@ -150,7 +151,7 @@ export default function Addresses() {
           )}
 
           {viewMode === 'list' && !showCards && (
-            <div className="addresses__table-wrap">
+            <Card clip>
               {isLoading ? (
                 <div className="addresses__loading">
                   {Array.from({ length: 4 }).map((_, i) => (
@@ -231,7 +232,7 @@ export default function Addresses() {
                   </tbody>
                 </table>
               )}
-            </div>
+            </Card>
           )}
 
         </div>

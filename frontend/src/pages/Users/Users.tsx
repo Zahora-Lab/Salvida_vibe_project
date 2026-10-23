@@ -22,6 +22,7 @@ import type { UserProfile } from '../../types';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Avatar } from '@/components/ui/avatar';
 import { EmptyState } from '@/components/ui/empty-state';
+import { Card } from '@/components/ui/card';
 import './Users.css';
 
 export default function Users() {
@@ -116,11 +117,11 @@ export default function Users() {
             (isLoading ? (
               <ul className="users__cards" aria-busy="true">
                 {Array.from({ length: 3 }).map((_, i) => (
-                  <li key={i} className="users__card users__card--skeleton">
+                  <Card as="li" padding="md" key={i} className="users__card users__card--skeleton">
                     <Skeleton width="55%" />
                     <Skeleton width="80%" />
                     <Skeleton width="40%" />
-                  </li>
+                  </Card>
                 ))}
               </ul>
             ) : filtered.length === 0 ? (
@@ -140,7 +141,7 @@ export default function Users() {
             ))}
 
           {!isMobile && (
-            <div className="users__table-wrap">
+            <Card clip>
               <div className="users__table-scroll">
                 <table className="users__table">
                   <thead>
@@ -239,7 +240,7 @@ export default function Users() {
                   </tbody>
                 </table>
               </div>
-            </div>
+            </Card>
           )}
         </div>
       </div>

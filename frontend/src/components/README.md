@@ -42,6 +42,7 @@ components/
 | `SegmentedControl` | Elección única en píldora, con iconos | `options` (`value`, `label`, `icon`, `iconOnly`), `variant` (`filled` · `outlined`), `onChange(valor)` |
 | `Alert` | Mensaje en línea del resultado de una acción (`role="alert"` o `status`) | `tone` (`danger` · `success`). Tokens `--alert-bg` `--alert-border` `--alert-color` |
 | `EmptyState` | Mensaje cuando una lista no tiene nada que mostrar | `icon`, `bordered`, `size` (`sm` · `md` · `lg`). Las celdas `<td>` de tabla siguen con su propia clase |
+| `Card` | Superficie blanca con borde y sombra: tarjetas de lista y contenedores de tabla | `as` (`div` · `li`…), `padding` (`none` · `md`), `clip` (recorta el desborde; no usar si el contenido abre menús) |
 | `Switch` | Interruptor `role="switch"` | **`label` obligatorio**, `checked`, `onChange(next: boolean)` |
 | `Modal` | Diálogo modal (`<dialog>` nativo) | `open`, `onCancel`, `title`, `footer`, `size`, `closable`, `maskClosable`, `keyboard`, `role`, `styles` |
 | `FilterTabs` | Filtro de una sola opción en píldoras | `options`, `value`, `onChange` |

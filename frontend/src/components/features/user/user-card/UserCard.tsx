@@ -6,6 +6,7 @@ import type { UserProfile } from '@/types';
 import { ROLE_LABEL, getDisplayName, getInitials, roleTone } from '@/components/features/user/user-display/userDisplay';
 import { Badge } from '@/components/ui/badge';
 import { Avatar } from '@/components/ui/avatar';
+import { Card } from '@/components/ui/card';
 
 interface UserCardProps {
   user: UserProfile;
@@ -20,7 +21,7 @@ export default function UserCard({ user, showDemo, menuItems, onOpen }: UserCard
   const isArchived = user.isActive === false;
 
   return (
-    <li className={`users__card${isArchived ? ' users__card--archived' : ''}`}>
+    <Card as="li" padding="md" className={`users__card${isArchived ? ' users__card--archived' : ''}`}>
       <div className="users__card-head">
         <button type="button" className="user-link users__card-link" onClick={onOpen}>
           <Avatar src={user.avatar} alt={user.firstName}>{getInitials(user)}</Avatar>
@@ -70,6 +71,6 @@ export default function UserCard({ user, showDemo, menuItems, onOpen }: UserCard
           </dd>
         </div>
       </dl>
-    </li>
+    </Card>
   );
 }

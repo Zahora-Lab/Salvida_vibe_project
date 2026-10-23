@@ -18,6 +18,7 @@ import PrmCard from '@/components/features/prm/prm-card/PrmCard';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Avatar } from '@/components/ui/avatar';
 import { EmptyState } from '@/components/ui/empty-state';
+import { Card } from '@/components/ui/card';
 import './Prms.css';
 
 export default function Prms() {
@@ -78,11 +79,11 @@ export default function Prms() {
             isLoading ? (
               <ul className="prms__cards" aria-busy="true">
                 {Array.from({ length: 3 }).map((_, i) => (
-                  <li key={i} className="prms__card prms__card--skeleton">
+                  <Card as="li" padding="md" key={i} className="prms__card prms__card--skeleton">
                     <Skeleton width="55%" />
                     <Skeleton width="80%" />
                     <Skeleton width="40%" />
-                  </li>
+                  </Card>
                 ))}
               </ul>
             ) : prms.length === 0 ? (
@@ -97,7 +98,7 @@ export default function Prms() {
           )}
 
           {!isMobile && (
-          <div className="prms__table-wrap">
+          <Card clip>
             <div className="prms__table-scroll">
               <table className="prms__table">
                 <thead>
@@ -181,7 +182,7 @@ export default function Prms() {
                 </tbody>
               </table>
             </div>
-          </div>
+          </Card>
           )}
 
         </div>

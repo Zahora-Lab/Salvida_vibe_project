@@ -7,6 +7,7 @@ import type { PrmListItem } from '@/hooks/usePrms';
 import { formatLastVisit } from '@/utils';
 import { Badge } from '@/components/ui/badge';
 import { Avatar } from '@/components/ui/avatar';
+import { Card } from '@/components/ui/card';
 
 interface PrmCardProps {
   prm: PrmListItem;
@@ -20,7 +21,7 @@ export default function PrmCard({ prm, isAdmin, menuItems }: PrmCardProps) {
   const isActive = prm.status === 'Activo';
 
   return (
-    <li className="prms__card">
+    <Card as="li" padding="md" className="prms__card">
       <div className="prms__card-head">
         <Link to={`/app/prms/${prm.id}`} className="prm-link prms__card-link">
           <Avatar>{prm.name.charAt(0)}</Avatar>
@@ -81,6 +82,6 @@ export default function PrmCard({ prm, isAdmin, menuItems }: PrmCardProps) {
           <dd>{formatLastVisit(prm.last_booking_date)}</dd>
         </div>
       </dl>
-    </li>
+    </Card>
   );
 }
