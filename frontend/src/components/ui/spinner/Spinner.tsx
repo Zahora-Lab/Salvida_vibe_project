@@ -1,6 +1,6 @@
-import "../app-loader/AppLoader.css";
+import './Spinner.css';
 
-/** Inline spinner (no full-screen wrapper). Shared by AppLoader and inline loaders. */
+/** Inline spinner (no full-screen wrapper). AppLoader wraps it for the full-screen case. */
 export default function Spinner() {
-  return <div className="app-loader__spinner" />;
+  return <div className="spinner" />;
 }
