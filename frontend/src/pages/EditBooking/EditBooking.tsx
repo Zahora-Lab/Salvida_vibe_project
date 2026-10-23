@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Send, Loader2, FileSignature } from 'lucide-react';
+import { Send, FileSignature } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import PrmAddressPicker from '../../components/features/prm/prm-address-picker/PrmAddressPicker';
 import { DateInput } from '../../components/ui/date-input';
@@ -11,6 +11,7 @@ import type { Address } from '../../types';
 import { Button, BackButton } from '../../components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Avatar } from '@/components/ui/avatar';
+import { Spinner } from '@/components/ui/spinner';
 import '../NewBooking/NewBooking.css';
 
 function cardState(
@@ -225,7 +226,7 @@ export default function EditBooking() {
             >
               {updateBooking.isPending ? (
                 <>
-                  <Loader2 size={18} className="animate-spin" />
+                  <Spinner size={18} tone="current" />
                   <span>{t('common.saving')}</span>
                 </>
               ) : (

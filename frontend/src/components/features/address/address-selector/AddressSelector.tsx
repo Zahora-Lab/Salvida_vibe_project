@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import {
   Search,
   MapPin,
-  Loader2,
   ShieldCheck,
   Clock,
   AlertTriangle,
@@ -10,6 +9,7 @@ import {
 } from 'lucide-react';
 import { MapContainer, TileLayer, Marker, useMap, useMapEvents } from 'react-leaflet';
 import L from 'leaflet';
+import { Spinner } from '@/components/ui/spinner';
 import 'leaflet/dist/leaflet.css';
 import type { Address } from '@/types';
 import { useDebounce } from '@/hooks/useDebounce';
@@ -288,7 +288,7 @@ export default function AddressSelector({
           />
           {loading && (
             <span className="address-selector__icon-right address-selector__icon-right--spinner">
-              <Loader2 size={16} />
+              <Spinner size={16} />
             </span>
           )}
           {selected && !loading && (
@@ -397,7 +397,7 @@ export default function AddressSelector({
           </MapContainer>
           {reverseLoading && (
             <div className="address-selector__map-status">
-              <Loader2 size={13} className="address-selector__map-status-spinner" />
+              <Spinner size={13} />
               <span>Buscando dirección...</span>
             </div>
           )}

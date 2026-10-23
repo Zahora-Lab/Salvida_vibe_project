@@ -46,11 +46,6 @@
 
 .address-selector__icon-right--spinner {
   pointer-events: none;
-  animation: addr-spin 1s linear infinite;
-}
-
-@keyframes addr-spin {
-  to { transform: translateY(-50%) rotate(360deg); }
 }
 
 /* left/right padding make room for the search icon and the status icon */
@@ -188,11 +183,6 @@
   font-size: 0.75rem;
   color: var(--color-slate-500);
   font-weight: 500;
-}
-
-.address-selector__map-status-spinner {
-  animation: addr-spin 1s linear infinite;
-  flex-shrink: 0;
 }
 
 /* Badges row */

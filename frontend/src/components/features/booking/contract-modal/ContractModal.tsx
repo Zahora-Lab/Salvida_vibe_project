@@ -1,6 +1,5 @@
 import { useRef, useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Loader2 } from 'lucide-react';
 import { toast } from 'react-toastify';
 import { SignatureCanvas } from '@/components/ui/signature-canvas';
 import { Button } from '@/components/ui/button';
@@ -67,7 +66,6 @@ export default function ContractModal({ booking, onClose, onSigned }: ContractMo
             onClick={handleSubmit}
             disabled={isEmpty}
             loading={signBooking.isPending}
-            icon={signBooking.isPending ? <Loader2 size={16} className="animate-spin" /> : undefined}
           >
             {signBooking.isPending ? t('contract.submitting') : t('contract.submitSignature')}
           </Button>

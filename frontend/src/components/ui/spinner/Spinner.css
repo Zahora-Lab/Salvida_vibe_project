@@ -1,10 +1,30 @@
+/*
+ * Theming tokens (a container can redefine them once):
+ *   --spinner-size    diameter
+ *   --spinner-border  ring thickness (7.5% of the diameter, at least 2px)
+ *   --spinner-track   color of the full ring
+ *   --spinner-head    color of the moving arc
+ */
 .spinner {
-  width: 2.5rem;
-  height: 2.5rem;
-  border: 3px solid var(--color-slate-100);
-  border-top-color: var(--color-primary);
+  display: inline-block;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  width: var(--spinner-size, 2.5rem);
+  height: var(--spinner-size, 2.5rem);
+  border: var(--spinner-border, max(2px, calc(var(--spinner-size, 2.5rem) * 0.075))) solid var(--spinner-track);
+  border-top-color: var(--spinner-head);
   border-radius: 50%;
   animation: spinner-rotate 0.7s linear infinite;
+}
+
+.spinner--primary {
+  --spinner-track: var(--color-slate-100);
+  --spinner-head: var(--color-primary);
+}
+
+.spinner--current {
+  --spinner-track: color-mix(in srgb, currentColor 25%, transparent);
+  --spinner-head: currentColor;
 }
 
 @keyframes spinner-rotate {

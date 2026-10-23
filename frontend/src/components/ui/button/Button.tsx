@@ -1,5 +1,6 @@
 import type { ButtonHTMLAttributes, MouseEventHandler, ReactNode } from 'react';
 import { Link } from 'react-router-dom';
+import { Spinner } from '../spinner';
 import './Button.css';
 
 export type ButtonVariant =
@@ -69,7 +70,7 @@ export default function Button(props: ButtonProps) {
     .join(' ');
   const content = (
     <>
-      {icon}
+      {props.to === undefined && props.loading ? <Spinner size="1.1em" tone="current" /> : icon}
       {children}
     </>
   );

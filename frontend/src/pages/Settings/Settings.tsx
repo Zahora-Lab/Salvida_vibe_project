@@ -36,6 +36,7 @@ import { Button } from "../../components/ui/button";
 import { Badge } from "../../components/ui/badge";
 import { Switch } from "../../components/ui/switch";
 import { Avatar } from '@/components/ui/avatar';
+import { Spinner } from '@/components/ui/spinner';
 import "./Settings.css";
 
 const GEOAPIFY_KEY = import.meta.env.VITE_GEOAPIFY_API_KEY as string;
@@ -617,7 +618,7 @@ export default function Settings() {
                               />
                             )}
                           </FormField>
-                          {municipalityLoading && <span className="settings-zone__spinner" />}
+                          {municipalityLoading && <span className="settings-zone__spinner"><Spinner size={14} /></span>}
                           {municipalityOpen && municipalitySuggestions.length > 0 && (
                             <ul className="settings-zone__dropdown">
                               {municipalitySuggestions.map((item) => (

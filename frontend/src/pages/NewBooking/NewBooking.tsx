@@ -1,4 +1,4 @@
-import { Send, Loader2 } from 'lucide-react';
+import { Send } from 'lucide-react';
 import { toast } from 'react-toastify';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useState, useMemo } from 'react';
@@ -14,6 +14,7 @@ import { todayIso, cardState } from '../../utils';
 import type { Address, UserProfile } from '../../types';
 import { Button, BackButton } from '../../components/ui/button';
 import { Avatar } from '@/components/ui/avatar';
+import { Spinner } from '@/components/ui/spinner';
 import './NewBooking.css';
 
 export default function NewBooking() {
@@ -280,7 +281,7 @@ export default function NewBooking() {
             >
               {createBooking.isPending ? (
                 <>
-                  <Loader2 size={18} className="animate-spin" />
+                  <Spinner size={18} tone="current" />
                   <span>{t('booking.submitting')}</span>
                 </>
               ) : (

@@ -85,6 +85,12 @@ describe('Button (native)', () => {
     expect(btn).toHaveAttribute('aria-busy', 'true');
   });
 
+  it('loading swaps the icon for a spinner', () => {
+    renderBtn(<Button loading icon={<svg data-testid="icon" />}>Guardar</Button>);
+    expect(screen.queryByTestId('icon')).not.toBeInTheDocument();
+    expect(screen.getByRole('button').querySelector('.spinner')).not.toBeNull();
+  });
+
   it('is not busy by default', () => {
     renderBtn(<Button>x</Button>);
     expect(screen.getByRole('button')).not.toHaveAttribute('aria-busy');

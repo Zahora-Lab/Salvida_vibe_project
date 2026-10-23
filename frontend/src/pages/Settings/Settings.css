@@ -401,16 +401,7 @@
   right: 0.875rem;
   top: 50%;
   transform: translateY(-50%);
-  width: 14px;
-  height: 14px;
-  border: 2px solid var(--color-slate-300);
-  border-top-color: var(--color-primary);
-  border-radius: 50%;
-  animation: zone-spin 0.8s linear infinite;
-}
-
-@keyframes zone-spin {
-  to { transform: translateY(-50%) rotate(360deg); }
+  display: flex;
 }
 
 .settings-zone__dropdown {
