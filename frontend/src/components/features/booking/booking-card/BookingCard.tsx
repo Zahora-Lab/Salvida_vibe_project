@@ -5,7 +5,7 @@ import {
 } from 'lucide-react';
 import { DropdownMenu } from '@/components/ui/dropdown-menu';
 import { formatDateShort } from '@/utils';
-import { STATUS_TONE } from '@/constants/booking';
+import { STATUS_TONE } from './statusTone';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import type { Booking } from '@/types';
