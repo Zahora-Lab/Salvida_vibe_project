@@ -1,0 +1,32 @@
+/*
+ * Theming tokens (a container can redefine them once):
+ *   --avatar-size       diameter
+ *   --avatar-font-size  initials size (35% of the diameter by default)
+ */
+.avatar {
+  --avatar-bg: var(--color-primary-10);
+  --avatar-color: var(--color-primary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: var(--avatar-size, 2.5rem);
+  height: var(--avatar-size, 2.5rem);
+  border-radius: 50%;
+  overflow: hidden;
+  background: var(--avatar-bg);
+  color: var(--avatar-color);
+  font-size: var(--avatar-font-size, calc(var(--avatar-size, 2.5rem) * 0.35));
+  font-weight: 700;
+}
+
+.avatar--solid {
+  --avatar-bg: var(--color-primary);
+  --avatar-color: white;
+}
+
+.avatar__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}

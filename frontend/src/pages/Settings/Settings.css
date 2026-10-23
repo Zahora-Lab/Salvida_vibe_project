@@ -115,24 +115,13 @@
   position: relative;
 }
 
-.settings-avatar__circle {
-  width: 6rem;
-  height: 6rem;
-  border-radius: 50%;
-  background-color: var(--color-primary-10);
-  color: var(--color-primary);
+.avatar.settings-avatar__circle {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.875rem;
+  --avatar-size: 6rem;
+  --avatar-font-size: 1.875rem;
   font-weight: 900;
   border: 4px solid white;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
-
-.settings-avatar__circle--img {
-  object-fit: cover;
-  font-size: 0;
 }
 
 .settings-avatar__btn {

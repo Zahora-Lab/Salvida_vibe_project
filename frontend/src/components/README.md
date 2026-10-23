@@ -37,6 +37,7 @@ components/
 | `CreateButton` | Acciones "añadir/nuevo" que colapsan a `+` en móvil | `display` (`responsive` · `full` · `icon`), `variant` (`solid` · `dashed`) |
 | `Badge` | Etiqueta de estado o categoría | `tone` (`success` · `warning` · `danger` · `info` · `neutral` · `primary`), `size`, `icon`, `bordered` |
 | `Skeleton` | Marcador de carga con brillo. Decorativo (`aria-hidden`) | `width`, `height`, `radius` (número = px). Tokens `--skeleton-base` `--skeleton-highlight` `--skeleton-radius` `--skeleton-duration` |
+| `Avatar` | Foto redonda con iniciales de respaldo. Pasa las iniciales como hijo | `src`, `alt`, `tone` (`primary` · `solid`), `size` (número = px). Tokens `--avatar-size` `--avatar-font-size` |
 | `Switch` | Interruptor `role="switch"` | **`label` obligatorio**, `checked`, `onChange(next: boolean)` |
 | `Modal` | Diálogo modal (`<dialog>` nativo) | `open`, `onCancel`, `title`, `footer`, `size`, `closable`, `maskClosable`, `keyboard`, `role`, `styles` |
 | `FilterTabs` | Filtro de una sola opción en píldoras | `options`, `value`, `onChange` |

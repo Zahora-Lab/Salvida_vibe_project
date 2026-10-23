@@ -16,6 +16,7 @@ import { useMediaQuery } from '../../hooks/useMediaQuery';
 import { formatLastVisit } from '../../utils';
 import PrmCard from '@/components/features/prm/prm-card/PrmCard';
 import { Skeleton } from '@/components/ui/skeleton';
+import { Avatar } from '@/components/ui/avatar';
 import './Prms.css';
 
 export default function Prms() {
@@ -133,9 +134,7 @@ export default function Prms() {
                       <tr key={prm.id}>
                         <td>
                           <Link to={`/app/prms/${prm.id}`} className="prm-link">
-                            <div className="prm-link__avatar">
-                              {prm.name.charAt(0)}
-                            </div>
+                            <Avatar>{prm.name.charAt(0)}</Avatar>
                             <span className="prm-link__name">{prm.name}</span>
                           </Link>
                         </td>

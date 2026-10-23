@@ -106,27 +106,6 @@
   text-decoration: underline;
 }
 
-.user-link__avatar {
-  width: 2rem;
-  height: 2rem;
-  border-radius: 50%;
-  background: var(--color-primary-10);
-  color: var(--color-primary);
-  font-weight: 700;
-  font-size: 0.75rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  overflow: hidden;
-}
-
-.user-link__avatar img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
 .user-link__name {
   font-weight: 600;
   color: var(--color-slate-800);
@@ -192,12 +171,6 @@
   flex: 1;
   min-width: 0;
   gap: 0.75rem;
-}
-
-.users__card-link .user-link__avatar {
-  width: 2.5rem;
-  height: 2.5rem;
-  font-size: 0.875rem;
 }
 
 .users__card-link .user-link__name {

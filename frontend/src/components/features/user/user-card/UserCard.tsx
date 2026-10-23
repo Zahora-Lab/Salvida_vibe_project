@@ -5,6 +5,7 @@ import type { DropdownItem } from '@/components/ui/dropdown-menu';
 import type { UserProfile } from '@/types';
 import { ROLE_LABEL, getDisplayName, getInitials, roleTone } from '@/components/features/user/user-display/userDisplay';
 import { Badge } from '@/components/ui/badge';
+import { Avatar } from '@/components/ui/avatar';
 
 interface UserCardProps {
   user: UserProfile;
@@ -22,9 +23,7 @@ export default function UserCard({ user, showDemo, menuItems, onOpen }: UserCard
     <li className={`users__card${isArchived ? ' users__card--archived' : ''}`}>
       <div className="users__card-head">
         <button type="button" className="user-link users__card-link" onClick={onOpen}>
-          <div className="user-link__avatar">
-            {user.avatar ? <img src={user.avatar} alt={user.firstName} /> : getInitials(user)}
-          </div>
+          <Avatar src={user.avatar} alt={user.firstName}>{getInitials(user)}</Avatar>
           <span className="user-link__name">{getDisplayName(user)}</span>
         </button>
         <DropdownMenu items={menuItems} />

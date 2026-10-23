@@ -15,6 +15,7 @@ import { useAuthStore } from "@/store/useAuthStore";
 import { SalvidaLogo } from "@/assets/icons/SalvidaLogo";
 import { useUIStore } from "@/store/useUIStore";
 import { useDemoMode } from "@/hooks/useProfile";
+import { Avatar } from '@/components/ui/avatar';
 import "./Sidebar.css";
 
 const allNavItems = [
@@ -161,7 +162,7 @@ export default function Sidebar() {
 
         <div className="sidebar__user">
           <div className="sidebar__user-info">
-            <div className="sidebar__user-avatar">{initials}</div>
+            <Avatar>{initials}</Avatar>
             <div>
               <p className="sidebar__user-name">{fullName}</p>
               <p className="sidebar__user-role">

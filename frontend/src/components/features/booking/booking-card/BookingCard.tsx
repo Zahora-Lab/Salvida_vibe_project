@@ -9,6 +9,7 @@ import { STATUS_TONE } from './statusTone';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import type { Booking } from '@/types';
+import { Avatar } from '@/components/ui/avatar';
 import './BookingCard.css';
 
 export interface BookingCardProps {
@@ -37,13 +38,9 @@ export default function BookingCard({
 
   return (
     <div className="booking-card">
-      {booking.prmAvatar ? (
-        <img className="booking-card__avatar" src={booking.prmAvatar} alt={booking.prmName} />
-      ) : (
-        <div className="booking-card__avatar booking-card__avatar--placeholder">
-          {booking.prmName?.[0] ?? '?'}
-        </div>
-      )}
+      <Avatar className="booking-card__avatar" src={booking.prmAvatar} alt={booking.prmName}>
+        {booking.prmName?.[0] ?? '?'}
+      </Avatar>
       <div className="booking-card__info">
         <div className="booking-card__top">
           <div className="booking-card__name">{booking.prmName}</div>

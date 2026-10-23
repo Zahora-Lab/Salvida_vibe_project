@@ -20,6 +20,7 @@ import { ROLE_LABEL, getDisplayName, getInitials, roleTone } from '@/components/
 import { Badge } from '../../components/ui/badge';
 import type { UserProfile } from '../../types';
 import { Skeleton } from '@/components/ui/skeleton';
+import { Avatar } from '@/components/ui/avatar';
 import './Users.css';
 
 export default function Users() {
@@ -196,13 +197,7 @@ export default function Users() {
                                 navigate(`/app/settings?userId=${u.id}`)
                               }
                             >
-                              <div className="user-link__avatar">
-                                {u.avatar ? (
-                                  <img src={u.avatar} alt={u.firstName} />
-                                ) : (
-                                  getInitials(u)
-                                )}
-                              </div>
+                              <Avatar size="2rem" src={u.avatar} alt={u.firstName}>{getInitials(u)}</Avatar>
                               <span className="user-link__name">
                                 {getDisplayName(u)}
                               </span>

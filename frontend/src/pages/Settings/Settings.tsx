@@ -35,6 +35,7 @@ import { FormField } from "../../components/ui/form-field";
 import { Button } from "../../components/ui/button";
 import { Badge } from "../../components/ui/badge";
 import { Switch } from "../../components/ui/switch";
+import { Avatar } from '@/components/ui/avatar';
 import "./Settings.css";
 
 const GEOAPIFY_KEY = import.meta.env.VITE_GEOAPIFY_API_KEY as string;
@@ -470,25 +471,17 @@ export default function Settings() {
                         }}
                       />
                       <div className="settings-avatar__wrap">
-                        {(
-                          selectedUserId
-                            ? form.avatar
-                            : form.avatar || profile?.avatar
-                        ) ? (
-                          <img
-                            src={
-                              (selectedUserId
-                                ? form.avatar
-                                : form.avatar || profile?.avatar) as string
-                            }
-                            alt="Avatar"
-                            className="settings-avatar__circle settings-avatar__circle--img"
-                          />
-                        ) : (
-                          <div className="settings-avatar__circle">
-                            {initials}
-                          </div>
-                        )}
+                        <Avatar
+                          className="settings-avatar__circle"
+                          src={
+                            (selectedUserId
+                              ? form.avatar
+                              : form.avatar || profile?.avatar) || undefined
+                          }
+                          alt="Avatar"
+                        >
+                          {initials}
+                        </Avatar>
                         <button
                           type="button"
                           className="settings-avatar__btn"

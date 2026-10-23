@@ -10,6 +10,7 @@ import { useBooking, useUpdateBooking } from '../../hooks/useBookings';
 import type { Address } from '../../types';
 import { Button, BackButton } from '../../components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
+import { Avatar } from '@/components/ui/avatar';
 import '../NewBooking/NewBooking.css';
 
 function cardState(
@@ -121,11 +122,7 @@ export default function EditBooking() {
             </div>
             <div className="field-card__content">
               <div className="prm-selected-card">
-                <div className="prm-selected-card__avatar">
-                  {booking.prmAvatar
-                    ? <img src={booking.prmAvatar} alt={booking.prmName} />
-                    : booking.prmName[0]}
-                </div>
+                <Avatar tone="solid" size="2.25rem" src={booking.prmAvatar} alt={booking.prmName}>{booking.prmName[0]}</Avatar>
                 <div className="prm-selected-card__info">
                   <span className="prm-selected-card__name">{booking.prmName}</span>
                 </div>

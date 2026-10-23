@@ -13,6 +13,7 @@ import { useAuthStore } from '../../store/useAuthStore';
 import { todayIso, cardState } from '../../utils';
 import type { Address, UserProfile } from '../../types';
 import { Button, BackButton } from '../../components/ui/button';
+import { Avatar } from '@/components/ui/avatar';
 import './NewBooking.css';
 
 export default function NewBooking() {
@@ -95,11 +96,9 @@ export default function NewBooking() {
               <div className="field-card__content">
                 {selectedOwner ? (
                   <div className="prm-selected-card">
-                    <div className="prm-selected-card__avatar">
-                      {selectedOwner.avatar
-                        ? <img src={selectedOwner.avatar} alt={selectedOwner.firstName} />
-                        : `${selectedOwner.firstName[0]}${selectedOwner.lastName[0]}`}
-                    </div>
+                    <Avatar tone="solid" size="2.25rem" src={selectedOwner.avatar} alt={selectedOwner.firstName}>
+                        {`${selectedOwner.firstName[0]}${selectedOwner.lastName[0]}`}
+                      </Avatar>
                     <div className="prm-selected-card__info">
                       <span className="prm-selected-card__name">{selectedOwner.firstName} {selectedOwner.lastName}</span>
                       {selectedOwner.email && (
@@ -151,11 +150,7 @@ export default function NewBooking() {
                     </p>
                   ) : selectedPrm ? (
                     <div className="prm-selected-card">
-                      <div className="prm-selected-card__avatar">
-                        {selectedPrm.avatar
-                          ? <img src={selectedPrm.avatar} alt={selectedPrm.name} />
-                          : selectedPrm.name[0]}
-                      </div>
+                      <Avatar tone="solid" size="2.25rem" src={selectedPrm.avatar} alt={selectedPrm.name}>{selectedPrm.name[0]}</Avatar>
                       <div className="prm-selected-card__info">
                         <span className="prm-selected-card__name">{selectedPrm.name}</span>
                         {selectedPrm.dni && (
@@ -198,9 +193,7 @@ export default function NewBooking() {
                                   setAddress({});
                                 }}
                               >
-                                <div className="prm-dropdown-option__avatar">
-                                  {p.avatar ? <img src={p.avatar} alt={p.name} /> : p.name[0]}
-                                </div>
+                                <Avatar size="1.75rem" src={p.avatar} alt={p.name}>{p.name[0]}</Avatar>
                                 <div>
                                   <div style={{ fontWeight: 600, fontSize: '0.875rem' }}>{p.name}</div>
                                   {p.dni && (
