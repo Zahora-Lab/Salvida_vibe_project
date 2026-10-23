@@ -38,6 +38,8 @@ components/
 | `Badge` | Etiqueta de estado o categoría | `tone` (`success` · `warning` · `danger` · `info` · `neutral` · `primary`), `size`, `icon`, `bordered` |
 | `Skeleton` | Marcador de carga con brillo. Decorativo (`aria-hidden`) | `width`, `height`, `radius` (número = px). Tokens `--skeleton-base` `--skeleton-highlight` `--skeleton-radius` `--skeleton-duration` |
 | `Avatar` | Foto redonda con iniciales de respaldo. Pasa las iniciales como hijo | `src`, `alt`, `tone` (`primary` · `solid`), `size` (número = px). Tokens `--avatar-size` `--avatar-font-size` |
+| `Tabs` | Pestañas subrayadas entre vistas hermanas (`role="tablist"`) | `options`, `value`, `onChange(valor)`, `stretch`. Tokens `--tabs-border-color` `--tabs-color` `--tabs-active-color` |
+| `SegmentedControl` | Elección única en píldora, con iconos | `options` (`value`, `label`, `icon`, `iconOnly`), `variant` (`filled` · `outlined`), `onChange(valor)` |
 | `Switch` | Interruptor `role="switch"` | **`label` obligatorio**, `checked`, `onChange(next: boolean)` |
 | `Modal` | Diálogo modal (`<dialog>` nativo) | `open`, `onCancel`, `title`, `footer`, `size`, `closable`, `maskClosable`, `keyboard`, `role`, `styles` |
 | `FilterTabs` | Filtro de una sola opción en píldoras | `options`, `value`, `onChange` |

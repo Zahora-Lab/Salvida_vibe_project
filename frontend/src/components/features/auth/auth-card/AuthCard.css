@@ -1,28 +1,5 @@
 .auth-card__tabs {
-  display: flex;
-  border-bottom: 1.5px solid var(--color-slate-200);
   margin-bottom: 1.75rem;
-  gap: 0;
-}
-
-.auth-card__tab {
-  flex: 1;
-  padding: 0.625rem 1rem;
-  background: none;
-  border: none;
-  border-bottom: 2px solid transparent;
-  margin-bottom: -1.5px;
-  cursor: pointer;
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: var(--color-slate-500);
-  transition: color 0.15s, border-color 0.15s;
-}
-
-.auth-card__tab--active {
-  color: var(--color-primary);
-  border-bottom-color: var(--color-primary);
-  font-weight: 600;
 }
 
 .auth-card__form {

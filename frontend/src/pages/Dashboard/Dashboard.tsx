@@ -26,6 +26,7 @@ import { useAuthStore } from '../../store/useAuthStore';
 import { formatDateISO } from '../../utils';
 import type { Booking } from '../../types';
 import { Skeleton } from '@/components/ui/skeleton';
+import { SegmentedControl } from '@/components/ui/segmented-control';
 import './Dashboard.css';
 
 // ─── Types ───────────────────────────────────────────────────────────────────
@@ -48,22 +49,14 @@ function ViewToggle({
 }) {
   const { t } = useTranslation();
   return (
-    <div className="dashboard__view-toggle">
-      <button
-        className={`dashboard__view-btn${view === 'calendar' ? ' dashboard__view-btn--active' : ''}`}
-        onClick={() => onChange('calendar')}
-      >
-        <CalendarDays size={16} />
-        <span>{t('dashboard.viewCalendar')}</span>
-      </button>
-      <button
-        className={`dashboard__view-btn${view === 'list' ? ' dashboard__view-btn--active' : ''}`}
-        onClick={() => onChange('list')}
-      >
-        <List size={16} />
-        <span>{t('dashboard.viewList')}</span>
-      </button>
-    </div>
+    <SegmentedControl
+      value={view}
+      onChange={onChange}
+      options={[
+        { value: 'calendar', label: t('dashboard.viewCalendar'), icon: <CalendarDays size={16} /> },
+        { value: 'list', label: t('dashboard.viewList'), icon: <List size={16} /> },
+      ]}
+    />
   );
 }
 

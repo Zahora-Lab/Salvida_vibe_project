@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Modal } from '@/components/ui/modal';
 import { Select } from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
+import { Tabs } from '@/components/ui/tabs';
 import './CreateUserModal.css';
 
 interface Props {
@@ -73,22 +74,15 @@ export default function CreateUserModal({ onClose }: Props) {
       size="md"
       styles={{ body: { padding: 0 } }}
     >
-      <div className="cum-tabs">
-        <button
-          className={`cum-tab${method === 'invite' ? ' cum-tab--active' : ''}`}
-          onClick={() => setMethod('invite')}
-          type="button"
-        >
-          Invitar por email
-        </button>
-        <button
-          className={`cum-tab${method === 'direct' ? ' cum-tab--active' : ''}`}
-          onClick={() => setMethod('direct')}
-          type="button"
-        >
-          Crear con contraseña
-        </button>
-      </div>
+      <Tabs
+        className="cum-tabs"
+        value={method}
+        onChange={setMethod}
+        options={[
+          { value: 'invite', label: 'Invitar por email' },
+          { value: 'direct', label: 'Crear con contraseña' },
+        ]}
+      />
 
       <form className="cum-form" onSubmit={handleSubmit} noValidate>
         <FormField

@@ -1,27 +1,9 @@
 /* Tabs */
 .cum-tabs {
-  display: flex;
-  gap: 0;
+  --tabs-border-color: var(--color-border, #e5e7eb);
+  --tabs-color: var(--color-text-muted, #6b7280);
+  --tabs-active-color: var(--color-primary, #2563eb);
   padding: 1rem 1.5rem 0;
-  border-bottom: 1.5px solid var(--color-border, #e5e7eb);
-}
-
-.cum-tab {
-  background: none;
-  border: none;
-  padding: 0.5rem 1rem;
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: var(--color-text-muted, #6b7280);
-  cursor: pointer;
-  border-bottom: 2px solid transparent;
-  margin-bottom: -1.5px;
-  transition: color 0.15s, border-color 0.15s;
-}
-
-.cum-tab--active {
-  color: var(--color-primary, #2563eb);
-  border-bottom-color: var(--color-primary, #2563eb);
 }
 
 /* Form */

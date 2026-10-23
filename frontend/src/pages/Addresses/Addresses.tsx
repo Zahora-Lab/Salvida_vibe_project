@@ -16,6 +16,7 @@ import PrmMultiSelect from '../../components/features/prm/prm-multi-select/PrmMu
 import AddressAccessibilityBadge from '../../components/features/address/address-accessibility-badge/AddressAccessibilityBadge';
 import { IconButton } from '../../components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
+import { SegmentedControl } from '@/components/ui/segmented-control';
 import './Addresses.css';
 
 type ViewMode = 'list' | 'map';
@@ -86,22 +87,15 @@ export default function Addresses() {
                 </button>
               ))}
             </div>
-            <div className="addresses__view-toggle">
-              <button
-                className={`addresses__view-btn${viewMode === 'list' ? ' addresses__view-btn--active' : ''}`}
-                onClick={() => setViewMode('list')}
-                title={t('addresses.viewList')}
-              >
-                <List size={16} />
-              </button>
-              <button
-                className={`addresses__view-btn${viewMode === 'map' ? ' addresses__view-btn--active' : ''}`}
-                onClick={() => setViewMode('map')}
-                title={t('addresses.viewMap')}
-              >
-                <Map size={16} />
-              </button>
-            </div>
+            <SegmentedControl
+              variant="outlined"
+              value={viewMode}
+              onChange={setViewMode}
+              options={[
+                { value: 'list', label: t('addresses.viewList'), icon: <List size={16} />, iconOnly: true },
+                { value: 'map', label: t('addresses.viewMap'), icon: <Map size={16} />, iconOnly: true },
+              ]}
+            />
           </div>
 
           {/* Entity filters: user + PRM */}

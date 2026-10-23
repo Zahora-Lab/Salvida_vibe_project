@@ -6,6 +6,7 @@ import { useAuthStore } from '@/store/useAuthStore';
 import { Input } from '@/components/ui/input';
 import { FormField } from '@/components/ui/form-field';
 import { Button } from '@/components/ui/button';
+import { Tabs } from '@/components/ui/tabs';
 import './AuthCard.css';
 
 interface AuthCardProps {
@@ -110,20 +111,16 @@ export default function AuthCard({ showRegister = false }: AuthCardProps) {
   return (
     <>
       {showRegister && (
-        <div className="auth-card__tabs">
-          <button
-            className={`auth-card__tab${tab === 'login' ? ' auth-card__tab--active' : ''}`}
-            onClick={() => setTab('login')}
-          >
-            {t('login.loginTab')}
-          </button>
-          <button
-            className={`auth-card__tab${tab === 'register' ? ' auth-card__tab--active' : ''}`}
-            onClick={() => setTab('register')}
-          >
-            {t('login.registerTab')}
-          </button>
-        </div>
+        <Tabs
+          stretch
+          className="auth-card__tabs"
+          value={tab}
+          onChange={setTab}
+          options={[
+            { value: 'login', label: t('login.loginTab') },
+            { value: 'register', label: t('login.registerTab') },
+          ]}
+        />
       )}
 
       {tab === 'login' ? (
