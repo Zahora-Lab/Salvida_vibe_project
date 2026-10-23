@@ -178,8 +178,8 @@ export default function Users() {
                       ))
                     ) : filtered.length === 0 ? (
                       <tr>
-                        <td colSpan={6} className="users__empty">
-                          {t('users.empty')}
+                        <td colSpan={6} className="users__empty-cell">
+                          <EmptyState>{t('users.empty')}</EmptyState>
                         </td>
                       </tr>
                     ) : (

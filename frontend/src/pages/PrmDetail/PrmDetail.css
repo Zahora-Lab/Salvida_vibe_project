@@ -54,11 +54,8 @@
   position: relative;
 }
 
-.prm-profile__avatar {
-  width: 8rem;
-  height: 8rem;
-  border-radius: 50%;
-  object-fit: cover;
+.avatar.prm-profile__avatar {
+  --avatar-size: 8rem;
   border: 4px solid white;
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
 }
@@ -410,9 +407,8 @@
     gap: 1.5rem;
   }
 
-  .prm-profile__avatar {
-    width: 6rem;
-    height: 6rem;
+  .avatar.prm-profile__avatar {
+    --avatar-size: 6rem;
   }
 
   .prm-stats {

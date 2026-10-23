@@ -40,6 +40,7 @@ import AccessibilityChoice from '../../components/features/address/accessibility
 import { Select } from '../../components/ui/select';
 import { Badge } from '../../components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
+import { Avatar } from '@/components/ui/avatar';
 import './PrmDetail.css';
 
 function formatBirthDate(iso: string) {
@@ -263,13 +264,13 @@ export default function PrmDetail() {
                   event.target.value = '';
                 }}
               />
-              <img
+              <Avatar
+                className="prm-profile__avatar"
                 src={
                   prm.avatar ||
                   `https://ui-avatars.com/api/?name=${encodeURIComponent(prm.name)}&background=random`
                 }
                 alt={prm.name}
-                className="prm-profile__avatar"
               />
               <button
                 type="button"

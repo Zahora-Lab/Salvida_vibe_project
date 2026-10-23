@@ -127,8 +127,8 @@ export default function Prms() {
                     ))
                   ) : prms.length === 0 ? (
                     <tr>
-                      <td colSpan={isAdmin ? 7 : 6} className="prms__empty">
-                        {t('prms.empty')}
+                      <td colSpan={isAdmin ? 7 : 6} className="prms__empty-cell">
+                        <EmptyState>{t('prms.empty')}</EmptyState>
                       </td>
                     </tr>
                   ) : (

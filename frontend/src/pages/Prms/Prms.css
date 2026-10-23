@@ -116,11 +116,8 @@
   font-weight: 500;
 }
 
-.prms__empty {
-  text-align: center;
-  padding: 3rem 1.5rem;
-  color: var(--color-slate-400);
-  font-size: 0.875rem;
+.prms__table td.prms__empty-cell {
+  padding: 0;
 }
 
 /* ── Mobile ───────────────────────────────────────────────────────────────── */

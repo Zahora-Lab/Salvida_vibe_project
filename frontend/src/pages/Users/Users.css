@@ -69,11 +69,8 @@
   opacity: 0.55;
 }
 
-.users__empty {
-  text-align: center;
-  padding: 3rem !important;
-  color: var(--color-slate-400);
-  font-size: 0.875rem;
+.users__table td.users__empty-cell {
+  padding: 0;
 }
 
 /* Skeleton */
