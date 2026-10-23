@@ -1,0 +1,26 @@
+/*
+ * Theming tokens (a container can redefine them once):
+ *   --alert-bg      background
+ *   --alert-border  border color
+ *   --alert-color   text color
+ */
+.alert {
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--alert-border);
+  border-radius: 0.625rem;
+  background: var(--alert-bg);
+  color: var(--alert-color);
+  font-size: 0.875rem;
+}
+
+.alert--danger {
+  --alert-bg: #fff5f5;
+  --alert-border: #fed7d7;
+  --alert-color: #c53030;
+}
+
+.alert--success {
+  --alert-bg: #f0fff4;
+  --alert-border: #9ae6b4;
+  --alert-color: #276749;
+}

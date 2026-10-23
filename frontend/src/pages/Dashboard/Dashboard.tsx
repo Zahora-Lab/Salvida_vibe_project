@@ -27,6 +27,7 @@ import { formatDateISO } from '../../utils';
 import type { Booking } from '../../types';
 import { Skeleton } from '@/components/ui/skeleton';
 import { SegmentedControl } from '@/components/ui/segmented-control';
+import { EmptyState } from '@/components/ui/empty-state';
 import './Dashboard.css';
 
 // ─── Types ───────────────────────────────────────────────────────────────────
@@ -384,11 +385,7 @@ export default function Dashboard() {
                   ))}
                 </div>
               ) : bookings.length === 0 ? (
-                <div className="booking-list booking-list--empty">
-                  <p className="booking-list__empty-text">
-                    {t('dashboard.noBookingsToday')}
-                  </p>
-                </div>
+                <EmptyState bordered size="sm">{t('dashboard.noBookingsToday')}</EmptyState>
               ) : (
                 <div className="booking-list">
                   {bookings.map((booking) => (
@@ -468,11 +465,7 @@ export default function Dashboard() {
                 <Skeleton height="5.5rem" radius="1rem" />
               </div>
             ) : sortedBookings.length === 0 ? (
-              <div className="booking-list booking-list--empty">
-                <p className="booking-list__empty-text">
-                  {t('dashboard.noBookings')}
-                </p>
-              </div>
+              <EmptyState bordered size="sm">{t('dashboard.noBookings')}</EmptyState>
             ) : (
               <div className="booking-list">
                 {sortedBookings.map((booking) => (

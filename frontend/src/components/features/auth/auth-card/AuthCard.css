@@ -14,24 +14,6 @@
   gap: 0.75rem;
 }
 
-.auth-card__error {
-  background: #fff5f5;
-  border: 1px solid #fed7d7;
-  border-radius: 0.625rem;
-  padding: 0.75rem 1rem;
-  font-size: 0.875rem;
-  color: #c53030;
-}
-
-.auth-card__success {
-  background: #f0fff4;
-  border: 1px solid #9ae6b4;
-  border-radius: 0.625rem;
-  padding: 0.75rem 1rem;
-  font-size: 0.875rem;
-  color: #276749;
-}
-
 .auth-card__submit {
   margin-top: 0.25rem;
 }

@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/input';
 import { FormField } from '@/components/ui/form-field';
 import { Button } from '@/components/ui/button';
 import { Tabs } from '@/components/ui/tabs';
+import { Alert } from '@/components/ui/alert';
 import './AuthCard.css';
 
 interface AuthCardProps {
@@ -155,7 +156,7 @@ export default function AuthCard({ showRegister = false }: AuthCardProps) {
             )}
           </FormField>
 
-          {loginError && <p className="auth-card__error">{loginError}</p>}
+          {loginError && <Alert>{loginError}</Alert>}
 
           <Button type="submit" size="lg" fullWidth className="auth-card__submit" loading={loginLoading}>
             {loginLoading ? t('login.submitting') : t('login.submit')}
@@ -266,10 +267,10 @@ export default function AuthCard({ showRegister = false }: AuthCardProps) {
             )}
           </FormField>
 
-          {regError && <p className="auth-card__error">{regError}</p>}
+          {regError && <Alert>{regError}</Alert>}
           {regSuccess ? (
             <>
-              <p className="auth-card__success">{regSuccess}</p>
+              <Alert tone="success">{regSuccess}</Alert>
               <Button
                 size="lg"
                 fullWidth

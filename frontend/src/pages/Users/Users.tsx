@@ -21,6 +21,7 @@ import { Badge } from '../../components/ui/badge';
 import type { UserProfile } from '../../types';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Avatar } from '@/components/ui/avatar';
+import { EmptyState } from '@/components/ui/empty-state';
 import './Users.css';
 
 export default function Users() {
@@ -123,9 +124,7 @@ export default function Users() {
                 ))}
               </ul>
             ) : filtered.length === 0 ? (
-              <p className="users__empty users__empty--card">
-                {t('users.empty')}
-              </p>
+              <EmptyState bordered>{t('users.empty')}</EmptyState>
             ) : (
               <ul className="users__cards">
                 {filtered.map((u) => (

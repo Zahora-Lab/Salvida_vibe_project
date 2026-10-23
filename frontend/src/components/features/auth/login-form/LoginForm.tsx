@@ -6,6 +6,7 @@ import { useAuthStore } from '@/store/useAuthStore';
 import { Input } from '@/components/ui/input';
 import { FormField } from '@/components/ui/form-field';
 import { Button } from '@/components/ui/button';
+import { Alert } from '@/components/ui/alert';
 import './LoginForm.css';
 
 interface LoginFormProps {
@@ -83,7 +84,7 @@ export default function LoginForm({ onSuccess }: LoginFormProps) {
         )}
       </FormField>
 
-      {error && <p className="login__error">{error}</p>}
+      {error && <Alert>{error}</Alert>}
 
       <Button type="submit" size="lg" fullWidth className="login__submit" loading={loading}>
         {loading ? t('login.submitting') : t('login.submit')}

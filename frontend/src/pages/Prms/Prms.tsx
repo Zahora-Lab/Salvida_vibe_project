@@ -17,6 +17,7 @@ import { formatLastVisit } from '../../utils';
 import PrmCard from '@/components/features/prm/prm-card/PrmCard';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Avatar } from '@/components/ui/avatar';
+import { EmptyState } from '@/components/ui/empty-state';
 import './Prms.css';
 
 export default function Prms() {
@@ -85,7 +86,7 @@ export default function Prms() {
                 ))}
               </ul>
             ) : prms.length === 0 ? (
-              <p className="prms__empty prms__empty--card">{t('prms.empty')}</p>
+              <EmptyState bordered>{t('prms.empty')}</EmptyState>
             ) : (
               <ul className="prms__cards">
                 {prms.map((prm) => (

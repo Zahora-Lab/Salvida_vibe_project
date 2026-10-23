@@ -40,6 +40,8 @@ components/
 | `Avatar` | Foto redonda con iniciales de respaldo. Pasa las iniciales como hijo | `src`, `alt`, `tone` (`primary` · `solid`), `size` (número = px). Tokens `--avatar-size` `--avatar-font-size` |
 | `Tabs` | Pestañas subrayadas entre vistas hermanas (`role="tablist"`) | `options`, `value`, `onChange(valor)`, `stretch`. Tokens `--tabs-border-color` `--tabs-color` `--tabs-active-color` |
 | `SegmentedControl` | Elección única en píldora, con iconos | `options` (`value`, `label`, `icon`, `iconOnly`), `variant` (`filled` · `outlined`), `onChange(valor)` |
+| `Alert` | Mensaje en línea del resultado de una acción (`role="alert"` o `status`) | `tone` (`danger` · `success`). Tokens `--alert-bg` `--alert-border` `--alert-color` |
+| `EmptyState` | Mensaje cuando una lista no tiene nada que mostrar | `icon`, `bordered`, `size` (`sm` · `md` · `lg`). Las celdas `<td>` de tabla siguen con su propia clase |
 | `Switch` | Interruptor `role="switch"` | **`label` obligatorio**, `checked`, `onChange(next: boolean)` |
 | `Modal` | Diálogo modal (`<dialog>` nativo) | `open`, `onCancel`, `title`, `footer`, `size`, `closable`, `maskClosable`, `keyboard`, `role`, `styles` |
 | `FilterTabs` | Filtro de una sola opción en píldoras | `options`, `value`, `onChange` |

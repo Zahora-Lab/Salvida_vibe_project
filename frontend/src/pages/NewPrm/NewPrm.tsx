@@ -13,6 +13,7 @@ import { Input } from '../../components/ui/input';
 import { FormField } from '../../components/ui/form-field';
 import { BackButton, Button, IconButton } from '../../components/ui/button';
 import { Select } from '../../components/ui/select';
+import { Alert } from '@/components/ui/alert';
 import './NewPrm.css';
 
 interface ContactDraft {
@@ -397,7 +398,7 @@ export default function NewPrm() {
             </Button>
           </section>
 
-          {formError && <p className="new-prm__form-error">{formError}</p>}
+          {formError && <Alert>{formError}</Alert>}
 
           <div className="new-prm__actions">
             <Button to="/app/prms" variant="outline" size="lg">

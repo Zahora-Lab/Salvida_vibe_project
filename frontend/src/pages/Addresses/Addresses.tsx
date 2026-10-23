@@ -17,6 +17,7 @@ import AddressAccessibilityBadge from '../../components/features/address/address
 import { IconButton } from '../../components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { SegmentedControl } from '@/components/ui/segmented-control';
+import { EmptyState } from '@/components/ui/empty-state';
 import './Addresses.css';
 
 type ViewMode = 'list' | 'map';
@@ -161,10 +162,7 @@ export default function Addresses() {
                   ))}
                 </div>
               ) : addresses.length === 0 ? (
-                <div className="addresses__empty">
-                  <MapPin size={32} />
-                  <p>{t('addresses.empty')}</p>
-                </div>
+                <EmptyState size="lg" icon={<MapPin size={32} />}>{t('addresses.empty')}</EmptyState>
               ) : (
                 <table className="addresses__table">
                   <thead>
