@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import type { Address } from '@/types';
 import { usePrmAddresses } from '@/hooks/usePrmAddresses';
 import AddressMapPreview from '@/components/features/address/address-map-preview/AddressMapPreview';
+import { Skeleton } from '@/components/ui/skeleton';
 import './PrmAddressPicker.css';
 
 interface PrmAddressPickerProps {
@@ -53,8 +54,8 @@ export default function PrmAddressPicker({
     return (
       <div className="prm-addr-picker">
         <div className="prm-addr-picker__chips">
-          <div className="prm-addr-chip prm-addr-chip--skeleton" />
-          <div className="prm-addr-chip prm-addr-chip--skeleton" style={{ width: '8rem' }} />
+          <Skeleton width="6rem" height="3rem" radius="0.75rem" />
+          <Skeleton width="8rem" height="3rem" radius="0.75rem" />
         </div>
       </div>
     );

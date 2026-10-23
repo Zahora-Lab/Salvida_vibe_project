@@ -19,6 +19,7 @@ import UserCard from '@/components/features/user/user-card/UserCard';
 import { ROLE_LABEL, getDisplayName, getInitials, roleTone } from '@/components/features/user/user-display/userDisplay';
 import { Badge } from '../../components/ui/badge';
 import type { UserProfile } from '../../types';
+import { Skeleton } from '@/components/ui/skeleton';
 import './Users.css';
 
 export default function Users() {
@@ -114,9 +115,9 @@ export default function Users() {
               <ul className="users__cards" aria-busy="true">
                 {Array.from({ length: 3 }).map((_, i) => (
                   <li key={i} className="users__card users__card--skeleton">
-                    <div className="users__skeleton" style={{ width: '55%' }} />
-                    <div className="users__skeleton" style={{ width: '80%' }} />
-                    <div className="users__skeleton" style={{ width: '40%' }} />
+                    <Skeleton width="55%" />
+                    <Skeleton width="80%" />
+                    <Skeleton width="40%" />
                   </li>
                 ))}
               </ul>
@@ -157,34 +158,19 @@ export default function Users() {
                       Array.from({ length: 4 }).map((_, i) => (
                         <tr key={i} className="users__skeleton-row">
                           <td>
-                            <div
-                              className="users__skeleton"
-                              style={{ width: '180px' }}
-                            />
+                            <Skeleton width="180px" />
                           </td>
                           <td>
-                            <div
-                              className="users__skeleton"
-                              style={{ width: '160px' }}
-                            />
+                            <Skeleton width="160px" />
                           </td>
                           <td>
-                            <div
-                              className="users__skeleton"
-                              style={{ width: '120px' }}
-                            />
+                            <Skeleton width="120px" />
                           </td>
                           <td>
-                            <div
-                              className="users__skeleton"
-                              style={{ width: '60px' }}
-                            />
+                            <Skeleton width="60px" />
                           </td>
                           <td>
-                            <div
-                              className="users__skeleton"
-                              style={{ width: '70px' }}
-                            />
+                            <Skeleton width="70px" />
                           </td>
                           <td />
                         </tr>

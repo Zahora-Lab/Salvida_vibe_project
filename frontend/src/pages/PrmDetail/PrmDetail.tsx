@@ -39,6 +39,7 @@ import { Button, BackButton, IconButton } from '../../components/ui/button';
 import AccessibilityChoice from '../../components/features/address/accessibility-choice/AccessibilityChoice';
 import { Select } from '../../components/ui/select';
 import { Badge } from '../../components/ui/badge';
+import { Skeleton } from '@/components/ui/skeleton';
 import './PrmDetail.css';
 
 function formatBirthDate(iso: string) {
@@ -188,11 +189,11 @@ export default function PrmDetail() {
         </div>
         <div className="prm-detail__body">
           <div className="prm-detail__inner">
-            <div className="prm-detail__skeleton-profile" />
+            <Skeleton height="10rem" radius="1rem" />
             <div className="prm-stats">
               {[0, 1, 2].map((i) => (
                 <div key={i} className="prm-stat">
-                  <div className="prm-detail__skeleton-line" />
+                  <Skeleton height="1rem" />
                 </div>
               ))}
             </div>
@@ -672,7 +673,7 @@ export default function PrmDetail() {
             </div>
 
             {addrLoading ? (
-              <div className="prm-detail__skeleton-line" />
+              <Skeleton height="1rem" />
             ) : (
               <>
                 {addresses && addresses.length > 0 && (

@@ -9,6 +9,7 @@ import ContractModal from '../../components/features/booking/contract-modal/Cont
 import { useBooking, useUpdateBooking } from '../../hooks/useBookings';
 import type { Address } from '../../types';
 import { Button, BackButton } from '../../components/ui/button';
+import { Skeleton } from '@/components/ui/skeleton';
 import '../NewBooking/NewBooking.css';
 
 function cardState(
@@ -81,7 +82,7 @@ export default function EditBooking() {
         </div>
         <div className="new-booking__body">
           <div className="new-booking__inner">
-            <div style={{ height: '12rem', borderRadius: '1rem', background: 'linear-gradient(90deg,#f1f5f9 25%,#f8fafc 50%,#f1f5f9 75%)', backgroundSize: '200% 100%', animation: 'skeleton-shimmer 1.4s ease infinite' }} />
+            <Skeleton height="12rem" radius="1rem" />
           </div>
         </div>
       </div>

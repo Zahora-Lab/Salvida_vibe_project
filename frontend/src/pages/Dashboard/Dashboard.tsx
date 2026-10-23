@@ -25,6 +25,7 @@ import {
 import { useAuthStore } from '../../store/useAuthStore';
 import { formatDateISO } from '../../utils';
 import type { Booking } from '../../types';
+import { Skeleton } from '@/components/ui/skeleton';
 import './Dashboard.css';
 
 // ─── Types ───────────────────────────────────────────────────────────────────
@@ -386,10 +387,7 @@ export default function Dashboard() {
               {isLoading ? (
                 <div className="booking-list">
                   {[1, 2, 3].map((i) => (
-                    <div
-                      key={i}
-                      className="booking-card booking-card--skeleton"
-                    />
+                    <Skeleton key={i} height="5.5rem" radius="1rem" />
                   ))}
                 </div>
               ) : bookings.length === 0 ? (
@@ -472,9 +470,9 @@ export default function Dashboard() {
             {/* Booking list */}
             {listLoading ? (
               <div className="booking-list">
-                <div className="booking-card booking-card--skeleton" />
-                <div className="booking-card booking-card--skeleton" />
-                <div className="booking-card booking-card--skeleton" />
+                <Skeleton height="5.5rem" radius="1rem" />
+                <Skeleton height="5.5rem" radius="1rem" />
+                <Skeleton height="5.5rem" radius="1rem" />
               </div>
             ) : sortedBookings.length === 0 ? (
               <div className="booking-list booking-list--empty">

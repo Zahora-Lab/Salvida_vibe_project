@@ -128,13 +128,6 @@
   font-size: 1.25rem;
 }
 
-.booking-card--skeleton {
-  height: 5.5rem;
-  background: linear-gradient(90deg, var(--color-slate-100) 25%, var(--color-slate-50) 50%, var(--color-slate-100) 75%);
-  background-size: 200% 100%;
-  animation: skeleton-shimmer 1.4s ease infinite;
-}
-
 @media (max-width: 768px) {
   .booking-card {
     padding: 0.875rem;

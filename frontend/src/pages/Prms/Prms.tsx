@@ -15,6 +15,7 @@ import { useDebounce } from '../../hooks/useDebounce';
 import { useMediaQuery } from '../../hooks/useMediaQuery';
 import { formatLastVisit } from '../../utils';
 import PrmCard from '@/components/features/prm/prm-card/PrmCard';
+import { Skeleton } from '@/components/ui/skeleton';
 import './Prms.css';
 
 export default function Prms() {
@@ -76,9 +77,9 @@ export default function Prms() {
               <ul className="prms__cards" aria-busy="true">
                 {Array.from({ length: 3 }).map((_, i) => (
                   <li key={i} className="prms__card prms__card--skeleton">
-                    <div className="prms__skeleton" style={{ width: '55%' }} />
-                    <div className="prms__skeleton" style={{ width: '80%' }} />
-                    <div className="prms__skeleton" style={{ width: '40%' }} />
+                    <Skeleton width="55%" />
+                    <Skeleton width="80%" />
+                    <Skeleton width="40%" />
                   </li>
                 ))}
               </ul>
@@ -112,12 +113,12 @@ export default function Prms() {
                   {isLoading ? (
                     Array.from({ length: 4 }).map((_, i) => (
                       <tr key={i} className="prms__skeleton-row">
-                        <td><div className="prms__skeleton" style={{ width: '180px' }} /></td>
-                        {isAdmin && <td><div className="prms__skeleton" style={{ width: '120px' }} /></td>}
-                        <td><div className="prms__skeleton" style={{ width: '140px' }} /></td>
-                        <td><div className="prms__skeleton" style={{ width: '40px', margin: '0 auto' }} /></td>
-                        <td><div className="prms__skeleton" style={{ width: '80px' }} /></td>
-                        <td><div className="prms__skeleton" style={{ width: '60px' }} /></td>
+                        <td><Skeleton width="180px" /></td>
+                        {isAdmin && <td><Skeleton width="120px" /></td>}
+                        <td><Skeleton width="140px" /></td>
+                        <td><Skeleton width="40px" style={{ margin: '0 auto' }} /></td>
+                        <td><Skeleton width="80px" /></td>
+                        <td><Skeleton width="60px" /></td>
                         <td />
                       </tr>
                     ))

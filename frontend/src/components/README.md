@@ -24,8 +24,6 @@ components/
 4. **Imports:** relativos para rutas cortas; si habría que subir 3 o más niveles, usa el alias `@/`
    (`@/store/useUIStore`).
 5. **Barrels:** todos los componentes de `ui/` exponen un `index.ts` (`import { Input } from '@/components/ui/input'`).
-   Los antiguos movidos (`autocomplete`, `multi-select`, `date-input`, `time-input`, `dropdown-menu`,
-   `confirm-dialog`, `signature-canvas`, `spinner`, `app-loader`) se importan por archivo.
 
 ## Catálogo de `ui/`
 
@@ -38,6 +36,7 @@ components/
 | `IconButton` | Botón de solo icono | **`label` obligatorio**, `tone` (`neutral` · `primary` · `danger`), `size`, `to` |
 | `CreateButton` | Acciones "añadir/nuevo" que colapsan a `+` en móvil | `display` (`responsive` · `full` · `icon`), `variant` (`solid` · `dashed`) |
 | `Badge` | Etiqueta de estado o categoría | `tone` (`success` · `warning` · `danger` · `info` · `neutral` · `primary`), `size`, `icon`, `bordered` |
+| `Skeleton` | Marcador de carga con brillo. Decorativo (`aria-hidden`) | `width`, `height`, `radius` (número = px). Tokens `--skeleton-base` `--skeleton-highlight` `--skeleton-radius` `--skeleton-duration` |
 | `Switch` | Interruptor `role="switch"` | **`label` obligatorio**, `checked`, `onChange(next: boolean)` |
 | `Modal` | Diálogo modal (`<dialog>` nativo) | `open`, `onCancel`, `title`, `footer`, `size`, `closable`, `maskClosable`, `keyboard`, `role`, `styles` |
 | `FilterTabs` | Filtro de una sola opción en píldoras | `options`, `value`, `onChange` |

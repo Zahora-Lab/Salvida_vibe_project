@@ -15,6 +15,7 @@ import UserMultiSelect from '../../components/features/user/user-multi-select/Us
 import PrmMultiSelect from '../../components/features/prm/prm-multi-select/PrmMultiSelect';
 import AddressAccessibilityBadge from '../../components/features/address/address-accessibility-badge/AddressAccessibilityBadge';
 import { IconButton } from '../../components/ui/button';
+import { Skeleton } from '@/components/ui/skeleton';
 import './Addresses.css';
 
 type ViewMode = 'list' | 'map';
@@ -159,9 +160,9 @@ export default function Addresses() {
                 <div className="addresses__loading">
                   {Array.from({ length: 4 }).map((_, i) => (
                     <div key={i} className="addresses__skeleton-row">
-                      <div className="addresses__skeleton" style={{ width: '60%' }} />
-                      <div className="addresses__skeleton" style={{ width: '5rem' }} />
-                      <div className="addresses__skeleton" style={{ width: '8rem' }} />
+                      <Skeleton width="60%" />
+                      <Skeleton width="5rem" />
+                      <Skeleton width="8rem" />
                     </div>
                   ))}
                 </div>
