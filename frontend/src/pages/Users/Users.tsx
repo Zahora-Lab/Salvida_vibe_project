@@ -16,7 +16,12 @@ import {
 import { useMediaQuery } from '../../hooks/useMediaQuery';
 import CreateUserModal from '@/components/features/user/create-user-modal/CreateUserModal';
 import UserCard from '@/components/features/user/user-card/UserCard';
-import { ROLE_LABEL, getDisplayName, getInitials, roleTone } from '@/components/features/user/user-display/userDisplay';
+import {
+  ROLE_LABEL,
+  getDisplayName,
+  getInitials,
+  roleTone,
+} from '@/components/features/user/user-display/userDisplay';
 import { Badge } from '../../components/ui/badge';
 import type { UserProfile } from '../../types';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -40,22 +45,22 @@ export default function Users() {
   const [showCreateModal, setShowCreateModal] = useState(false);
   const isMobile = useMediaQuery('(max-width: 768px)');
 
-  function buildMenuItems(u: UserProfile): DropdownItem[] {
+  function buildMenuItems(user: UserProfile): DropdownItem[] {
     return [
       {
         label:
-          u.isActive === false
+          user.isActive === false
             ? t('users.menu.restore')
             : t('users.menu.archive'),
-        onClick: () => archiveUser.mutate(u.id),
-        variant: u.isActive === false ? 'default' : 'danger',
+        onClick: () => archiveUser.mutate(user.id),
+        variant: user.isActive === false ? 'default' : 'danger',
       },
       ...(isSuperAdmin
         ? [
             {
-              label: u.isDemo ? 'Quitar demo' : 'Marcar como demo',
+              label: user.isDemo ? 'Quitar demo' : 'Marcar como demo',
               onClick: () =>
-                toggleDemo.mutate({ userId: u.id, isDemo: !u.isDemo }),
+                toggleDemo.mutate({ userId: user.id, isDemo: !user.isDemo }),
               variant: 'default' as const,
             },
           ]
@@ -63,16 +68,16 @@ export default function Users() {
     ];
   }
 
-  const filtered = users.filter((u) => {
-    if (statusTab === 'active' && u.isActive === false) return false;
-    if (statusTab === 'archived' && u.isActive !== false) return false;
+  const filtered = users.filter((user) => {
+    if (statusTab === 'active' && user.isActive === false) return false;
+    if (statusTab === 'archived' && user.isActive !== false) return false;
     if (query) {
       const q = query.toLowerCase();
       return (
-        u.firstName?.toLowerCase().includes(q) ||
-        u.lastName?.toLowerCase().includes(q) ||
-        u.email?.toLowerCase().includes(q) ||
-        u.organization?.toLowerCase().includes(q)
+        user.firstName?.toLowerCase().includes(q) ||
+        user.lastName?.toLowerCase().includes(q) ||
+        user.email?.toLowerCase().includes(q) ||
+        user.organization?.toLowerCase().includes(q)
       );
     }
     return true;
@@ -117,7 +122,12 @@ export default function Users() {
             (isLoading ? (
               <ul className="users__cards" aria-busy="true">
                 {Array.from({ length: 3 }).map((_, i) => (
-                  <Card as="li" padding="md" key={i} className="users__card users__card--skeleton">
+                  <Card
+                    as="li"
+                    padding="md"
+                    key={i}
+                    className="users__card users__card--skeleton"
+                  >
                     <Skeleton width="55%" />
                     <Skeleton width="80%" />
                     <Skeleton width="40%" />
@@ -128,13 +138,13 @@ export default function Users() {
               <EmptyState bordered>{t('users.empty')}</EmptyState>
             ) : (
               <ul className="users__cards">
-                {filtered.map((u) => (
+                {filtered.map((user) => (
                   <UserCard
-                    key={u.id}
-                    user={u}
+                    key={user.id}
+                    user={user}
                     showDemo={isSuperAdmin}
-                    menuItems={buildMenuItems(u)}
-                    onOpen={() => navigate(`/app/settings?userId=${u.id}`)}
+                    menuItems={buildMenuItems(user)}
+                    onOpen={() => navigate(`/app/settings?userId=${user.id}`)}
                   />
                 ))}
               </ul>
@@ -183,38 +193,46 @@ export default function Users() {
                         </td>
                       </tr>
                     ) : (
-                      filtered.map((u) => (
+                      filtered.map((user) => (
                         <tr
-                          key={u.id}
+                          key={user.id}
                           className={
-                            u.isActive === false ? 'users__row--archived' : ''
+                            user.isActive === false
+                              ? 'users__row--archived'
+                              : ''
                           }
                         >
                           <td>
                             <button
                               className="user-link"
                               onClick={() =>
-                                navigate(`/app/settings?userId=${u.id}`)
+                                navigate(`/app/settings?userId=${user.id}`)
                               }
                             >
-                              <Avatar size="2rem" src={u.avatar} alt={u.firstName}>{getInitials(u)}</Avatar>
+                              <Avatar
+                                size="2rem"
+                                src={user.avatar}
+                                alt={user.firstName}
+                              >
+                                {getInitials(user)}
+                              </Avatar>
                               <span className="user-link__name">
-                                {getDisplayName(u)}
+                                {getDisplayName(user)}
                               </span>
                             </button>
                           </td>
-                          <td className="users__email">{u.email || '—'}</td>
+                          <td className="users__email">{user.email || '—'}</td>
                           <td className="users__org">
-                            {u.organization || '—'}
+                            {user.organization || '—'}
                           </td>
                           <td>
                             <div className="users__role-cell">
-                              <Badge size="md" tone={roleTone(u.role)}>
-                                {u.role === 'user'
+                              <Badge size="md" tone={roleTone(user.role)}>
+                                {user.role === 'user'
                                   ? t('userRoles.user')
-                                  : (ROLE_LABEL[u.role ?? ''] ?? u.role)}
+                                  : (ROLE_LABEL[user.role ?? ''] ?? user.role)}
                               </Badge>
-                              {isSuperAdmin && u.isDemo && (
+                              {isSuperAdmin && user.isDemo && (
                                 <Badge
                                   size="md"
                                   tone="warning"
@@ -227,12 +245,16 @@ export default function Users() {
                             </div>
                           </td>
                           <td>
-                            <Badge tone={u.isActive === false ? 'neutral' : 'success'}>
-                              {u.isActive === false ? 'Archivado' : 'Activo'}
+                            <Badge
+                              tone={
+                                user.isActive === false ? 'neutral' : 'success'
+                              }
+                            >
+                              {user.isActive === false ? 'Archivado' : 'Activo'}
                             </Badge>
                           </td>
                           <td>
-                            <DropdownMenu items={buildMenuItems(u)} />
+                            <DropdownMenu items={buildMenuItems(user)} />
                           </td>
                         </tr>
                       ))
