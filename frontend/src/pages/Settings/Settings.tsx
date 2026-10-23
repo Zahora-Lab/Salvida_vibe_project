@@ -1,4 +1,4 @@
-import Header from "../../components/Header/Header";
+import Header from "../../components/layout/header/Header";
 import {
   User,
   Bell,
@@ -22,14 +22,21 @@ import {
   useUsers,
   useArchiveUser,
 } from "../../hooks/useProfile";
-import DropdownMenu from "../../components/DropdownMenu";
-import ConfirmDialog from "../../components/ConfirmDialog/ConfirmDialog";
-import UserSelector from "../../components/UserSelector/UserSelector";
+import { DropdownMenu } from "../../components/ui/dropdown-menu";
+import { ConfirmDialog } from "../../components/ui/confirm-dialog";
+import UserSelector from "../../components/features/user/user-selector/UserSelector";
 import SettingsRRSS from "./SettingsRRSS";
 import { usePushNotifications } from "../../hooks/usePushNotifications";
 import { supabase } from "../../lib/supabaseClient";
 import { toast } from "react-toastify";
 import { useDebounce } from "../../hooks/useDebounce";
+import { Input } from "../../components/ui/input";
+import { FormField } from "../../components/ui/form-field";
+import { Button } from "../../components/ui/button";
+import { Badge } from "../../components/ui/badge";
+import { Switch } from "../../components/ui/switch";
+import { Avatar } from '@/components/ui/avatar';
+import { Spinner } from '@/components/ui/spinner';
 import "./Settings.css";
 
 const GEOAPIFY_KEY = import.meta.env.VITE_GEOAPIFY_API_KEY as string;
@@ -287,18 +294,12 @@ export default function Settings() {
                         )}
                       </span>
                     </div>
-                    <button
-                      type="button"
-                      role="switch"
-                      aria-checked={notifPrefs.email}
+                    <Switch
+                      label={t("settings.notifications.emailLabel")}
+                      checked={notifPrefs.email}
                       disabled={!(notifTargetUser ? notifTargetUser.email : profile?.email)}
-                      className={`settings-toggle${notifPrefs.email ? " settings-toggle--on" : ""}${!profile?.email ? " settings-toggle--disabled" : ""}`}
-                      onClick={() =>
-                        setNotifPrefs((p) => ({ ...p, email: !p.email }))
-                      }
-                    >
-                      <span className="settings-toggle__thumb" />
-                    </button>
+                      onChange={(next) => setNotifPrefs((p) => ({ ...p, email: next }))}
+                    />
                   </div>
 
                   <div className="settings-notif-row">
@@ -310,22 +311,17 @@ export default function Settings() {
                         {t("settings.notifications.pushDesc")}
                       </span>
                     </div>
-                    <button
-                      type="button"
-                      role="switch"
-                      aria-checked={notifPrefs.push}
-                      className={`settings-toggle${notifPrefs.push ? " settings-toggle--on" : ""}`}
-                      onClick={() => {
-                        const next = !notifPrefs.push;
+                    <Switch
+                      label={t("settings.notifications.pushLabel")}
+                      checked={notifPrefs.push}
+                      onChange={(next) => {
                         setNotifPrefs((p) => ({ ...p, push: next }));
                         if (!notifTargetUser) {
                           if (next) subscribePush();
                           else unsubscribePush();
                         }
                       }}
-                    >
-                      <span className="settings-toggle__thumb" />
-                    </button>
+                    />
                   </div>
                   {isAdminUser && notifTargetUser && (
                     <p className="settings-notif-row__sub" style={{ marginTop: '-8px', marginBottom: '8px' }}>
@@ -348,27 +344,20 @@ export default function Settings() {
                         Aviso 2 horas antes de cada servicio programado
                       </span>
                     </div>
-                    <button
-                      type="button"
-                      role="switch"
-                      aria-checked={notifPrefs.booking_reminder}
-                      className={`settings-toggle${notifPrefs.booking_reminder ? " settings-toggle--on" : ""}`}
-                      onClick={() =>
-                        setNotifPrefs((p) => ({
-                          ...p,
-                          booking_reminder: !p.booking_reminder,
-                        }))
+                    <Switch
+                      label={t("settings.notifications.reminderLabel")}
+                      checked={notifPrefs.booking_reminder}
+                      onChange={(next) =>
+                        setNotifPrefs((p) => ({ ...p, booking_reminder: next }))
                       }
-                    >
-                      <span className="settings-toggle__thumb" />
-                    </button>
+                    />
                   </div>
                 </div>
 
                 <div className="settings-profile__footer">
-                  <button
-                    type="button"
-                    className="settings-save-btn"
+                  <Button
+                    size="lg"
+                    icon={<Save size={20} />}
                     disabled={isSavingPrefs || isPending}
                     onClick={() => {
                       if (notifTargetUser) {
@@ -378,13 +367,10 @@ export default function Settings() {
                       }
                     }}
                   >
-                    <Save size={20} />
-                    <span>
-                      {isSavingPrefs
-                        ? t("common.saving")
-                        : t("settings.notifications.save")}
-                    </span>
-                  </button>
+                    {isSavingPrefs
+                      ? t("common.saving")
+                      : t("settings.notifications.save")}
+                  </Button>
                 </div>
               </div>
             ) : activeSection === "profile" ? (
@@ -426,13 +412,11 @@ export default function Settings() {
                         ? selectedUser.isActive === false
                         : false;
                       return (
-                        <span
-                          className={`settings-user-status-badge${isArchived ? " settings-user-status-badge--archived" : " settings-user-status-badge--active"}`}
-                        >
+                        <Badge tone={isArchived ? "neutral" : "success"}>
                           {isArchived
                             ? t("settings.profile.statusArchived")
                             : t("settings.profile.statusActive")}
-                        </span>
+                        </Badge>
                       );
                     })()}
                   </div>
@@ -488,25 +472,17 @@ export default function Settings() {
                         }}
                       />
                       <div className="settings-avatar__wrap">
-                        {(
-                          selectedUserId
-                            ? form.avatar
-                            : form.avatar || profile?.avatar
-                        ) ? (
-                          <img
-                            src={
-                              (selectedUserId
-                                ? form.avatar
-                                : form.avatar || profile?.avatar) as string
-                            }
-                            alt="Avatar"
-                            className="settings-avatar__circle settings-avatar__circle--img"
-                          />
-                        ) : (
-                          <div className="settings-avatar__circle">
-                            {initials}
-                          </div>
-                        )}
+                        <Avatar
+                          className="settings-avatar__circle"
+                          src={
+                            (selectedUserId
+                              ? form.avatar
+                              : form.avatar || profile?.avatar) || undefined
+                          }
+                          alt="Avatar"
+                        >
+                          {initials}
+                        </Avatar>
                         <button
                           type="button"
                           className="settings-avatar__btn"
@@ -517,16 +493,14 @@ export default function Settings() {
                         </button>
                       </div>
                       <div className="settings-avatar__info">
-                        <button
-                          type="button"
-                          className="settings-avatar__change-btn"
-                          disabled={uploadingAvatar}
+                        <Button
+                          loading={uploadingAvatar}
                           onClick={() => fileInputRef.current?.click()}
                         >
                           {uploadingAvatar
                             ? t("settings.profile.uploading")
                             : t("settings.profile.changePhoto")}
-                        </button>
+                        </Button>
                         <p className="settings-avatar__hint">
                           {t("settings.profile.photoHint")}
                         </p>
@@ -535,113 +509,116 @@ export default function Settings() {
 
                     {/* Form */}
                     <form className="settings-form" onSubmit={handleSubmit}>
-                      <div className="settings-form__field">
-                        <label className="settings-form__label">
-                          {t("settings.profile.firstName")}
-                        </label>
-                        <input
-                          type="text"
-                          name="firstName"
-                          value={form.firstName}
-                          onChange={handleChange}
-                          className="settings-form__input"
-                          placeholder={t(
-                            "settings.profile.firstNamePlaceholder",
-                          )}
-                        />
-                      </div>
-                      <div className="settings-form__field">
-                        <label className="settings-form__label">
-                          {t("settings.profile.lastName")}
-                        </label>
-                        <input
-                          type="text"
-                          name="lastName"
-                          value={form.lastName}
-                          onChange={handleChange}
-                          className="settings-form__input"
-                          placeholder={t(
-                            "settings.profile.lastNamePlaceholder",
-                          )}
-                        />
-                      </div>
-                      <div className="settings-form__field">
-                        <label className="settings-form__label">
-                          {t("settings.profile.dni")}
-                        </label>
-                        <input
-                          type="text"
-                          name="dni"
-                          value={form.dni}
-                          onChange={handleChange}
-                          className="settings-form__input"
-                          placeholder={t("settings.profile.dniPlaceholder")}
-                          autoComplete="off"
-                        />
-                      </div>
-                      <div className="settings-form__field">
-                        <label className="settings-form__label">
-                          {t("settings.profile.email")}
-                        </label>
-                        <input
-                          type="email"
-                          name="email"
-                          value={form.email}
-                          onChange={handleChange}
-                          className="settings-form__input"
-                          placeholder={t("settings.profile.emailPlaceholder")}
-                        />
-                      </div>
-                      <div className="settings-form__field">
-                        <label className="settings-form__label">
-                          {t("settings.profile.phone")}
-                        </label>
-                        <input
-                          type="tel"
-                          name="phone"
-                          value={form.phone}
-                          onChange={handleChange}
-                          className="settings-form__input"
-                          placeholder={t("settings.profile.phonePlaceholder")}
-                        />
-                      </div>
-                      <div className="settings-form__field settings-form__field--full">
-                        <label className="settings-form__label">
-                          {t("settings.profile.organization")}
-                        </label>
-                        <input
-                          type="text"
-                          name="organization"
-                          value={form.organization}
-                          onChange={handleChange}
-                          className="settings-form__input"
-                          placeholder={t(
-                            "settings.profile.organizationPlaceholder",
-                          )}
-                        />
-                      </div>
-
-                      <div className="settings-form__field settings-form__field--full" ref={municipalityRef} style={{ position: "relative", zIndex: 2 }}>
-                          <label className="settings-form__label">
-                            Municipio
-                          </label>
-                          <input
+                      <FormField variant="eyebrow" label={t("settings.profile.firstName")}>
+                        {(field) => (
+                          <Input
+                            {...field}
+                            variant="filled"
                             type="text"
-                            value={municipalityQuery}
-                            onChange={(e) => {
-                              setMunicipalityQuery(e.target.value);
-                              if (municipalitySelected) {
-                                setMunicipalitySelected(false);
-                                setMunicipalityCoords(null);
-                              }
-                            }}
-                            onFocus={() => {
-                              if (!municipalitySelected && municipalitySuggestions.length > 0) setMunicipalityOpen(true);
-                            }}
-                            placeholder="Busca tu municipio..."
-                            className={`settings-form__input${municipalitySelected ? " settings-form__input--selected" : ""}`}
+                            name="firstName"
+                            value={form.firstName}
+                            onChange={handleChange}
+                            placeholder={t(
+                              "settings.profile.firstNamePlaceholder",
+                            )}
                           />
-                          {municipalityLoading && <span className="settings-zone__spinner" />}
+                        )}
+                      </FormField>
+                      <FormField variant="eyebrow" label={t("settings.profile.lastName")}>
+                        {(field) => (
+                          <Input
+                            {...field}
+                            variant="filled"
+                            type="text"
+                            name="lastName"
+                            value={form.lastName}
+                            onChange={handleChange}
+                            placeholder={t(
+                              "settings.profile.lastNamePlaceholder",
+                            )}
+                          />
+                        )}
+                      </FormField>
+                      <FormField variant="eyebrow" label={t("settings.profile.dni")}>
+                        {(field) => (
+                          <Input
+                            {...field}
+                            variant="filled"
+                            type="text"
+                            name="dni"
+                            value={form.dni}
+                            onChange={handleChange}
+                            placeholder={t("settings.profile.dniPlaceholder")}
+                            autoComplete="off"
+                          />
+                        )}
+                      </FormField>
+                      <FormField variant="eyebrow" label={t("settings.profile.email")}>
+                        {(field) => (
+                          <Input
+                            {...field}
+                            variant="filled"
+                            type="email"
+                            name="email"
+                            value={form.email}
+                            onChange={handleChange}
+                            placeholder={t("settings.profile.emailPlaceholder")}
+                          />
+                        )}
+                      </FormField>
+                      <FormField variant="eyebrow" label={t("settings.profile.phone")}>
+                        {(field) => (
+                          <Input
+                            {...field}
+                            variant="filled"
+                            type="tel"
+                            name="phone"
+                            value={form.phone}
+                            onChange={handleChange}
+                            placeholder={t("settings.profile.phonePlaceholder")}
+                          />
+                        )}
+                      </FormField>
+                      <FormField variant="eyebrow" label={t("settings.profile.organization")} className="settings-form__field--full">
+                        {(field) => (
+                          <Input
+                            {...field}
+                            variant="filled"
+                            type="text"
+                            name="organization"
+                            value={form.organization}
+                            onChange={handleChange}
+                            placeholder={t(
+                              "settings.profile.organizationPlaceholder",
+                            )}
+                          />
+                        )}
+                      </FormField>
+
+                      <div className="settings-form__field--full" ref={municipalityRef} style={{ position: "relative", zIndex: 2 }}>
+                          <FormField variant="eyebrow" label="Municipio">
+                            {(field) => (
+                              <Input
+                                {...field}
+                                variant="filled"
+                                type="text"
+                                value={municipalityQuery}
+                                onChange={(e) => {
+                                  setMunicipalityQuery(e.target.value);
+                                  if (municipalitySelected) {
+                                    setMunicipalitySelected(false);
+                                    setMunicipalityCoords(null);
+                                  }
+                                }}
+                                onFocus={() => {
+                                  if (!municipalitySelected && municipalitySuggestions.length > 0) setMunicipalityOpen(true);
+                                }}
+                                placeholder="Busca tu municipio..."
+                                className={municipalitySelected ? "settings-form__input--selected" : undefined}
+                              />
+                            )}
+                          </FormField>
+                          {municipalityLoading && <span className="settings-zone__spinner"><Spinner size={14} /></span>}
                           {municipalityOpen && municipalitySuggestions.length > 0 && (
                             <ul className="settings-zone__dropdown">
                               {municipalitySuggestions.map((item) => (
@@ -661,18 +638,16 @@ export default function Settings() {
                         </div>
 
                       <div className="settings-profile__footer">
-                        <button
+                        <Button
                           type="submit"
-                          className="settings-save-btn"
-                          disabled={isPending}
+                          size="lg"
+                          icon={<Save size={20} />}
+                          loading={isPending}
                         >
-                          <Save size={20} />
-                          <span>
-                            {isPending
-                              ? t("settings.profile.saving")
-                              : t("settings.profile.save")}
-                          </span>
-                        </button>
+                          {isPending
+                            ? t("settings.profile.saving")
+                            : t("settings.profile.save")}
+                        </Button>
                       </div>
                     </form>
                   </>

@@ -54,6 +54,22 @@
   --color-amber-500: #f59e0b;
   --color-red-500: #ef4444;
 
+  /* ── Meaning tones ──
+     One background/text pair per meaning. Badge and Button (soft, outline) read from here,
+     so "success" looks the same everywhere. */
+  --tone-success-bg: var(--color-emerald-50);
+  --tone-success-color: var(--color-emerald-600);
+  --tone-warning-bg: #fef3c7;
+  --tone-warning-color: #92400e;
+  --tone-danger-bg: #fef2f2;
+  --tone-danger-color: var(--color-red-500);
+  --tone-info-bg: #dbeafe;
+  --tone-info-color: #1d4ed8;
+  --tone-neutral-bg: var(--color-slate-100);
+  --tone-neutral-color: var(--color-slate-500);
+  --tone-primary-bg: var(--color-primary-10);
+  --tone-primary-color: var(--color-primary);
+
   /* ── Z-index scale ── */
   --z-overlay:  20;   /* sticky page headers, mobile nav */
   --z-sticky:   30;   /* sticky action bars (bottom bars, booking actions) */
@@ -114,4 +130,14 @@ select {
 
 ::-webkit-scrollbar-thumb:hover {
   background-color: var(--color-slate-300);
+}
+
+/* Shared by every skeleton placeholder (.prms__skeleton, .booking-card--skeleton, ...) */
+@keyframes skeleton-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
 }

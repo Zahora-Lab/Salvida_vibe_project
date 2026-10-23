@@ -1,18 +1,24 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Search, Plus, Mail, Phone, User } from 'lucide-react';
+import { Mail, Phone, User } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import Header from '../../components/Header/Header';
-import DropdownMenu from '../../components/DropdownMenu';
-import MobileAddButton from '../../components/MobileAddButton/MobileAddButton';
-import type { DropdownItem } from '../../components/DropdownMenu';
+import Header from '../../components/layout/header/Header';
+import { DropdownMenu } from '../../components/ui/dropdown-menu';
+import { ListToolbar } from '../../components/ui/list-toolbar';
+import { FilterTabs } from '../../components/ui/filter-tabs';
+import { Badge } from '../../components/ui/badge';
+import type { DropdownItem } from '../../components/ui/dropdown-menu';
 import { usePrms, useUpdatePrm } from '../../hooks/usePrms';
 import type { PrmListItem } from '../../hooks/usePrms';
 import { useAuthStore } from '../../store/useAuthStore';
 import { useDebounce } from '../../hooks/useDebounce';
 import { useMediaQuery } from '../../hooks/useMediaQuery';
 import { formatLastVisit } from '../../utils';
-import PrmCard from './PrmCard';
+import PrmCard from '@/components/features/prm/prm-card/PrmCard';
+import { Skeleton } from '@/components/ui/skeleton';
+import { Avatar } from '@/components/ui/avatar';
+import { EmptyState } from '@/components/ui/empty-state';
+import { Card } from '@/components/ui/card';
 import './Prms.css';
 
 export default function Prms() {
@@ -52,54 +58,36 @@ export default function Prms() {
       <div className="prms__body">
         <div className="prms__inner">
 
-          <div className="prms__toolbar">
-            <div className="prms__search-wrap">
-              <span className="prms__search-icon">
-                <Search size={18} />
-              </span>
-              <input
-                type="text"
-                placeholder={t('prms.search')}
-                className="prms__search-input"
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
+          <ListToolbar
+            search={{ value: query, onChange: setQuery, placeholder: t('prms.search') }}
+            create={{ label: t('prms.addPrm'), to: '/app/prms/new' }}
+            filters={
+              <FilterTabs
+                value={statusTab}
+                onChange={setStatusTab}
+                options={[
+                  { value: 'all', label: t('prms.tabs.all') },
+                  { value: 'Activo', label: t('prms.tabs.active') },
+                  { value: 'Inactivo', label: t('prms.tabs.inactive') },
+                ]}
               />
-            </div>
-            <Link to="/app/prms/new" className="prms__add-btn">
-              <Plus size={20} />
-              <span>{t('prms.addPrm')}</span>
-            </Link>
-          </div>
-
-          <div className="prms__filters-row">
-            <div className="prms__filter-tabs">
-              {(['all', 'Activo', 'Inactivo'] as const).map((tab) => (
-                <button
-                  key={tab}
-                  className={`prms__filter-tab${statusTab === tab ? ' prms__filter-tab--active' : ''}`}
-                  onClick={() => setStatusTab(tab)}
-                >
-                  {tab === 'Activo' ? t('prms.tabs.active') : tab === 'Inactivo' ? t('prms.tabs.inactive') : t('prms.tabs.all')}
-                </button>
-              ))}
-            </div>
-            <MobileAddButton to="/app/prms/new" label={t('prms.addPrm')} />
-          </div>
+            }
+          />
 
           {/* Mobile: one card per PMR, every value labelled with its column title */}
           {isMobile && (
             isLoading ? (
               <ul className="prms__cards" aria-busy="true">
                 {Array.from({ length: 3 }).map((_, i) => (
-                  <li key={i} className="prms__card prms__card--skeleton">
-                    <div className="prms__skeleton" style={{ width: '55%' }} />
-                    <div className="prms__skeleton" style={{ width: '80%' }} />
-                    <div className="prms__skeleton" style={{ width: '40%' }} />
-                  </li>
+                  <Card as="li" padding="md" key={i} className="prms__card prms__card--skeleton">
+                    <Skeleton width="55%" />
+                    <Skeleton width="80%" />
+                    <Skeleton width="40%" />
+                  </Card>
                 ))}
               </ul>
             ) : prms.length === 0 ? (
-              <p className="prms__empty prms__empty--card">{t('prms.empty')}</p>
+              <EmptyState bordered>{t('prms.empty')}</EmptyState>
             ) : (
               <ul className="prms__cards">
                 {prms.map((prm) => (
@@ -110,7 +98,7 @@ export default function Prms() {
           )}
 
           {!isMobile && (
-          <div className="prms__table-wrap">
+          <Card clip>
             <div className="prms__table-scroll">
               <table className="prms__table">
                 <thead>
@@ -128,19 +116,19 @@ export default function Prms() {
                   {isLoading ? (
                     Array.from({ length: 4 }).map((_, i) => (
                       <tr key={i} className="prms__skeleton-row">
-                        <td><div className="prms__skeleton" style={{ width: '180px' }} /></td>
-                        {isAdmin && <td><div className="prms__skeleton" style={{ width: '120px' }} /></td>}
-                        <td><div className="prms__skeleton" style={{ width: '140px' }} /></td>
-                        <td><div className="prms__skeleton" style={{ width: '40px', margin: '0 auto' }} /></td>
-                        <td><div className="prms__skeleton" style={{ width: '80px' }} /></td>
-                        <td><div className="prms__skeleton" style={{ width: '60px' }} /></td>
+                        <td><Skeleton width="180px" /></td>
+                        {isAdmin && <td><Skeleton width="120px" /></td>}
+                        <td><Skeleton width="140px" /></td>
+                        <td><Skeleton width="40px" style={{ margin: '0 auto' }} /></td>
+                        <td><Skeleton width="80px" /></td>
+                        <td><Skeleton width="60px" /></td>
                         <td />
                       </tr>
                     ))
                   ) : prms.length === 0 ? (
                     <tr>
-                      <td colSpan={isAdmin ? 7 : 6} className="prms__empty">
-                        {t('prms.empty')}
+                      <td colSpan={isAdmin ? 7 : 6} className="prms__empty-cell">
+                        <EmptyState>{t('prms.empty')}</EmptyState>
                       </td>
                     </tr>
                   ) : (
@@ -148,9 +136,7 @@ export default function Prms() {
                       <tr key={prm.id}>
                         <td>
                           <Link to={`/app/prms/${prm.id}`} className="prm-link">
-                            <div className="prm-link__avatar">
-                              {prm.name.charAt(0)}
-                            </div>
+                            <Avatar>{prm.name.charAt(0)}</Avatar>
                             <span className="prm-link__name">{prm.name}</span>
                           </Link>
                         </td>
@@ -183,9 +169,9 @@ export default function Prms() {
                           {formatLastVisit(prm.last_booking_date)}
                         </td>
                         <td>
-                          <span className={`prm-status ${prm.status === 'Activo' ? 'prm-status--active' : 'prm-status--inactive'}`}>
+                          <Badge tone={prm.status === 'Activo' ? 'success' : 'neutral'}>
                             {prm.status === 'Activo' ? t('common.active') : t('common.archived')}
-                          </span>
+                          </Badge>
                         </td>
                         <td>
                           <DropdownMenu items={buildMenuItems(prm)} />
@@ -196,7 +182,7 @@ export default function Prms() {
                 </tbody>
               </table>
             </div>
-          </div>
+          </Card>
           )}
 
         </div>

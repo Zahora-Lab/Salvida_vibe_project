@@ -1,13 +1,17 @@
 import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Send, Loader2, FileSignature } from 'lucide-react';
+import { Send, FileSignature } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import PrmAddressPicker from '../../components/PrmAddressPicker';
-import DateInput from '../../components/DateInput/DateInput';
-import TimeInput from '../../components/TimeInput/TimeInput';
-import ContractModal from '../../components/ContractModal/ContractModal';
+import PrmAddressPicker from '../../components/features/prm/prm-address-picker/PrmAddressPicker';
+import { DateInput } from '../../components/ui/date-input';
+import { TimeInput } from '../../components/ui/time-input';
+import ContractModal from '../../components/features/booking/contract-modal/ContractModal';
 import { useBooking, useUpdateBooking } from '../../hooks/useBookings';
 import type { Address } from '../../types';
+import { Button, BackButton } from '../../components/ui/button';
+import { Skeleton } from '@/components/ui/skeleton';
+import { Avatar } from '@/components/ui/avatar';
+import { Spinner } from '@/components/ui/spinner';
 import '../NewBooking/NewBooking.css';
 
 function cardState(
@@ -75,14 +79,12 @@ export default function EditBooking() {
     return (
       <div className="new-booking">
         <div className="new-booking__header">
-          <button onClick={() => navigate(-1)} className="new-booking__back-btn">
-            <ArrowLeft size={20} />
-          </button>
+          <BackButton className="new-booking__back-btn" onClick={() => navigate(-1)} />
           <h2 className="new-booking__title">{t('booking.editTitle')}</h2>
         </div>
         <div className="new-booking__body">
           <div className="new-booking__inner">
-            <div style={{ height: '12rem', borderRadius: '1rem', background: 'linear-gradient(90deg,#f1f5f9 25%,#f8fafc 50%,#f1f5f9 75%)', backgroundSize: '200% 100%', animation: 'skeleton-shimmer 1.4s ease infinite' }} />
+            <Skeleton height="12rem" radius="1rem" />
           </div>
         </div>
       </div>
@@ -93,9 +95,7 @@ export default function EditBooking() {
     return (
       <div className="new-booking">
         <div className="new-booking__header">
-          <button onClick={() => navigate(-1)} className="new-booking__back-btn">
-            <ArrowLeft size={20} />
-          </button>
+          <BackButton className="new-booking__back-btn" onClick={() => navigate(-1)} />
           <h2 className="new-booking__title">{t('booking.editTitle')}</h2>
         </div>
         <div className="new-booking__body">
@@ -108,9 +108,7 @@ export default function EditBooking() {
   return (
     <div className="new-booking">
       <div className="new-booking__header">
-        <button onClick={() => navigate(-1)} className="new-booking__back-btn">
-          <ArrowLeft size={20} />
-        </button>
+        <BackButton className="new-booking__back-btn" onClick={() => navigate(-1)} />
         <h2 className="new-booking__title">{t('booking.editTitle')}</h2>
       </div>
 
@@ -125,11 +123,7 @@ export default function EditBooking() {
             </div>
             <div className="field-card__content">
               <div className="prm-selected-card">
-                <div className="prm-selected-card__avatar">
-                  {booking.prmAvatar
-                    ? <img src={booking.prmAvatar} alt={booking.prmName} />
-                    : booking.prmName[0]}
-                </div>
+                <Avatar tone="solid" size="2.25rem" src={booking.prmAvatar} alt={booking.prmName}>{booking.prmName[0]}</Avatar>
                 <div className="prm-selected-card__info">
                   <span className="prm-selected-card__name">{booking.prmName}</span>
                 </div>
@@ -186,15 +180,15 @@ export default function EditBooking() {
                 <span className="field-card__label">{t('contract.title')}</span>
               </div>
               <div className="field-card__content">
-                <button
-                  type="button"
+                <Button
+                  size="lg"
+                  fullWidth
                   className="booking-actions__submit"
-                  style={{ width: '100%', justifyContent: 'center', gap: '8px' }}
+                  icon={<FileSignature size={18} />}
                   onClick={() => setShowSignModal(true)}
                 >
-                  <FileSignature size={18} />
                   {t('contract.signButton')}
-                </button>
+                </Button>
               </div>
             </div>
           )}
@@ -215,18 +209,24 @@ export default function EditBooking() {
       <div className="booking-actions">
         <div className="booking-actions__inner booking-actions__inner--stacked">
           <div className="booking-actions__row">
-            <button onClick={() => navigate(-1)} className="booking-actions__cancel">
+            <Button
+              variant="ghost"
+              size="lg"
+              className="booking-actions__cancel"
+              onClick={() => navigate(-1)}
+            >
               {t('common.cancel')}
-            </button>
-            <button
+            </Button>
+            <Button
+              size="lg"
+              className={`booking-actions__submit${!canSubmit || updateBooking.isPending ? ' booking-actions__submit--disabled' : ''}`}
               onClick={handleSubmit}
               disabled={updateBooking.isPending}
               aria-disabled={!canSubmit || updateBooking.isPending}
-              className={`booking-actions__submit${!canSubmit || updateBooking.isPending ? ' booking-actions__submit--disabled' : ''}`}
             >
               {updateBooking.isPending ? (
                 <>
-                  <Loader2 size={18} className="animate-spin" />
+                  <Spinner size={18} tone="current" />
                   <span>{t('common.saving')}</span>
                 </>
               ) : (
@@ -235,7 +235,7 @@ export default function EditBooking() {
                   <Send size={18} />
                 </>
               )}
-            </button>
+            </Button>
           </div>
           {submitAttempted && missingFields.length > 0 && (
             <div className="booking-submit__hint">

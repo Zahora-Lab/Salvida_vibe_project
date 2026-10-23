@@ -1,17 +1,17 @@
 import { lazy, Suspense } from 'react';
 import { Navigate } from 'react-router-dom';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import AppLoader from './components/AppLoader';
-import ProtectedRoute from './components/ProtectedRoute';
-import RoleGuard from './components/RoleGuard';
-import InstallPrompt from './components/InstallPrompt/InstallPrompt';
+import { AppLoader } from './components/ui/app-loader';
+import ProtectedRoute from './components/guards/protected-route/ProtectedRoute';
+import RoleGuard from './components/guards/role-guard/RoleGuard';
+import InstallPrompt from './components/features/app/install-prompt/InstallPrompt';
 
 // Public pages — loaded eagerly (small, needed immediately)
 import Login from './pages/Login/Login';
 import LandingPage from './pages/LandingPage/LandingPage';
 
 // App pages — lazy loaded (heavy, only needed after auth)
-const Layout       = lazy(() => import('./components/Layout/Layout'));
+const AppLayout    = lazy(() => import('./components/layout/app-layout/AppLayout'));
 const Dashboard    = lazy(() => import('./pages/Dashboard/Dashboard'));
 const Prms         = lazy(() => import('./pages/Prms/Prms'));
 const PrmDetail    = lazy(() => import('./pages/PrmDetail/PrmDetail'));
@@ -46,7 +46,7 @@ export default function App() {
 
           {/* Protected app — all authenticated users */}
           <Route element={<ProtectedRoute />}>
-            <Route path="/app" element={<Layout />}>
+            <Route path="/app" element={<AppLayout />}>
               <Route index element={<Navigate to="/app/bookings" replace />} />
               <Route path="bookings" element={<Dashboard />} />
               <Route path="bookings/new" element={<NewBooking />} />

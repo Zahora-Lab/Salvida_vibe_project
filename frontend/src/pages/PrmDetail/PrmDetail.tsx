@@ -1,7 +1,6 @@
 import { useState, useRef } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import {
-  ArrowLeft,
   Mail,
   Phone,
   Cake,
@@ -19,7 +18,7 @@ import {
 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { usePrm, useUpdatePrm, useAddEmergencyContact, useDeleteEmergencyContact, useUpdateEmergencyContact } from '../../hooks/usePrms';
-import DropdownMenu from '../../components/DropdownMenu';
+import { DropdownMenu } from '../../components/ui/dropdown-menu';
 import { useAuthStore } from '../../store/useAuthStore';
 import { supabase } from '../../lib/supabaseClient';
 import { toast } from 'react-toastify';
@@ -29,12 +28,19 @@ import {
   useDeletePrmAddress,
   useUpdatePrmAddress,
 } from '../../hooks/usePrmAddresses';
-import AddressSelector from '../../components/AddressSelector';
-import PrmAddressesMap from '../../components/PrmAddressesMap/PrmAddressesMap';
-import AddressAccessibilityBadge from '../../components/AddressAccessibilityBadge/AddressAccessibilityBadge';
-import DateInput from '../../components/DateInput/DateInput';
+import AddressSelector from '../../components/features/address/address-selector/AddressSelector';
+import PrmAddressesMap from '../../components/features/prm/prm-addresses-map/PrmAddressesMap';
+import AddressAccessibilityBadge from '../../components/features/address/address-accessibility-badge/AddressAccessibilityBadge';
+import { DateInput } from '../../components/ui/date-input';
 import type { Address } from '../../types';
-import PrmRecentHistory from './PrmRecentHistory';
+import PrmRecentHistory from '@/components/features/prm/prm-recent-history/PrmRecentHistory';
+import { Input } from '../../components/ui/input';
+import { Button, BackButton, IconButton } from '../../components/ui/button';
+import AccessibilityChoice from '../../components/features/address/accessibility-choice/AccessibilityChoice';
+import { Select } from '../../components/ui/select';
+import { Badge } from '../../components/ui/badge';
+import { Skeleton } from '@/components/ui/skeleton';
+import { Avatar } from '@/components/ui/avatar';
 import './PrmDetail.css';
 
 function formatBirthDate(iso: string) {
@@ -179,18 +185,16 @@ export default function PrmDetail() {
     return (
       <div className="prm-detail">
         <div className="prm-detail__header">
-          <button onClick={() => navigate(-1)} className="prm-detail__back-btn">
-            <ArrowLeft size={20} />
-          </button>
+          <BackButton className="prm-detail__back-btn" onClick={() => navigate(-1)} />
           <h2 className="prm-detail__title">{t('prmDetail.title')}</h2>
         </div>
         <div className="prm-detail__body">
           <div className="prm-detail__inner">
-            <div className="prm-detail__skeleton-profile" />
+            <Skeleton height="10rem" radius="1rem" />
             <div className="prm-stats">
               {[0, 1, 2].map((i) => (
                 <div key={i} className="prm-stat">
-                  <div className="prm-detail__skeleton-line" />
+                  <Skeleton height="1rem" />
                 </div>
               ))}
             </div>
@@ -204,17 +208,15 @@ export default function PrmDetail() {
     return (
       <div className="prm-detail">
         <div className="prm-detail__header">
-          <button onClick={() => navigate(-1)} className="prm-detail__back-btn">
-            <ArrowLeft size={20} />
-          </button>
+          <BackButton className="prm-detail__back-btn" onClick={() => navigate(-1)} />
           <h2 className="prm-detail__title">{t('prmDetail.title')}</h2>
         </div>
         <div className="prm-detail__body">
           <div className="prm-detail__inner prm-detail__not-found">
             <p>{t('prmDetail.notFound')}</p>
-            <button onClick={() => navigate(-1)}>
+            <Button variant="secondary" onClick={() => navigate(-1)}>
               {t('prmDetail.goBack')}
-            </button>
+            </Button>
           </div>
         </div>
       </div>
@@ -224,9 +226,7 @@ export default function PrmDetail() {
   return (
     <div className="prm-detail">
       <div className="prm-detail__header">
-        <button onClick={() => navigate(-1)} className="prm-detail__back-btn">
-          <ArrowLeft size={20} />
-        </button>
+        <BackButton className="prm-detail__back-btn" onClick={() => navigate(-1)} />
         <h2 className="prm-detail__title">{t('prmDetail.title')}</h2>
         {isAdmin && prm && (
           <DropdownMenu
@@ -264,13 +264,13 @@ export default function PrmDetail() {
                   event.target.value = '';
                 }}
               />
-              <img
+              <Avatar
+                className="prm-profile__avatar"
                 src={
                   prm.avatar ||
                   `https://ui-avatars.com/api/?name=${encodeURIComponent(prm.name)}&background=random`
                 }
                 alt={prm.name}
-                className="prm-profile__avatar"
               />
               <button
                 type="button"
@@ -284,8 +284,10 @@ export default function PrmDetail() {
             </div>
             <div>
               {editing ? (
-                <input
-                  className="prm-edit-input prm-edit-input--name"
+                <Input
+                  variant="compact"
+                  size="xs"
+                  className="prm-edit-input--name"
                   value={draft.name}
                   onChange={(event) => setDraft({ ...draft, name: event.target.value })}
                 />
@@ -293,11 +295,9 @@ export default function PrmDetail() {
                 <h1 className="prm-profile__name">{prm.name}</h1>
               )}
               <div className="prm-profile__badges">
-                <span
-                  className={`prm-profile__status ${prm.status === 'Activo' ? 'prm-profile__status--active' : 'prm-profile__status--inactive'}`}
-                >
+                <Badge tone={prm.status === 'Activo' ? 'success' : 'neutral'}>
                   {prm.status === 'Activo' ? t('common.active') : t('common.archived')}
-                </span>
+                </Badge>
               </div>
             </div>
           </div>
@@ -307,8 +307,10 @@ export default function PrmDetail() {
             {editing ? (
               <>
                 <div className="prm-stat">
-                  <select
-                    className="prm-edit-input prm-edit-input--stat"
+                  <Select
+                    variant="compact"
+                    size="xs"
+                    className="prm-edit-input--stat"
                     value={draft.bloodType}
                     onChange={(event) =>
                       setDraft({ ...draft, bloodType: event.target.value })
@@ -322,12 +324,14 @@ export default function PrmDetail() {
                         </option>
                       ),
                     )}
-                  </select>
+                  </Select>
                   <p className="prm-stat__label">{t('prmDetail.blood')}</p>
                 </div>
                 <div className="prm-stat">
-                  <input
-                    className="prm-edit-input prm-edit-input--stat"
+                  <Input
+                    variant="compact"
+                    size="xs"
+                    className="prm-edit-input--stat"
                     type="text"
                     placeholder="cm"
                     value={draft.height}
@@ -338,8 +342,10 @@ export default function PrmDetail() {
                   <p className="prm-stat__label">{t('prmDetail.height')}</p>
                 </div>
                 <div className="prm-stat">
-                  <input
-                    className="prm-edit-input prm-edit-input--stat"
+                  <Input
+                    variant="compact"
+                    size="xs"
+                    className="prm-edit-input--stat"
                     type="text"
                     placeholder="kg"
                     value={draft.weight}
@@ -370,26 +376,28 @@ export default function PrmDetail() {
               <h3 className="prm-info__title">{t('prmDetail.personalInfo')}</h3>
               {editing ? (
                 <div className="prm-edit-actions">
-                  <button
-                    className="prm-edit-actions__cancel"
+                  <Button
+                    variant="ghost"
+                    size="xs"
+                    icon={<X size={16} />}
                     onClick={() => setEditing(false)}
                   >
-                    <X size={16} />
                     {t('prmDetail.cancelEdit')}
-                  </button>
-                  <button
-                    className="prm-edit-actions__save"
+                  </Button>
+                  <Button
+                    variant="primary"
+                    size="xs"
+                    icon={<Check size={16} />}
                     onClick={handleSave}
                     disabled={updatePrm.isPending}
                   >
-                    <Check size={16} />
                     {t('prmDetail.saveChanges')}
-                  </button>
+                  </Button>
                 </div>
               ) : (
-                <button className="prm-info__edit-btn" onClick={startEditing}>
+                <Button variant="link" size="sm" onClick={startEditing}>
                   {t('prmDetail.edit')}
-                </button>
+                </Button>
               )}
             </div>
             <div className="prm-info__rows">
@@ -403,8 +411,9 @@ export default function PrmDetail() {
                   </span>
                 </div>
                 {editing ? (
-                  <input
-                    className="prm-edit-input"
+                  <Input
+                    variant="compact"
+                    size="xs"
                     type="email"
                     value={draft.email}
                     onChange={(event) =>
@@ -425,8 +434,9 @@ export default function PrmDetail() {
                   </span>
                 </div>
                 {editing ? (
-                  <input
-                    className="prm-edit-input"
+                  <Input
+                    variant="compact"
+                    size="xs"
                     type="tel"
                     value={draft.phone}
                     onChange={(event) =>
@@ -470,8 +480,9 @@ export default function PrmDetail() {
                   </span>
                 </div>
                 {editing ? (
-                  <input
-                    className="prm-edit-input"
+                  <Input
+                    variant="compact"
+                    size="xs"
                     type="text"
                     value={draft.dni}
                     onChange={(event) =>
@@ -503,13 +514,14 @@ export default function PrmDetail() {
                 {t('prmDetail.emergencyContacts')}
               </h3>
               {!showAddContact && (
-                <button
-                  className="prm-info__edit-btn"
-                  style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}
+                <Button
+                  variant="link"
+                  size="sm"
+                  icon={<Plus size={14} />}
                   onClick={() => setShowAddContact(true)}
                 >
-                  <Plus size={14} /> {t('prmDetail.addContact')}
-                </button>
+                  {t('prmDetail.addContact')}
+                </Button>
               )}
             </div>
 
@@ -517,18 +529,33 @@ export default function PrmDetail() {
               <div className="prm-info__rows">
                 {prm.emergency_contacts.map((contact) => (
                   editingContactId === contact.id ? (
-                    <div key={contact.id} style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', padding: '1rem', borderBottom: '1px solid var(--color-slate-50)' }}>
-                      <input type="text" className="prm-edit-input" placeholder={t('prmDetail.contactName')} value={editContactDraft.name} onChange={(event) => setEditContactDraft({ ...editContactDraft, name: event.target.value })} style={{ maxWidth: '100%', width: '100%' }} />
-                      <input type="tel" className="prm-edit-input" placeholder={t('prmDetail.contactPhone')} value={editContactDraft.phone} onChange={(event) => setEditContactDraft({ ...editContactDraft, phone: event.target.value })} style={{ maxWidth: '100%', width: '100%' }} />
-                      <input type="text" className="prm-edit-input" placeholder={t('prmDetail.contactRelationshipPlaceholder')} value={editContactDraft.relationship} onChange={(event) => setEditContactDraft({ ...editContactDraft, relationship: event.target.value })} style={{ maxWidth: '100%', width: '100%' }} />
-                      <div className="prm-edit-actions" style={{ justifyContent: 'flex-end' }}>
-                        <button type="button" className="prm-edit-actions__cancel" onClick={() => setEditingContactId(null)}><X size={14} /> {t('common.cancel')}</button>
-                        <button type="button" className="prm-edit-actions__save" disabled={!editContactDraft.name.trim() || updateEmergencyContact.isPending}
+                    <div key={contact.id} className="prm-detail__row-form">
+                      <Input variant="compact" size="xs" type="text" placeholder={t('prmDetail.contactName')} value={editContactDraft.name} onChange={(event) => setEditContactDraft({ ...editContactDraft, name: event.target.value })} className="prm-edit-input--full" />
+                      <Input variant="compact" size="xs" type="tel" placeholder={t('prmDetail.contactPhone')} value={editContactDraft.phone} onChange={(event) => setEditContactDraft({ ...editContactDraft, phone: event.target.value })} className="prm-edit-input--full" />
+                      <Input variant="compact" size="xs" type="text" placeholder={t('prmDetail.contactRelationshipPlaceholder')} value={editContactDraft.relationship} onChange={(event) => setEditContactDraft({ ...editContactDraft, relationship: event.target.value })} className="prm-edit-input--full" />
+                      <div className="prm-edit-actions prm-edit-actions--end">
+                        <Button
+                          variant="ghost"
+                          size="xs"
+                          icon={<X size={14} />}
+                          type="button"
+                          onClick={() => setEditingContactId(null)}
+                        >
+                          {t('common.cancel')}
+                        </Button>
+                        <Button
+                          variant="primary"
+                          size="xs"
+                          icon={<Check size={14} />}
+                          type="button"
+                          disabled={!editContactDraft.name.trim() || updateEmergencyContact.isPending}
                           onClick={async () => {
                             await updateEmergencyContact.mutateAsync({ prmId: id!, ecId: contact.id, ...editContactDraft });
                             setEditingContactId(null);
                           }}
-                        ><Check size={14} /> {t('common.save')}</button>
+                        >
+                          {t('common.save')}
+                        </Button>
                       </div>
                     </div>
                   ) : (
@@ -540,10 +567,20 @@ export default function PrmDetail() {
                           <p style={{ fontSize: '0.75rem', color: 'var(--color-slate-400)', marginTop: '0.125rem' }}>{contact.relationship}</p>
                         </div>
                       </div>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                      <div className="prm-edit-actions">
                         <span className="prm-info__row-value">{contact.phone}</span>
-                        <button type="button" onClick={() => { setEditingContactId(contact.id); setEditContactDraft({ name: contact.name, phone: contact.phone, relationship: contact.relationship }); }} style={{ color: 'var(--color-slate-400)', background: 'none', border: 'none', cursor: 'pointer', padding: '0.375rem', borderRadius: '0.375rem', display: 'flex' }} title={t('common.edit')}><Pencil size={15} /></button>
-                        <button type="button" onClick={() => deleteEmergencyContact.mutate({ prmId: id!, ecId: contact.id })} style={{ color: 'var(--color-slate-400)', background: 'none', border: 'none', cursor: 'pointer', padding: '0.375rem', borderRadius: '0.375rem', display: 'flex' }} title={t('common.remove')}><Trash2 size={15} /></button>
+                        <IconButton
+                          label={t('common.edit')}
+                          icon={<Pencil size={15} />}
+                          tone="primary"
+                          onClick={() => { setEditingContactId(contact.id); setEditContactDraft({ name: contact.name, phone: contact.phone, relationship: contact.relationship }); }}
+                        />
+                        <IconButton
+                          label={t('common.remove')}
+                          icon={<Trash2 size={15} />}
+                          tone="danger"
+                          onClick={() => deleteEmergencyContact.mutate({ prmId: id!, ecId: contact.id })}
+                        />
                       </div>
                     </div>
                   )
@@ -551,49 +588,56 @@ export default function PrmDetail() {
               </div>
             ) : (
               !showAddContact && (
-                <p style={{ fontSize: '0.875rem', color: 'var(--color-slate-400)' }}>
+                <p className="prm-detail__no-addresses">
                   {t('prmDetail.noEmergencyContacts')}
                 </p>
               )
             )}
 
             {showAddContact && (
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', padding: '1rem', background: 'white', borderRadius: '0.75rem', border: '1px solid var(--color-slate-100)' }}>
-                <input
+              <div className="prm-addr-form">
+                <Input
+                  variant="compact"
+                  size="xs"
                   type="text"
-                  className="prm-edit-input"
                   placeholder={t('prmDetail.contactName')}
                   value={newContact.name}
                   onChange={(event) => setNewContact({ ...newContact, name: event.target.value })}
-                  style={{ maxWidth: '100%', width: '100%' }}
+                  className="prm-edit-input--full"
                 />
-                <input
+                <Input
+                  variant="compact"
+                  size="xs"
                   type="tel"
-                  className="prm-edit-input"
                   placeholder={t('prmDetail.contactPhone')}
                   value={newContact.phone}
                   onChange={(event) => setNewContact({ ...newContact, phone: event.target.value })}
-                  style={{ maxWidth: '100%', width: '100%' }}
+                  className="prm-edit-input--full"
                 />
-                <input
+                <Input
+                  variant="compact"
+                  size="xs"
                   type="text"
-                  className="prm-edit-input"
                   placeholder={t('prmDetail.contactRelationshipPlaceholder')}
                   value={newContact.relationship}
                   onChange={(event) => setNewContact({ ...newContact, relationship: event.target.value })}
-                  style={{ maxWidth: '100%', width: '100%' }}
+                  className="prm-edit-input--full"
                 />
-                <div className="prm-edit-actions" style={{ justifyContent: 'flex-end' }}>
-                  <button
+                <div className="prm-edit-actions prm-edit-actions--end">
+                  <Button
+                    variant="ghost"
+                    size="xs"
+                    icon={<X size={14} />}
                     type="button"
-                    className="prm-edit-actions__cancel"
                     onClick={() => { setShowAddContact(false); setNewContact({ name: '', phone: '', relationship: '' }); }}
                   >
-                    <X size={14} /> {t('common.cancel')}
-                  </button>
-                  <button
+                    {t('common.cancel')}
+                  </Button>
+                  <Button
+                    variant="primary"
+                    size="xs"
+                    icon={<Check size={14} />}
                     type="button"
-                    className="prm-edit-actions__save"
                     disabled={!newContact.name.trim() || !newContact.phone.trim() || addEmergencyContact.isPending}
                     onClick={async () => {
                       await addEmergencyContact.mutateAsync({
@@ -606,8 +650,8 @@ export default function PrmDetail() {
                       setNewContact({ name: '', phone: '', relationship: '' });
                     }}
                   >
-                    <Check size={14} /> {t('common.save')}
-                  </button>
+                    {t('common.save')}
+                  </Button>
                 </div>
               </div>
             )}
@@ -618,82 +662,59 @@ export default function PrmDetail() {
             <div className="prm-info__header">
               <h3 className="prm-info__title">{t('prmDetail.addresses')}</h3>
               {!showAddAddr && (
-                <button
-                  className="prm-info__edit-btn"
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '0.25rem',
-                  }}
+                <Button
+                  variant="link"
+                  size="sm"
+                  icon={<Plus size={14} />}
                   onClick={() => setShowAddAddr(true)}
                 >
-                  <Plus size={14} /> {t('prmDetail.addAddress')}
-                </button>
+                  {t('prmDetail.addAddress')}
+                </Button>
               )}
             </div>
 
             {addrLoading ? (
-              <div className="prm-detail__skeleton-line" />
+              <Skeleton height="1rem" />
             ) : (
               <>
                 {addresses && addresses.length > 0 && (
                   <div className="prm-info__rows">
                     {addresses.map((addr) => (
                       editingAddressId === addr.id ? (
-                        <div key={addr.id} style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', padding: '1rem', borderBottom: '1px solid var(--color-slate-50)' }}>
+                        <div key={addr.id} className="prm-detail__row-form">
                           <AddressSelector value={editAddrDraft.value} onChange={(v) => setEditAddrDraft({ ...editAddrDraft, value: v })} showValidation={false} showMap={false} />
-                          <input type="text" className="prm-edit-input" placeholder={t('prmDetail.addressAlias')} value={editAddrDraft.alias} onChange={(event) => setEditAddrDraft({ ...editAddrDraft, alias: event.target.value })} maxLength={40} style={{ maxWidth: '100%', width: '100%' }} />
+                          <Input variant="compact" size="xs" type="text" placeholder={t('prmDetail.addressAlias')} value={editAddrDraft.alias} onChange={(event) => setEditAddrDraft({ ...editAddrDraft, alias: event.target.value })} maxLength={40} className="prm-edit-input--full" />
                           {isAdmin && (
-                            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.375rem' }}>
-                              <span style={{ fontSize: '0.6875rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--color-primary)' }}>
-                                {t('addresses.columns.accessibility')}
-                              </span>
-                              <div style={{ display: 'flex', gap: '0.375rem' }}>
-                                {([
-                                  { value: null,  label: t('addresses.access.pendingShort') },
-                                  { value: true,  label: t('addresses.access.yesShort') },
-                                  { value: false, label: t('addresses.access.noShort') },
-                                ] as { value: boolean | null; label: string }[]).map(({ value, label }) => {
-                                  const current = editAddrDraft.value.is_accessible ?? null;
-                                  const active = current === value;
-                                  return (
-                                    <button
-                                      key={String(value)}
-                                      type="button"
-                                      onClick={() => setEditAddrDraft({ ...editAddrDraft, value: { ...editAddrDraft.value, is_accessible: value } })}
-                                      style={{
-                                        padding: '0.3rem 0.75rem',
-                                        borderRadius: '9999px',
-                                        fontSize: '0.75rem',
-                                        fontWeight: 600,
-                                        cursor: 'pointer',
-                                        border: '1.5px solid',
-                                        transition: 'all 0.15s',
-                                        ...(active
-                                          ? value === true
-                                            ? { background: 'var(--color-emerald-50)', borderColor: 'var(--color-emerald-600)', color: 'var(--color-emerald-600)' }
-                                            : value === false
-                                            ? { background: '#fff5f5', borderColor: '#c53030', color: '#c53030' }
-                                            : { background: 'var(--color-slate-100)', borderColor: 'var(--color-slate-400)', color: 'var(--color-slate-600)' }
-                                          : { background: 'white', borderColor: 'var(--color-slate-200)', color: 'var(--color-slate-500)' }
-                                        ),
-                                      }}
-                                    >
-                                      {label}
-                                    </button>
-                                  );
-                                })}
-                              </div>
-                            </div>
+                            <AccessibilityChoice
+                              value={editAddrDraft.value.is_accessible ?? null}
+                              onChange={(next) =>
+                                setEditAddrDraft({ ...editAddrDraft, value: { ...editAddrDraft.value, is_accessible: next } })
+                              }
+                            />
                           )}
-                          <div className="prm-edit-actions" style={{ justifyContent: 'flex-end' }}>
-                            <button type="button" className="prm-edit-actions__cancel" onClick={() => setEditingAddressId(null)}><X size={14} /> {t('common.cancel')}</button>
-                            <button type="button" className="prm-edit-actions__save" disabled={!editAddrDraft.value.full_address || updatePrmAddress.isPending}
+                          <div className="prm-edit-actions prm-edit-actions--end">
+                            <Button
+                              variant="ghost"
+                              size="xs"
+                              icon={<X size={14} />}
+                              type="button"
+                              onClick={() => setEditingAddressId(null)}
+                            >
+                              {t('common.cancel')}
+                            </Button>
+                            <Button
+                              variant="primary"
+                              size="xs"
+                              icon={<Check size={14} />}
+                              type="button"
+                              disabled={!editAddrDraft.value.full_address || updatePrmAddress.isPending}
                               onClick={async () => {
                                 await updatePrmAddress.mutateAsync({ prmId: id!, addressId: addr.id, full_address: editAddrDraft.value.full_address, lat: editAddrDraft.value.lat, lng: editAddrDraft.value.lng, is_accessible: editAddrDraft.value.is_accessible, alias: editAddrDraft.alias });
                                 setEditingAddressId(null);
                               }}
-                            ><Check size={14} /> {t('common.save')}</button>
+                            >
+                              {t('common.save')}
+                            </Button>
                           </div>
                         </div>
                       ) : (
@@ -706,34 +727,41 @@ export default function PrmDetail() {
                               <AddressAccessibilityBadge value={addr.is_accessible} className="prm-info__addr-badge" />
                             </div>
                           </div>
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                          <div className="prm-edit-actions">
                             {confirmDeleteAddrId === addr.id ? (
                               <>
                                 <span style={{ fontSize: '0.75rem', color: 'var(--color-slate-500)', whiteSpace: 'nowrap' }}>
                                   {t('common.confirmDelete')}
                                 </span>
-                                <button
-                                  type="button"
-                                  onClick={() => setConfirmDeleteAddrId(null)}
-                                  style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--color-slate-500)', background: 'none', border: 'none', cursor: 'pointer', padding: '0.25rem 0.5rem', borderRadius: '0.375rem' }}
-                                >
+                                <Button variant="ghost" size="xs" onClick={() => setConfirmDeleteAddrId(null)}>
                                   {t('common.cancel')}
-                                </button>
-                                <button
-                                  type="button"
+                                </Button>
+                                <Button
+                                  variant="soft"
+                                  tone="danger"
+                                  size="xs"
                                   onClick={() => {
                                     deletePrmAddress.mutate({ prmId: id!, addressId: addr.id });
                                     setConfirmDeleteAddrId(null);
                                   }}
-                                  style={{ fontSize: '0.75rem', fontWeight: 600, color: '#c53030', background: '#fff5f5', border: '1px solid #fed7d7', cursor: 'pointer', padding: '0.25rem 0.5rem', borderRadius: '0.375rem' }}
                                 >
                                   {t('common.delete')}
-                                </button>
+                                </Button>
                               </>
                             ) : (
                               <>
-                                <button type="button" onClick={() => { setEditingAddressId(addr.id); setEditAddrDraft({ value: { full_address: addr.full_address, lat: addr.lat, lng: addr.lng, is_accessible: addr.is_accessible }, alias: addr.alias || '' }); }} style={{ color: 'var(--color-slate-400)', background: 'none', border: 'none', cursor: 'pointer', padding: '0.375rem', borderRadius: '0.375rem', display: 'flex' }} title={t('prmDetail.editAddress')}><Pencil size={15} /></button>
-                                <button type="button" onClick={() => setConfirmDeleteAddrId(addr.id)} style={{ color: 'var(--color-slate-400)', background: 'none', border: 'none', cursor: 'pointer', padding: '0.375rem', borderRadius: '0.375rem', display: 'flex' }} title={t('prmDetail.deleteAddress')}><Trash2 size={15} /></button>
+                                <IconButton
+                                  label={t('prmDetail.editAddress')}
+                                  icon={<Pencil size={15} />}
+                                  tone="primary"
+                                  onClick={() => { setEditingAddressId(addr.id); setEditAddrDraft({ value: { full_address: addr.full_address, lat: addr.lat, lng: addr.lng, is_accessible: addr.is_accessible }, alias: addr.alias || '' }); }}
+                                />
+                                <IconButton
+                                  label={t('prmDetail.deleteAddress')}
+                                  icon={<Trash2 size={15} />}
+                                  tone="danger"
+                                  onClick={() => setConfirmDeleteAddrId(addr.id)}
+                                />
                               </>
                             )}
                           </div>
@@ -760,89 +788,43 @@ export default function PrmDetail() {
                 />
 
                 {(!addresses || addresses.length === 0) && !showAddAddr && (
-                  <p
-                    style={{
-                      fontSize: '0.875rem',
-                      color: 'var(--color-slate-400)',
-                    }}
-                  >
+                  <p className="prm-detail__no-addresses">
                     {t('prmDetail.noAddresses')}
                   </p>
                 )}
 
                 {showAddAddr && (
-                  <div
-                    style={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      gap: '0.75rem',
-                      padding: '1rem',
-                      background: 'white',
-                      borderRadius: '0.75rem',
-                      border: '1px solid var(--color-slate-100)',
-                    }}
-                  >
+                  <div className="prm-addr-form">
                     <AddressSelector
                       value={newAddrValue}
                       onChange={setNewAddrValue}
                       showValidation={false}
                       showMap={false}
                     />
-                    <input
+                    <Input
+                      variant="compact"
+                      size="xs"
                       type="text"
-                      className="prm-edit-input"
                       placeholder={t('prmDetail.addressAlias')}
                       value={newAddrAlias}
                       onChange={(e) => setNewAddrAlias(e.target.value)}
                       maxLength={40}
-                      style={{ maxWidth: '100%', width: '100%' }}
+                      className="prm-edit-input--full"
                     />
                     {isAdmin && (
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.375rem' }}>
-                        <span style={{ fontSize: '0.6875rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--color-primary)' }}>
-                          {t('addresses.columns.accessibility')}
-                        </span>
-                        <div style={{ display: 'flex', gap: '0.375rem' }}>
-                          {([
-                            { value: null,  label: t('addresses.access.pendingShort') },
-                            { value: true,  label: t('addresses.access.yesShort') },
-                            { value: false, label: t('addresses.access.noShort') },
-                          ] as { value: boolean | null; label: string }[]).map(({ value, label }) => (
-                            <button
-                              key={String(value)}
-                              type="button"
-                              onClick={() => setNewAddrIsAccessible(value)}
-                              style={{
-                                padding: '0.3rem 0.75rem',
-                                borderRadius: '9999px',
-                                fontSize: '0.75rem',
-                                fontWeight: 600,
-                                cursor: 'pointer',
-                                border: '1.5px solid',
-                                transition: 'all 0.15s',
-                                ...(newAddrIsAccessible === value
-                                  ? value === true
-                                    ? { background: 'var(--color-emerald-50)', borderColor: 'var(--color-emerald-600)', color: 'var(--color-emerald-600)' }
-                                    : value === false
-                                    ? { background: '#fff5f5', borderColor: '#c53030', color: '#c53030' }
-                                    : { background: 'var(--color-slate-100)', borderColor: 'var(--color-slate-400)', color: 'var(--color-slate-600)' }
-                                  : { background: 'white', borderColor: 'var(--color-slate-200)', color: 'var(--color-slate-500)' }
-                                ),
-                              }}
-                            >
-                              {label}
-                            </button>
-                          ))}
-                        </div>
-                      </div>
+                      <AccessibilityChoice
+                        value={newAddrIsAccessible}
+                        onChange={setNewAddrIsAccessible}
+                      />
                     )}
                     <div
-                      className="prm-edit-actions"
-                      style={{ justifyContent: 'flex-end' }}
+                      className="prm-edit-actions prm-edit-actions--end"
                     >
-                      <button
+                      <Button
+                        variant="ghost"
+                        size="xs"
+                        icon={<X size={14} />}
                         type="button"
-                        className="prm-edit-actions__cancel"
                         onClick={() => {
                           setShowAddAddr(false);
                           setNewAddrValue({});
@@ -850,11 +832,13 @@ export default function PrmDetail() {
                           setNewAddrIsAccessible(null);
                         }}
                       >
-                        <X size={14} /> {t('common.cancel')}
-                      </button>
-                      <button
+                        {t('common.cancel')}
+                      </Button>
+                      <Button
+                        variant="primary"
+                        size="xs"
+                        icon={<Check size={14} />}
                         type="button"
-                        className="prm-edit-actions__save"
                         disabled={
                           !newAddrValue.full_address || addPrmAddress.isPending
                         }
@@ -874,8 +858,8 @@ export default function PrmDetail() {
                           setNewAddrIsAccessible(null);
                         }}
                       >
-                        <Check size={14} /> {t('common.save')}
-                      </button>
+                        {t('common.save')}
+                      </Button>
                     </div>
                   </div>
                 )}

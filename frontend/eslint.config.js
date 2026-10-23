@@ -49,4 +49,29 @@ export default tseslint.config(
       },
     },
   },
+  {
+    // components/ui must stay generic: it knows nothing about the business (see src/components/README.md).
+    files: ['src/components/ui/**/*.{ts,tsx}'],
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            {
+              group: [
+                '**/features/**',
+                '**/layout/**',
+                '**/guards/**',
+                '**/pages/**',
+                '**/hooks/**',
+                '**/store/**',
+              ],
+              message:
+                'components/ui must not import from features, layout, guards, pages, hooks or store. Move the component to components/features or pass the data in through props.',
+            },
+          ],
+        },
+      ],
+    },
+  },
 );

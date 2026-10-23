@@ -1,17 +1,20 @@
-import { ArrowLeft, Send, Loader2 } from 'lucide-react';
+import { Send } from 'lucide-react';
 import { toast } from 'react-toastify';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useState, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import PrmAddressPicker from '../../components/PrmAddressPicker';
-import UserSelector from '../../components/UserSelector/UserSelector';
-import DateInput from '../../components/DateInput/DateInput';
-import TimeInput from '../../components/TimeInput/TimeInput';
+import PrmAddressPicker from '../../components/features/prm/prm-address-picker/PrmAddressPicker';
+import UserSelector from '../../components/features/user/user-selector/UserSelector';
+import { DateInput } from '../../components/ui/date-input';
+import { TimeInput } from '../../components/ui/time-input';
 import { useCreateBooking } from '../../hooks/useBookings';
 import { usePrms } from '../../hooks/usePrms';
 import { useAuthStore } from '../../store/useAuthStore';
 import { todayIso, cardState } from '../../utils';
 import type { Address, UserProfile } from '../../types';
+import { Button, BackButton } from '../../components/ui/button';
+import { Avatar } from '@/components/ui/avatar';
+import { Spinner } from '@/components/ui/spinner';
 import './NewBooking.css';
 
 export default function NewBooking() {
@@ -77,12 +80,7 @@ export default function NewBooking() {
   return (
     <div className="new-booking">
       <div className="new-booking__header">
-        <button
-          onClick={() => navigate(-1)}
-          className="new-booking__back-btn"
-        >
-          <ArrowLeft size={20} />
-        </button>
+        <BackButton className="new-booking__back-btn" onClick={() => navigate(-1)} />
         <h2 className="new-booking__title">{t('booking.title')}</h2>
       </div>
 
@@ -99,24 +97,23 @@ export default function NewBooking() {
               <div className="field-card__content">
                 {selectedOwner ? (
                   <div className="prm-selected-card">
-                    <div className="prm-selected-card__avatar">
-                      {selectedOwner.avatar
-                        ? <img src={selectedOwner.avatar} alt={selectedOwner.firstName} />
-                        : `${selectedOwner.firstName[0]}${selectedOwner.lastName[0]}`}
-                    </div>
+                    <Avatar tone="solid" size="2.25rem" src={selectedOwner.avatar} alt={selectedOwner.firstName}>
+                        {`${selectedOwner.firstName[0]}${selectedOwner.lastName[0]}`}
+                      </Avatar>
                     <div className="prm-selected-card__info">
                       <span className="prm-selected-card__name">{selectedOwner.firstName} {selectedOwner.lastName}</span>
                       {selectedOwner.email && (
                         <span className="prm-selected-card__dni">{selectedOwner.email}</span>
                       )}
                     </div>
-                    <button
-                      type="button"
-                      className="prm-selected-card__change"
+                    <Button
+                      variant="outline"
+                      tone="primary"
+                      size="xs"
                       onClick={() => { setSelectedOwnerId(''); setSelectedOwner(null); setManualPrm(null); setAddress({}); }}
                     >
                       {t('booking.changePrm')}
-                    </button>
+                    </Button>
                   </div>
                 ) : (
                   <UserSelector
@@ -149,16 +146,12 @@ export default function NewBooking() {
               ) : (
               <>
                 {prms.length === 0 ? (
-                    <p style={{ fontSize: '0.875rem', color: 'var(--color-slate-400)' }}>
+                    <p className="new-booking__muted">
                       {isAdmin ? t('booking.noPrmsForUser') : t('booking.noPrms')}
                     </p>
                   ) : selectedPrm ? (
                     <div className="prm-selected-card">
-                      <div className="prm-selected-card__avatar">
-                        {selectedPrm.avatar
-                          ? <img src={selectedPrm.avatar} alt={selectedPrm.name} />
-                          : selectedPrm.name[0]}
-                      </div>
+                      <Avatar tone="solid" size="2.25rem" src={selectedPrm.avatar} alt={selectedPrm.name}>{selectedPrm.name[0]}</Avatar>
                       <div className="prm-selected-card__info">
                         <span className="prm-selected-card__name">{selectedPrm.name}</span>
                         {selectedPrm.dni && (
@@ -168,17 +161,18 @@ export default function NewBooking() {
                         )}
                       </div>
                       {prms.length > 1 && (
-                        <button
-                          type="button"
-                          className="prm-selected-card__change"
-                           onClick={() => { setManualPrm(null); setAddress({}); }}
+                        <Button
+                          variant="outline"
+                          tone="primary"
+                          size="xs"
+                          onClick={() => { setManualPrm(null); setAddress({}); }}
                         >
                           {t('booking.changePrm')}
-                        </button>
+                        </Button>
                       )}
                     </div>
                   ) : (
-                    <div style={{ position: 'relative' }}>
+                    <div className="prm-dropdown">
                       <button
                         type="button"
                         className="field-card-placeholder"
@@ -189,8 +183,8 @@ export default function NewBooking() {
                       </button>
                       {prmDropdownOpen && (
                         <ul className="prm-dropdown-list">
-                          {prms.map((p, idx) => (
-                            <li key={p.id} style={{ borderTop: idx > 0 ? '1px solid #f1f5f9' : 'none' }}>
+                          {prms.map((p) => (
+                            <li key={p.id}>
                               <button
                                 type="button"
                                 className="prm-dropdown-option"
@@ -200,13 +194,11 @@ export default function NewBooking() {
                                   setAddress({});
                                 }}
                               >
-                                <div className="prm-dropdown-option__avatar">
-                                  {p.avatar ? <img src={p.avatar} alt={p.name} /> : p.name[0]}
-                                </div>
+                                <Avatar size="1.75rem" src={p.avatar} alt={p.name}>{p.name[0]}</Avatar>
                                 <div>
-                                  <div style={{ fontWeight: 600, fontSize: '0.875rem' }}>{p.name}</div>
+                                  <div className="prm-dropdown-option__name">{p.name}</div>
                                   {p.dni && (
-                                    <div style={{ fontSize: '0.72rem', color: '#64748b' }}>
+                                    <div className="prm-dropdown-option__dni">
                                       {t('prms.newPrm.dni')}: {p.dni}
                                     </div>
                                   )}
@@ -272,21 +264,24 @@ export default function NewBooking() {
       <div className="booking-actions">
         <div className="booking-actions__inner booking-actions__inner--stacked">
           <div className="booking-actions__row">
-            <button
-              onClick={() => navigate(-1)}
+            <Button
+              variant="ghost"
+              size="lg"
               className="booking-actions__cancel"
+              onClick={() => navigate(-1)}
             >
               {t('booking.cancel')}
-            </button>
-            <button
+            </Button>
+            <Button
+              size="lg"
+              className={`booking-actions__submit${!canSubmit || createBooking.isPending ? ' booking-actions__submit--disabled' : ''}`}
               onClick={handleSubmit}
               disabled={createBooking.isPending}
               aria-disabled={!canSubmit || createBooking.isPending}
-              className={`booking-actions__submit${!canSubmit || createBooking.isPending ? ' booking-actions__submit--disabled' : ''}`}
             >
               {createBooking.isPending ? (
                 <>
-                  <Loader2 size={18} className="animate-spin" />
+                  <Spinner size={18} tone="current" />
                   <span>{t('booking.submitting')}</span>
                 </>
               ) : (
@@ -295,7 +290,7 @@ export default function NewBooking() {
                   <Send size={18} />
                 </>
               )}
-            </button>
+            </Button>
           </div>
           {submitAttempted && missingFields.length > 0 && (
             <div className="booking-submit__hint">

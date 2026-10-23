@@ -1,0 +1,71 @@
+/*
+ * Solid CreateButton is a <Button size="sm">: it only adds how it collapses by width.
+ * Selectors are `.btn.create-btn--*` so they win over Button's own rules regardless of load order.
+ */
+
+/* display: icon is a square "+" visible up to 768px */
+.btn.create-btn--icon {
+  display: none;
+  flex-shrink: 0;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+}
+
+@media (max-width: 768px) {
+  .btn.create-btn--full {
+    display: none;
+  }
+
+  .btn.create-btn--icon {
+    display: inline-flex;
+  }
+
+  /* responsive: the same element collapses to a square "+" */
+  .btn.create-btn--responsive {
+    flex-shrink: 0;
+    width: 2.5rem;
+    height: 2.5rem;
+    padding: 0;
+  }
+
+  .btn.create-btn--responsive .create-btn__label {
+    display: none;
+  }
+
+  .btn.create-btn--responsive svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+/* ── dashed: full-width call to action, its own look ───────────────────── */
+.create-btn--dashed {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 1rem;
+  border: 2px dashed var(--color-slate-200);
+  border-radius: 1rem;
+  background: none;
+  color: var(--color-slate-400);
+  font-weight: 700;
+  white-space: nowrap;
+  text-decoration: none;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s, background-color 0.15s;
+}
+
+.create-btn--dashed:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  background-color: var(--color-primary-05);
+}
+
+@media (max-width: 768px) {
+  .create-btn--dashed {
+    display: none;
+  }
+}

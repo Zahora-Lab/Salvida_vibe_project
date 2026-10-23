@@ -2,18 +2,24 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { MapPin, ChevronDown, ChevronUp, List, Map, User } from 'lucide-react';
-import Header from '../../components/Header/Header';
+import Header from '../../components/layout/header/Header';
 import { useAddresses, useValidateAddress } from '../../hooks/useAddresses';
 import type { AccessibilityFilter } from '../../hooks/useAddresses';
 import { useMediaQuery } from '../../hooks/useMediaQuery';
 import type { Address } from '../../types';
-import AddressActions from './AddressActions';
-import AddressCard from './AddressCard';
-import AddressMapPreview from './AddressMapPreview';
-import AddressesMapView from './AddressesMapView';
-import UserMultiSelect from '../../components/UserMultiSelect/UserMultiSelect';
-import PrmMultiSelect from '../../components/PrmMultiSelect/PrmMultiSelect';
-import AddressAccessibilityBadge from '../../components/AddressAccessibilityBadge/AddressAccessibilityBadge';
+import AddressActions from '@/components/features/address/address-actions/AddressActions';
+import AddressCard from '@/components/features/address/address-card/AddressCard';
+import AddressMapPreview from '@/components/features/address/address-map-preview/AddressMapPreview';
+import AddressesMapView from '@/components/features/address/addresses-map-view/AddressesMapView';
+import UserMultiSelect from '../../components/features/user/user-multi-select/UserMultiSelect';
+import PrmMultiSelect from '../../components/features/prm/prm-multi-select/PrmMultiSelect';
+import AddressAccessibilityBadge from '../../components/features/address/address-accessibility-badge/AddressAccessibilityBadge';
+import { IconButton } from '../../components/ui/button';
+import { Skeleton } from '@/components/ui/skeleton';
+import { SegmentedControl } from '@/components/ui/segmented-control';
+import { EmptyState } from '@/components/ui/empty-state';
+import { Card } from '@/components/ui/card';
+import { Chip } from '@/components/ui/chip';
 import './Addresses.css';
 
 type ViewMode = 'list' | 'map';
@@ -75,31 +81,25 @@ export default function Addresses() {
           <div className="addresses__toolbar">
             <div className="addresses__filter-bar">
               {accessFilters.map(({ key, label }) => (
-                <button
+                <Chip
                   key={key}
-                  className={`addresses__filter-btn${filter === key ? ' addresses__filter-btn--active' : ''}`}
+                  size="lg"
+                  selected={filter === key}
                   onClick={() => setFilter(key)}
                 >
                   {label}
-                </button>
+                </Chip>
               ))}
             </div>
-            <div className="addresses__view-toggle">
-              <button
-                className={`addresses__view-btn${viewMode === 'list' ? ' addresses__view-btn--active' : ''}`}
-                onClick={() => setViewMode('list')}
-                title={t('addresses.viewList')}
-              >
-                <List size={16} />
-              </button>
-              <button
-                className={`addresses__view-btn${viewMode === 'map' ? ' addresses__view-btn--active' : ''}`}
-                onClick={() => setViewMode('map')}
-                title={t('addresses.viewMap')}
-              >
-                <Map size={16} />
-              </button>
-            </div>
+            <SegmentedControl
+              variant="outlined"
+              value={viewMode}
+              onChange={setViewMode}
+              options={[
+                { value: 'list', label: t('addresses.viewList'), icon: <List size={16} />, iconOnly: true },
+                { value: 'map', label: t('addresses.viewMap'), icon: <Map size={16} />, iconOnly: true },
+              ]}
+            />
           </div>
 
           {/* Entity filters: user + PRM */}
@@ -153,22 +153,19 @@ export default function Addresses() {
           )}
 
           {viewMode === 'list' && !showCards && (
-            <div className="addresses__table-wrap">
+            <Card clip>
               {isLoading ? (
                 <div className="addresses__loading">
                   {Array.from({ length: 4 }).map((_, i) => (
                     <div key={i} className="addresses__skeleton-row">
-                      <div className="addresses__skeleton" style={{ width: '60%' }} />
-                      <div className="addresses__skeleton" style={{ width: '5rem' }} />
-                      <div className="addresses__skeleton" style={{ width: '8rem' }} />
+                      <Skeleton width="60%" />
+                      <Skeleton width="5rem" />
+                      <Skeleton width="8rem" />
                     </div>
                   ))}
                 </div>
               ) : addresses.length === 0 ? (
-                <div className="addresses__empty">
-                  <MapPin size={32} />
-                  <p>{t('addresses.empty')}</p>
-                </div>
+                <EmptyState size="lg" icon={<MapPin size={32} />}>{t('addresses.empty')}</EmptyState>
               ) : (
                 <table className="addresses__table">
                   <thead>
@@ -201,25 +198,25 @@ export default function Addresses() {
                           </td>
                           <td>
                             {address.lat && address.lng && (
-                              <button
+                              <IconButton
                                 className="addresses__expand-btn"
+                                label={t('addresses.viewMap')}
+                                icon={expandedId === address.id ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+                                tone="primary"
+                                aria-expanded={expandedId === address.id}
                                 onClick={() => toggleExpand(address.id)}
-                              >
-                                {expandedId === address.id
-                                  ? <ChevronUp size={16} />
-                                  : <ChevronDown size={16} />}
-                              </button>
+                              />
                             )}
                           </td>
                           <td>
                             {address.prm_id && (
-                              <button
-                                className="addresses__expand-btn addresses__prm-link"
+                              <IconButton
+                                className="addresses__expand-btn"
+                                label={address.prm_name ? t('addresses.viewPrmProfile', { name: address.prm_name }) : t('addresses.viewPrmProfileGeneric')}
+                                icon={<User size={15} />}
+                                tone="primary"
                                 onClick={() => navigate(`/app/prms/${address.prm_id}`)}
-                                title={address.prm_name ? t('addresses.viewPrmProfile', { name: address.prm_name }) : t('addresses.viewPrmProfileGeneric')}
-                              >
-                                <User size={15} />
-                              </button>
+                              />
                             )}
                           </td>
                         </tr>
@@ -237,7 +234,7 @@ export default function Addresses() {
                   </tbody>
                 </table>
               )}
-            </div>
+            </Card>
           )}
 
         </div>
