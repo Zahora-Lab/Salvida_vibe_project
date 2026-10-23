@@ -169,6 +169,24 @@
 
 /* PRM dropdown */
 
+.prm-dropdown {
+  position: relative;
+}
+
+.prm-dropdown-list li + li {
+  border-top: 1px solid #f1f5f9;
+}
+
+.prm-dropdown-option__name {
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.prm-dropdown-option__dni {
+  font-size: 0.72rem;
+  color: #64748b;
+}
+
 .prm-dropdown-list {
   position: absolute;
   z-index: var(--z-float);
@@ -373,4 +391,9 @@
   .datetime-card__row {
     grid-template-columns: minmax(0, 1fr);
   }
+}
+
+.new-booking__muted {
+  font-size: 0.875rem;
+  color: var(--color-slate-400);
 }

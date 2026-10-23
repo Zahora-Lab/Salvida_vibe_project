@@ -145,7 +145,7 @@ export default function NewBooking() {
               ) : (
               <>
                 {prms.length === 0 ? (
-                    <p style={{ fontSize: '0.875rem', color: 'var(--color-slate-400)' }}>
+                    <p className="new-booking__muted">
                       {isAdmin ? t('booking.noPrmsForUser') : t('booking.noPrms')}
                     </p>
                   ) : selectedPrm ? (
@@ -171,7 +171,7 @@ export default function NewBooking() {
                       )}
                     </div>
                   ) : (
-                    <div style={{ position: 'relative' }}>
+                    <div className="prm-dropdown">
                       <button
                         type="button"
                         className="field-card-placeholder"
@@ -182,8 +182,8 @@ export default function NewBooking() {
                       </button>
                       {prmDropdownOpen && (
                         <ul className="prm-dropdown-list">
-                          {prms.map((p, idx) => (
-                            <li key={p.id} style={{ borderTop: idx > 0 ? '1px solid #f1f5f9' : 'none' }}>
+                          {prms.map((p) => (
+                            <li key={p.id}>
                               <button
                                 type="button"
                                 className="prm-dropdown-option"
@@ -195,9 +195,9 @@ export default function NewBooking() {
                               >
                                 <Avatar size="1.75rem" src={p.avatar} alt={p.name}>{p.name[0]}</Avatar>
                                 <div>
-                                  <div style={{ fontWeight: 600, fontSize: '0.875rem' }}>{p.name}</div>
+                                  <div className="prm-dropdown-option__name">{p.name}</div>
                                   {p.dni && (
-                                    <div style={{ fontSize: '0.72rem', color: '#64748b' }}>
+                                    <div className="prm-dropdown-option__dni">
                                       {t('prms.newPrm.dni')}: {p.dni}
                                     </div>
                                   )}

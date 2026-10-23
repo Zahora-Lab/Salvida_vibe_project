@@ -363,6 +363,38 @@
   gap: 0.5rem;
 }
 
+.prm-edit-actions--end {
+  justify-content: flex-end;
+}
+
+.input.prm-edit-input--full {
+  max-width: 100%;
+  width: 100%;
+}
+
+.prm-detail__no-addresses {
+  font-size: 0.875rem;
+  color: var(--color-slate-400);
+}
+
+.prm-detail__row-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1rem;
+  border-bottom: 1px solid var(--color-slate-50);
+}
+
+.prm-addr-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1rem;
+  background: white;
+  border-radius: 0.75rem;
+  border: 1px solid var(--color-slate-100);
+}
+
 /* ── Mobile ───────────────────────────────────────────────────────────────── */
 @media (max-width: 768px) {
   .prm-detail__header {

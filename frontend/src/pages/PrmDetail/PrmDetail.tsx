@@ -528,11 +528,11 @@ export default function PrmDetail() {
               <div className="prm-info__rows">
                 {prm.emergency_contacts.map((contact) => (
                   editingContactId === contact.id ? (
-                    <div key={contact.id} style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', padding: '1rem', borderBottom: '1px solid var(--color-slate-50)' }}>
-                      <Input variant="compact" size="xs" type="text" placeholder={t('prmDetail.contactName')} value={editContactDraft.name} onChange={(event) => setEditContactDraft({ ...editContactDraft, name: event.target.value })} style={{ maxWidth: '100%', width: '100%' }} />
-                      <Input variant="compact" size="xs" type="tel" placeholder={t('prmDetail.contactPhone')} value={editContactDraft.phone} onChange={(event) => setEditContactDraft({ ...editContactDraft, phone: event.target.value })} style={{ maxWidth: '100%', width: '100%' }} />
-                      <Input variant="compact" size="xs" type="text" placeholder={t('prmDetail.contactRelationshipPlaceholder')} value={editContactDraft.relationship} onChange={(event) => setEditContactDraft({ ...editContactDraft, relationship: event.target.value })} style={{ maxWidth: '100%', width: '100%' }} />
-                      <div className="prm-edit-actions" style={{ justifyContent: 'flex-end' }}>
+                    <div key={contact.id} className="prm-detail__row-form">
+                      <Input variant="compact" size="xs" type="text" placeholder={t('prmDetail.contactName')} value={editContactDraft.name} onChange={(event) => setEditContactDraft({ ...editContactDraft, name: event.target.value })} className="prm-edit-input--full" />
+                      <Input variant="compact" size="xs" type="tel" placeholder={t('prmDetail.contactPhone')} value={editContactDraft.phone} onChange={(event) => setEditContactDraft({ ...editContactDraft, phone: event.target.value })} className="prm-edit-input--full" />
+                      <Input variant="compact" size="xs" type="text" placeholder={t('prmDetail.contactRelationshipPlaceholder')} value={editContactDraft.relationship} onChange={(event) => setEditContactDraft({ ...editContactDraft, relationship: event.target.value })} className="prm-edit-input--full" />
+                      <div className="prm-edit-actions prm-edit-actions--end">
                         <Button
                           variant="ghost"
                           size="xs"
@@ -566,7 +566,7 @@ export default function PrmDetail() {
                           <p style={{ fontSize: '0.75rem', color: 'var(--color-slate-400)', marginTop: '0.125rem' }}>{contact.relationship}</p>
                         </div>
                       </div>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                      <div className="prm-edit-actions">
                         <span className="prm-info__row-value">{contact.phone}</span>
                         <IconButton
                           label={t('common.edit')}
@@ -587,14 +587,14 @@ export default function PrmDetail() {
               </div>
             ) : (
               !showAddContact && (
-                <p style={{ fontSize: '0.875rem', color: 'var(--color-slate-400)' }}>
+                <p className="prm-detail__no-addresses">
                   {t('prmDetail.noEmergencyContacts')}
                 </p>
               )
             )}
 
             {showAddContact && (
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', padding: '1rem', background: 'white', borderRadius: '0.75rem', border: '1px solid var(--color-slate-100)' }}>
+              <div className="prm-addr-form">
                 <Input
                   variant="compact"
                   size="xs"
@@ -602,7 +602,7 @@ export default function PrmDetail() {
                   placeholder={t('prmDetail.contactName')}
                   value={newContact.name}
                   onChange={(event) => setNewContact({ ...newContact, name: event.target.value })}
-                  style={{ maxWidth: '100%', width: '100%' }}
+                  className="prm-edit-input--full"
                 />
                 <Input
                   variant="compact"
@@ -611,7 +611,7 @@ export default function PrmDetail() {
                   placeholder={t('prmDetail.contactPhone')}
                   value={newContact.phone}
                   onChange={(event) => setNewContact({ ...newContact, phone: event.target.value })}
-                  style={{ maxWidth: '100%', width: '100%' }}
+                  className="prm-edit-input--full"
                 />
                 <Input
                   variant="compact"
@@ -620,9 +620,9 @@ export default function PrmDetail() {
                   placeholder={t('prmDetail.contactRelationshipPlaceholder')}
                   value={newContact.relationship}
                   onChange={(event) => setNewContact({ ...newContact, relationship: event.target.value })}
-                  style={{ maxWidth: '100%', width: '100%' }}
+                  className="prm-edit-input--full"
                 />
-                <div className="prm-edit-actions" style={{ justifyContent: 'flex-end' }}>
+                <div className="prm-edit-actions prm-edit-actions--end">
                   <Button
                     variant="ghost"
                     size="xs"
@@ -680,9 +680,9 @@ export default function PrmDetail() {
                   <div className="prm-info__rows">
                     {addresses.map((addr) => (
                       editingAddressId === addr.id ? (
-                        <div key={addr.id} style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', padding: '1rem', borderBottom: '1px solid var(--color-slate-50)' }}>
+                        <div key={addr.id} className="prm-detail__row-form">
                           <AddressSelector value={editAddrDraft.value} onChange={(v) => setEditAddrDraft({ ...editAddrDraft, value: v })} showValidation={false} showMap={false} />
-                          <Input variant="compact" size="xs" type="text" placeholder={t('prmDetail.addressAlias')} value={editAddrDraft.alias} onChange={(event) => setEditAddrDraft({ ...editAddrDraft, alias: event.target.value })} maxLength={40} style={{ maxWidth: '100%', width: '100%' }} />
+                          <Input variant="compact" size="xs" type="text" placeholder={t('prmDetail.addressAlias')} value={editAddrDraft.alias} onChange={(event) => setEditAddrDraft({ ...editAddrDraft, alias: event.target.value })} maxLength={40} className="prm-edit-input--full" />
                           {isAdmin && (
                             <AccessibilityChoice
                               value={editAddrDraft.value.is_accessible ?? null}
@@ -691,7 +691,7 @@ export default function PrmDetail() {
                               }
                             />
                           )}
-                          <div className="prm-edit-actions" style={{ justifyContent: 'flex-end' }}>
+                          <div className="prm-edit-actions prm-edit-actions--end">
                             <Button
                               variant="ghost"
                               size="xs"
@@ -726,7 +726,7 @@ export default function PrmDetail() {
                               <AddressAccessibilityBadge value={addr.is_accessible} className="prm-info__addr-badge" />
                             </div>
                           </div>
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                          <div className="prm-edit-actions">
                             {confirmDeleteAddrId === addr.id ? (
                               <>
                                 <span style={{ fontSize: '0.75rem', color: 'var(--color-slate-500)', whiteSpace: 'nowrap' }}>
@@ -787,28 +787,13 @@ export default function PrmDetail() {
                 />
 
                 {(!addresses || addresses.length === 0) && !showAddAddr && (
-                  <p
-                    style={{
-                      fontSize: '0.875rem',
-                      color: 'var(--color-slate-400)',
-                    }}
-                  >
+                  <p className="prm-detail__no-addresses">
                     {t('prmDetail.noAddresses')}
                   </p>
                 )}
 
                 {showAddAddr && (
-                  <div
-                    style={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      gap: '0.75rem',
-                      padding: '1rem',
-                      background: 'white',
-                      borderRadius: '0.75rem',
-                      border: '1px solid var(--color-slate-100)',
-                    }}
-                  >
+                  <div className="prm-addr-form">
                     <AddressSelector
                       value={newAddrValue}
                       onChange={setNewAddrValue}
@@ -823,7 +808,7 @@ export default function PrmDetail() {
                       value={newAddrAlias}
                       onChange={(e) => setNewAddrAlias(e.target.value)}
                       maxLength={40}
-                      style={{ maxWidth: '100%', width: '100%' }}
+                      className="prm-edit-input--full"
                     />
                     {isAdmin && (
                       <AccessibilityChoice
@@ -832,8 +817,7 @@ export default function PrmDetail() {
                       />
                     )}
                     <div
-                      className="prm-edit-actions"
-                      style={{ justifyContent: 'flex-end' }}
+                      className="prm-edit-actions prm-edit-actions--end"
                     >
                       <Button
                         variant="ghost"
