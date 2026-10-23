@@ -15,7 +15,7 @@ export function getInitials(u: UserProfile) {
   if (u.firstName || u.lastName) {
     return `${u.firstName?.charAt(0) ?? ''}${u.lastName?.charAt(0) ?? ''}`.toUpperCase();
   }
-  return (u.email?.charAt(0) ?? '?').toUpperCase();
+  return (u.email?.charAt(0) || '?').toUpperCase();
 }
 
 export function getDisplayName(u: UserProfile) {
