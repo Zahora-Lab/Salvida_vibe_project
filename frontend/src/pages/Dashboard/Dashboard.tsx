@@ -28,6 +28,7 @@ import type { Booking } from '../../types';
 import { Skeleton } from '@/components/ui/skeleton';
 import { SegmentedControl } from '@/components/ui/segmented-control';
 import { EmptyState } from '@/components/ui/empty-state';
+import { Chip } from '@/components/ui/chip';
 import './Dashboard.css';
 
 // ─── Types ───────────────────────────────────────────────────────────────────
@@ -440,9 +441,11 @@ export default function Dashboard() {
               </span>
               <div className="booking-sort__chips">
                 {sortColumns.map((col) => (
-                  <button
+                  <Chip
                     key={col.key}
-                    className={`booking-sort__chip${sortKey === col.key ? ' booking-sort__chip--active' : ''}`}
+                    variant="tinted"
+                    size="sm"
+                    selected={sortKey === col.key}
                     onClick={() => toggleSort(col.key)}
                   >
                     {col.label}
@@ -452,7 +455,7 @@ export default function Dashboard() {
                       ) : (
                         <ArrowDown size={12} />
                       ))}
-                  </button>
+                  </Chip>
                 ))}
               </div>
             </div>

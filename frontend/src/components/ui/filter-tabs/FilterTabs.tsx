@@ -1,3 +1,4 @@
+import { Chip } from '../chip';
 import './FilterTabs.css';
 
 export interface FilterTabOption<T extends string> {
@@ -29,15 +30,14 @@ export default function FilterTabs<T extends string>({
       {options.map((option) => {
         const active = option.value === value;
         return (
-          <button
+          <Chip
             key={option.value}
-            type="button"
-            className={`filter-tabs__tab${active ? ' filter-tabs__tab--active' : ''}`}
-            aria-pressed={active}
+            variant="filled"
+            selected={active}
             onClick={() => onChange(option.value)}
           >
             {option.label}
-          </button>
+          </Chip>
         );
       })}
     </div>

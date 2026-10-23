@@ -19,6 +19,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { SegmentedControl } from '@/components/ui/segmented-control';
 import { EmptyState } from '@/components/ui/empty-state';
 import { Card } from '@/components/ui/card';
+import { Chip } from '@/components/ui/chip';
 import './Addresses.css';
 
 type ViewMode = 'list' | 'map';
@@ -80,13 +81,14 @@ export default function Addresses() {
           <div className="addresses__toolbar">
             <div className="addresses__filter-bar">
               {accessFilters.map(({ key, label }) => (
-                <button
+                <Chip
                   key={key}
-                  className={`addresses__filter-btn${filter === key ? ' addresses__filter-btn--active' : ''}`}
+                  size="lg"
+                  selected={filter === key}
                   onClick={() => setFilter(key)}
                 >
                   {label}
-                </button>
+                </Chip>
               ))}
             </div>
             <SegmentedControl

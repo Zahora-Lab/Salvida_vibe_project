@@ -36,6 +36,7 @@ components/
 | `IconButton` | Botón de solo icono | **`label` obligatorio**, `tone` (`neutral` · `primary` · `danger`), `size`, `to` |
 | `CreateButton` | Acciones "añadir/nuevo" que colapsan a `+` en móvil | `display` (`responsive` · `full` · `icon`), `variant` (`solid` · `dashed`) |
 | `Badge` | Etiqueta de estado o categoría | `tone` (`success` · `warning` · `danger` · `info` · `neutral` · `primary`), `size`, `icon`, `bordered` |
+| `Chip` | Píldora de elección única: filtros, claves de orden | `selected`, `variant` (`filled` · `outlined` · `tinted`), `size` (`sm` · `md` · `lg`). `FilterTabs` está hecho con él |
 | `Skeleton` | Marcador de carga con brillo. Decorativo (`aria-hidden`) | `width`, `height`, `radius` (número = px). Tokens `--skeleton-base` `--skeleton-highlight` `--skeleton-radius` `--skeleton-duration` |
 | `Avatar` | Foto redonda con iniciales de respaldo. Pasa las iniciales como hijo | `src`, `alt`, `tone` (`primary` · `solid`), `size` (número = px). Tokens `--avatar-size` `--avatar-font-size` |
 | `Tabs` | Pestañas subrayadas entre vistas hermanas (`role="tablist"`) | `options`, `value`, `onChange(valor)`, `stretch`. Tokens `--tabs-border-color` `--tabs-color` `--tabs-active-color` |

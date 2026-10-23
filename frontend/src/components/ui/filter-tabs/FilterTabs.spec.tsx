@@ -22,11 +22,11 @@ describe('FilterTabs', () => {
     render(<FilterTabs options={OPTIONS} value="active" onChange={() => {}} />);
     const active = screen.getByRole('button', { name: 'Activos' });
     expect(active).toHaveAttribute('aria-pressed', 'true');
-    expect(active).toHaveClass('filter-tabs__tab--active');
+    expect(active).toHaveClass('chip--selected');
 
     const other = screen.getByRole('button', { name: 'Todos' });
     expect(other).toHaveAttribute('aria-pressed', 'false');
-    expect(other).not.toHaveClass('filter-tabs__tab--active');
+    expect(other).not.toHaveClass('chip--selected');
   });
 
   it('calls onChange with the option value', () => {
