@@ -4,29 +4,67 @@ const BASE_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:8000';
 
 const RETRY_DELAYS = [500, 1200, 2000];
 
+const ATTEMPT_TIMEOUT_MS = 10_000;
+
+/** Single fetch attempt with its own timeout, also cut by the external signal. */
+async function fetchWithTimeout(
+  url: string,
+  options: RequestInit | undefined,
+  signal: AbortSignal | undefined,
+): Promise<Response> {
+  const attemptAc = new AbortController();
+  const onExternalAbort = () => attemptAc.abort(signal?.reason);
+  if (signal?.aborted) onExternalAbort();
+  else signal?.addEventListener('abort', onExternalAbort, { once: true });
+  const timer = setTimeout(() => attemptAc.abort(), ATTEMPT_TIMEOUT_MS);
+  try {
+    return await fetch(url, { ...options, signal: attemptAc.signal });
+  } finally {
+    clearTimeout(timer);
+    signal?.removeEventListener('abort', onExternalAbort);
+  }
+}
+
 export async function fetchWithRetry(
   url: string,
   options?: RequestInit,
   signal?: AbortSignal,
 ): Promise<Response> {
   let lastError: unknown;
+  let lastStatus: number | undefined;
   for (let attempt = 0; attempt <= RETRY_DELAYS.length; attempt++) {
     try {
-      const res = await fetch(url, { ...options, signal });
-      if (res.ok || res.status < 500) return res;
+      const res = await fetchWithTimeout(url, options, signal);
+      if (res.ok) return res;
+      lastStatus = res.status;
       lastError = new Error(`HTTP ${res.status}`);
     } catch (err) {
       if (signal?.aborted) throw err;
+      lastStatus = undefined;
       lastError = err;
     }
     if (attempt < RETRY_DELAYS.length) {
       await new Promise<void>((resolve, reject) => {
-        const t = setTimeout(resolve, RETRY_DELAYS[attempt]);
-        signal?.addEventListener('abort', () => { clearTimeout(t); reject(signal.reason); });
+        const onAbort = () => {
+          clearTimeout(t);
+          reject(signal?.reason);
+        };
+        const t = setTimeout(() => {
+          signal?.removeEventListener('abort', onAbort);
+          resolve();
+        }, RETRY_DELAYS[attempt]);
+        if (signal?.aborted) onAbort();
+        else signal?.addEventListener('abort', onAbort, { once: true });
       });
     }
   }
-  throw lastError;
+  const reason =
+    lastStatus !== undefined
+      ? `HTTP ${lastStatus}`
+      : lastError instanceof Error
+        ? lastError.message
+        : 'network error';
+  throw new Error(`Request failed after retries: ${reason}`);
 }
 
 export class ApiError extends Error {
