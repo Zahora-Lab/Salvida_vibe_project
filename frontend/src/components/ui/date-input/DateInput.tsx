@@ -18,6 +18,8 @@ interface DateInputProps {
   placeholder?: string;
   className?: string;
   disabled?: boolean;
+  /** `sm` matches compact controls such as MultiSelect (filter bars). */
+  size?: 'md' | 'sm';
 }
 
 export default function DateInput({
@@ -28,6 +30,7 @@ export default function DateInput({
   placeholder = 'Selecciona una fecha',
   className,
   disabled,
+  size = 'md',
 }: DateInputProps) {
   // Memoize so antd doesn't see a new object reference on every render
   const dayjsValue = useMemo(() => (value ? dayjs(value, FORMAT) : null), [value]);
@@ -46,7 +49,7 @@ export default function DateInput({
         placeholder={placeholder}
         disabledDate={disabledDate}
         disabled={disabled}
-        className={`date-input ${className ?? ''}`}
+        className={`date-input${size === 'sm' ? ' date-input--sm' : ''} ${className ?? ''}`}
         style={{ width: '100%' }}
         getPopupContainer={() => document.body}
       />

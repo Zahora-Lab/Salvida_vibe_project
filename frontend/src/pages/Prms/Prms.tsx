@@ -13,7 +13,7 @@ import type { PrmListItem } from '../../hooks/usePrms';
 import { useAuthStore } from '../../store/useAuthStore';
 import { useDebounce } from '../../hooks/useDebounce';
 import { useMediaQuery } from '../../hooks/useMediaQuery';
-import { formatLastVisit } from '../../utils';
+import { EMPTY_VALUE, formatLastVisit, orDash } from '../../utils';
 import PrmCard from '@/components/features/prm/prm-card/PrmCard';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Avatar } from '@/components/ui/avatar';
@@ -147,18 +147,18 @@ export default function Prms() {
                                 <User size={12} />
                                 <span>{prm.owner_name}</span>
                               </div>
-                            ) : '—'}
+                            ) : EMPTY_VALUE}
                           </td>
                         )}
                         <td>
                           <div className="prm-contact">
                             <div className="prm-contact__item">
                               <Mail size={12} />
-                              <span>{prm.email}</span>
+                              <span>{orDash(prm.email)}</span>
                             </div>
                             <div className="prm-contact__item">
                               <Phone size={12} />
-                              <span>{prm.phone}</span>
+                              <span>{orDash(prm.phone)}</span>
                             </div>
                           </div>
                         </td>

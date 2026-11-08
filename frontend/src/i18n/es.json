@@ -99,9 +99,9 @@
       "status": "Estado",
       "dateFrom": "Desde",
       "dateTo": "Hasta",
-      "allUsers": "Todos los responsables",
-      "allPrms": "Todos los usuarios del servicio",
-      "allStatuses": "Todos los estados"
+      "allUsers": "Selecciona un responsable",
+      "allPrms": "Selecciona un usuario",
+      "allStatuses": "Selecciona un estado"
     },
     "sort": {
       "label": "Ordenar por",

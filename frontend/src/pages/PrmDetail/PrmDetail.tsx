@@ -41,10 +41,11 @@ import { Select } from '../../components/ui/select';
 import { Badge } from '../../components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Avatar } from '@/components/ui/avatar';
+import { EMPTY_VALUE, orDash } from '../../utils';
 import './PrmDetail.css';
 
 function formatBirthDate(iso: string) {
-  if (!iso) return '—';
+  if (!iso) return EMPTY_VALUE;
   return new Intl.DateTimeFormat('es-ES', {
     day: 'numeric',
     month: 'long',
@@ -421,7 +422,7 @@ export default function PrmDetail() {
                     }
                   />
                 ) : (
-                  <span className="prm-info__row-value">{prm.email}</span>
+                  <span className="prm-info__row-value">{orDash(prm.email)}</span>
                 )}
               </div>
               <div className="prm-info__row">
@@ -444,7 +445,7 @@ export default function PrmDetail() {
                     }
                   />
                 ) : (
-                  <span className="prm-info__row-value">{prm.phone}</span>
+                  <span className="prm-info__row-value">{orDash(prm.phone)}</span>
                 )}
               </div>
               <div className="prm-info__row">
@@ -490,7 +491,7 @@ export default function PrmDetail() {
                     }
                   />
                 ) : (
-                  <span className="prm-info__row-value">{prm.dni || '—'}</span>
+                  <span className="prm-info__row-value">{orDash(prm.dni)}</span>
                 )}
               </div>
               {isAdmin && (
@@ -501,7 +502,7 @@ export default function PrmDetail() {
                     </div>
                     <span className="prm-info__row-key">{t('prms.columns.responsible')}</span>
                   </div>
-                  <span className="prm-info__row-value">{prm.owner_name || '—'}</span>
+                  <span className="prm-info__row-value">{orDash(prm.owner_name)}</span>
                 </div>
               )}
             </div>
@@ -568,7 +569,7 @@ export default function PrmDetail() {
                         </div>
                       </div>
                       <div className="prm-edit-actions">
-                        <span className="prm-info__row-value">{contact.phone}</span>
+                        <span className="prm-info__row-value">{orDash(contact.phone)}</span>
                         <IconButton
                           label={t('common.edit')}
                           icon={<Pencil size={15} />}

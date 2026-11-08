@@ -28,6 +28,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { Avatar } from '@/components/ui/avatar';
 import { EmptyState } from '@/components/ui/empty-state';
 import { Card } from '@/components/ui/card';
+import { orDash } from '../../utils';
 import './Users.css';
 
 export default function Users() {
@@ -221,9 +222,9 @@ export default function Users() {
                               </span>
                             </button>
                           </td>
-                          <td className="users__email">{user.email || '—'}</td>
+                          <td className="users__email">{orDash(user.email)}</td>
                           <td className="users__org">
-                            {user.organization || '—'}
+                            {orDash(user.organization)}
                           </td>
                           <td>
                             <div className="users__role-cell">

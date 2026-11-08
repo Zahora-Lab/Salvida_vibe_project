@@ -71,6 +71,7 @@ export default function FilterBar({
             <DateInput
               value={values.dateFrom}
               onChange={(dateFrom) => onChange({ dateFrom })}
+              size="sm"
               placeholder={t('dashboard.filters.dateFrom')}
             />
           </div>
@@ -79,6 +80,7 @@ export default function FilterBar({
             <DateInput
               value={values.dateTo}
               onChange={(dateTo) => onChange({ dateTo })}
+              size="sm"
               placeholder={t('dashboard.filters.dateTo')}
             />
           </div>

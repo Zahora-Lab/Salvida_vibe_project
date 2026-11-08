@@ -7,6 +7,7 @@ import { ROLE_LABEL, getDisplayName, getInitials, roleTone } from '@/components/
 import { Badge } from '@/components/ui/badge';
 import { Avatar } from '@/components/ui/avatar';
 import { Card } from '@/components/ui/card';
+import { orDash } from '@/utils';
 
 interface UserCardProps {
   user: UserProfile;
@@ -33,12 +34,12 @@ export default function UserCard({ user, showDemo, menuItems, onOpen }: UserCard
       <dl className="users__card-fields">
         <div className="users__card-field users__card-field--full">
           <dt>Email</dt>
-          <dd className="users__card-text">{user.email || '—'}</dd>
+          <dd className="users__card-text">{orDash(user.email)}</dd>
         </div>
 
         <div className="users__card-field users__card-field--full">
           <dt>Organización</dt>
-          <dd className="users__card-text">{user.organization || '—'}</dd>
+          <dd className="users__card-text">{orDash(user.organization)}</dd>
         </div>
 
         <div className="users__card-field">

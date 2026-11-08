@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { DropdownMenu } from '@/components/ui/dropdown-menu';
 import type { DropdownItem } from '@/components/ui/dropdown-menu';
 import type { PrmListItem } from '@/hooks/usePrms';
-import { formatLastVisit } from '@/utils';
+import { EMPTY_VALUE, formatLastVisit } from '@/utils';
 import { Badge } from '@/components/ui/badge';
 import { Avatar } from '@/components/ui/avatar';
 import { Card } from '@/components/ui/card';
@@ -45,7 +45,7 @@ export default function PrmCard({ prm, isAdmin, menuItems }: PrmCardProps) {
                   <User size={12} />
                   {prm.owner_name}
                 </span>
-              ) : '—'}
+              ) : EMPTY_VALUE}
             </dd>
           </div>
         )}
@@ -68,7 +68,7 @@ export default function PrmCard({ prm, isAdmin, menuItems }: PrmCardProps) {
                   </div>
                 )}
               </div>
-            ) : '—'}
+            ) : EMPTY_VALUE}
           </dd>
         </div>
 

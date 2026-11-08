@@ -93,13 +93,13 @@ export default function MultiSelect({
                 className={`multi-select__option${selected ? ' multi-select__option--selected' : ''}`}
                 onMouseDown={() => toggle(o.id)}
               >
-                <span className="multi-select__check">
-                  {selected && <Check size={11} />}
-                </span>
                 <span className="multi-select__option-label">{o.label}</span>
                 {o.sublabel && (
                   <span className="multi-select__option-sublabel">{o.sublabel}</span>
                 )}
+                <span className="multi-select__check" aria-hidden="true">
+                  {selected && <Check size={11} />}
+                </span>
               </li>
             );
           })}

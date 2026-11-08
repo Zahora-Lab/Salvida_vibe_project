@@ -1,6 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
 
 :root {
+  /* ── Form controls ── */
+  --control-height-sm: 2.375rem;
+
   /* ── Admin app palette ── */
   --color-primary: #6b4691;
   --color-primary-dark: #543673;
