@@ -1,0 +1,73 @@
+/*
+ * Theming tokens (a container can redefine them once):
+ *   --segmented-track-bg      track background
+ *   --segmented-color         inactive text
+ *   --segmented-hover-bg      hovered option
+ *   --segmented-hover-color   hovered option text
+ *   --segmented-active-bg     selected option
+ *   --segmented-active-color  selected option text
+ */
+.segmented {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.25rem;
+  border-radius: 0.625rem;
+  background: var(--segmented-track-bg);
+}
+
+.segmented--filled {
+  --segmented-track-bg: var(--color-slate-100);
+  --segmented-color: var(--color-slate-500);
+  --segmented-hover-bg: var(--color-slate-200);
+  --segmented-hover-color: var(--color-slate-700);
+}
+
+.segmented--outlined {
+  --segmented-track-bg: white;
+  --segmented-color: var(--color-slate-400);
+  --segmented-hover-bg: var(--color-slate-50);
+  --segmented-hover-color: var(--color-primary);
+  border: 1.5px solid var(--color-slate-200);
+}
+
+.segmented__option {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.375rem;
+  padding: 0.375rem 0.75rem;
+  border: none;
+  background: transparent;
+  color: var(--segmented-color);
+  font-family: inherit;
+  cursor: pointer;
+  transition: background-color 0.15s, color 0.15s;
+}
+
+.segmented--filled .segmented__option {
+  border-radius: 0.5rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+.segmented--outlined .segmented__option {
+  border-radius: 0.375rem;
+}
+
+.segmented .segmented__option--icon-only {
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+}
+
+.segmented__option:hover {
+  background: var(--segmented-hover-bg);
+  color: var(--segmented-hover-color);
+}
+
+.segmented .segmented__option--active,
+.segmented .segmented__option--active:hover {
+  background: var(--segmented-active-bg, var(--color-primary));
+  color: var(--segmented-active-color, white);
+}

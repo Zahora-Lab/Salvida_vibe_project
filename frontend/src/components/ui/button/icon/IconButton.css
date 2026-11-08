@@ -1,0 +1,60 @@
+/*
+ * Theming token:
+ *   --icon-btn-color   resting icon color (default slate-400)
+ */
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  padding: var(--_icon-btn-p);
+  border: none;
+  border-radius: var(--_icon-btn-r);
+  background: none;
+  color: var(--icon-btn-color, var(--color-slate-400));
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.15s, color 0.15s;
+}
+
+.icon-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ── size: padding around the icon ─────────────────────────────────────── */
+.icon-btn--xs {
+  --_icon-btn-p: 0.25rem;
+  --_icon-btn-r: 0.5rem;
+}
+
+.icon-btn--sm {
+  --_icon-btn-p: 0.375rem;
+  --_icon-btn-r: 0.5rem;
+}
+
+.icon-btn--md {
+  --_icon-btn-p: 0.5rem;
+  --_icon-btn-r: 0.5rem;
+}
+
+.icon-btn--lg {
+  --_icon-btn-p: 0.625rem;
+  --_icon-btn-r: 0.75rem;
+}
+
+/* ── tone: what the button becomes on hover ────────────────────────────── */
+.icon-btn--neutral:hover:not(:disabled) {
+  background-color: var(--color-slate-100);
+  color: var(--color-slate-600);
+}
+
+.icon-btn--primary:hover:not(:disabled) {
+  background-color: var(--color-slate-50);
+  color: var(--color-primary);
+}
+
+.icon-btn--danger:hover:not(:disabled) {
+  background-color: #fef2f2;
+  color: var(--color-red-500);
+}

@@ -1,0 +1,4 @@
+/* Resting color of the arrow; hover comes from IconButton's "primary" tone. */
+.back-btn {
+  --icon-btn-color: var(--color-primary);
+}

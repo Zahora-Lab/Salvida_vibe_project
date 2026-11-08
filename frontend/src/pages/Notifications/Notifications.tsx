@@ -1,7 +1,8 @@
-import { Bell, ArrowLeft } from 'lucide-react';
+import { Bell } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import './Notifications.css';
+import { BackButton } from '../../components/ui/button';
 
 export default function Notifications() {
   const navigate = useNavigate();
@@ -10,12 +11,7 @@ export default function Notifications() {
   return (
     <div className="notifications">
       <div className="notifications__header">
-        <button
-          onClick={() => navigate(-1)}
-          className="notifications__back-btn"
-        >
-          <ArrowLeft size={20} />
-        </button>
+        <BackButton className="notifications__back-btn" onClick={() => navigate(-1)} />
         <h2 className="notifications__title">{t('notifications.title')}</h2>
       </div>
 

@@ -1,0 +1,118 @@
+import { useTranslation } from 'react-i18next';
+import {
+  Clock, MapPin, Pencil, Trash2, CheckCircle, X, FileSignature,
+  CalendarDays, User,
+} from 'lucide-react';
+import { DropdownMenu } from '@/components/ui/dropdown-menu';
+import { formatDateShort } from '@/utils';
+import { STATUS_TONE } from './statusTone';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import type { Booking } from '@/types';
+import { Avatar } from '@/components/ui/avatar';
+import './BookingCard.css';
+
+export interface BookingCardProps {
+  booking: Booking;
+  onEdit: () => void;
+  onDelete: () => void;
+  onStatusChange: (status: Booking['status']) => void;
+  onSign: () => void;
+  isAdmin: boolean;
+  showDate?: boolean;
+}
+
+export default function BookingCard({
+  booking,
+  onEdit,
+  onDelete,
+  onStatusChange,
+  onSign,
+  isAdmin,
+  showDate,
+}: BookingCardProps) {
+  const { t } = useTranslation();
+  const mapsUrl = booking.address
+    ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(booking.address)}`
+    : null;
+
+  return (
+    <div className="booking-card">
+      <Avatar className="booking-card__avatar" src={booking.prmAvatar} alt={booking.prmName}>
+        {booking.prmName?.[0] ?? '?'}
+      </Avatar>
+      <div className="booking-card__info">
+        <div className="booking-card__top">
+          <div className="booking-card__name">{booking.prmName}</div>
+          <div className="booking-card__right">
+            <div className="booking-card__badges">
+              {booking.created_by_admin && (
+                <Badge tone="primary" bordered>{t('dashboard.createdByAdmin')}</Badge>
+              )}
+              <Badge tone={STATUS_TONE[booking.status]}>
+                {t(`bookingStatuses.${booking.status}`)}
+              </Badge>
+              {booking.status === 'SignPending' && (
+                <Button
+                  size="xs"
+                  icon={<FileSignature size={14} />}
+                  onClick={(event) => { event.stopPropagation(); onSign(); }}
+                >
+                  {t('contract.signButton')}
+                </Button>
+              )}
+            </div>
+            <DropdownMenu
+              items={[
+                ...(isAdmin && (booking.status === 'Pending' || booking.status === 'SignPending') ? [
+                  { label: t('dashboard.actions.approve'), icon: <CheckCircle size={14} />, onClick: () => onStatusChange('Approved') },
+                ] : []),
+                ...(isAdmin && (booking.status === 'Pending' || booking.status === 'Approved') ? [
+                  { label: t('dashboard.actions.complete'), icon: <CheckCircle size={14} />, onClick: () => onStatusChange('Completed') },
+                  { label: t('dashboard.actions.cancelBooking'), icon: <X size={14} />, onClick: () => onStatusChange('Cancelled'), variant: 'danger' as const },
+                ] : []),
+                { label: t('dashboard.actions.editBooking'), icon: <Pencil size={14} />, onClick: onEdit },
+                { label: t('dashboard.actions.deleteBooking'), icon: <Trash2 size={14} />, onClick: onDelete, variant: 'danger' as const },
+              ]}
+            />
+          </div>
+        </div>
+        <div className="booking-card__meta">
+          {showDate && booking.date && (
+            <span className="booking-card__meta-item">
+              <CalendarDays size={13} />
+              {formatDateShort(booking.date)}
+            </span>
+          )}
+          <span className="booking-card__meta-item">
+            <Clock size={13} />
+            {booking.startTime}
+          </span>
+          <span className="booking-card__meta-item booking-card__meta-location">
+            {mapsUrl ? (
+              <a
+                href={mapsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="booking-card__map-icon"
+                title={t('dashboard.viewOnMaps')}
+                onClick={(event) => event.stopPropagation()}
+              >
+                <MapPin size={13} />
+              </a>
+            ) : (
+              <MapPin size={13} />
+            )}
+            {booking.address}
+          </span>
+          {isAdmin && booking.owner_name && (
+            <span className="booking-card__meta-item">
+              <User size={13} />
+              {booking.owner_name}
+            </span>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}

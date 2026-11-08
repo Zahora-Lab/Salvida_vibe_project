@@ -1,0 +1,91 @@
+/* ── PrmAddressPicker ── */
+
+.prm-addr-picker {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* Chips row */
+.prm-addr-picker__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.prm-addr-chip {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.125rem;
+  padding: 0.5rem 0.875rem;
+  border-radius: 0.75rem;
+  border: 1.5px solid var(--color-slate-200);
+  background-color: white;
+  cursor: pointer;
+  transition: border-color 0.15s, background-color 0.15s, box-shadow 0.15s;
+  text-align: left;
+  font-family: inherit;
+  max-width: 14rem;
+}
+
+.prm-addr-chip:hover {
+  border-color: var(--color-primary-40);
+  background-color: var(--color-primary-05);
+}
+
+.prm-addr-chip--active {
+  border-color: var(--color-primary);
+  background-color: var(--color-primary-05);
+  box-shadow: 0 0 0 2px var(--color-primary-20);
+}
+
+.prm-addr-chip__alias {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--color-slate-900);
+  line-height: 1.2;
+}
+
+.prm-addr-chip--active .prm-addr-chip__alias {
+  color: var(--color-primary);
+}
+
+.prm-addr-chip__address {
+  font-size: 0.7rem;
+  color: var(--color-slate-400);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 12rem;
+  line-height: 1.3;
+}
+
+/* Empty state */
+.prm-addr-picker__empty {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  border: 1px dashed var(--color-slate-200);
+  background-color: var(--color-slate-50);
+  font-size: 0.8125rem;
+  color: var(--color-slate-500);
+}
+
+.prm-addr-picker__empty-link {
+  font-weight: 600;
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+.prm-addr-picker__empty-link:hover {
+  text-decoration: underline;
+}
+
+/* Map preview */
+.prm-addr-picker__map {
+  border-radius: 0.75rem;
+  overflow: hidden;
+}

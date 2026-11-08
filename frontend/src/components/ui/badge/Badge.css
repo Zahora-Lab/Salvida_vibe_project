@@ -1,0 +1,68 @@
+/*
+ * Theming tokens (a container can redefine them once, like --input-*):
+ *   --badge-bg      background
+ *   --badge-color   text and border color
+ */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  border: 1px solid transparent;
+  border-radius: 9999px;
+  background: var(--badge-bg);
+  color: var(--badge-color);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.badge--uppercase {
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.badge--bordered {
+  border-color: var(--badge-color);
+}
+
+/* ── size ──────────────────────────────────────────────────────────────── */
+.badge--sm {
+  padding: calc(0.25rem - 1px) calc(0.75rem - 1px);
+  font-size: 0.625rem;
+}
+
+.badge--md {
+  padding: calc(0.2rem - 1px) calc(0.6rem - 1px);
+  font-size: 0.72rem;
+}
+
+/* ── tone: one pair per meaning ────────────────────────────────────────── */
+/* The pairs live in index.css (--tone-*), shared with Button's soft and outline variants. */
+.badge--success {
+  --badge-bg: var(--tone-success-bg);
+  --badge-color: var(--tone-success-color);
+}
+
+.badge--warning {
+  --badge-bg: var(--tone-warning-bg);
+  --badge-color: var(--tone-warning-color);
+}
+
+.badge--danger {
+  --badge-bg: var(--tone-danger-bg);
+  --badge-color: var(--tone-danger-color);
+}
+
+.badge--info {
+  --badge-bg: var(--tone-info-bg);
+  --badge-color: var(--tone-info-color);
+}
+
+.badge--neutral {
+  --badge-bg: var(--tone-neutral-bg);
+  --badge-color: var(--tone-neutral-color);
+}
+
+.badge--primary {
+  --badge-bg: var(--tone-primary-bg);
+  --badge-color: var(--tone-primary-color);
+}

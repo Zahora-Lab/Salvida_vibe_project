@@ -23,9 +23,17 @@ export function formatDateShort(dateStr: string): string {
   return new Date(y, m - 1, d).toLocaleDateString('es-ES', { day: 'numeric', month: 'short' });
 }
 
+/** Placeholder shown wherever a piece of data does not exist. */
+export const EMPTY_VALUE = '—';
+
+/** Returns the value, or "—" when it is null, undefined or blank. */
+export function orDash(value?: string | null): string {
+  return value && value.trim() ? value : EMPTY_VALUE;
+}
+
 /** "3 oct 2026" for a booking date coming from the API, "—" when there is none. */
 export function formatLastVisit(dateStr?: string): string {
-  if (!dateStr) return '—';
+  if (!dateStr) return EMPTY_VALUE;
   return new Date(dateStr).toLocaleDateString('es-ES', { day: 'numeric', month: 'short', year: 'numeric' });
 }
 

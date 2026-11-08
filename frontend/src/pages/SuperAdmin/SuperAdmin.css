@@ -76,35 +76,3 @@
   font-weight: 500;
   color: var(--color-text-primary);
 }
-
-.superadmin__toggle-btn {
-  padding: 8px 20px;
-  border-radius: 8px;
-  font-size: 0.875rem;
-  font-weight: 500;
-  cursor: pointer;
-  border: 1px solid var(--color-border);
-  background: var(--color-surface);
-  color: var(--color-text-primary);
-  transition: background 0.15s, color 0.15s, border-color 0.15s;
-}
-
-.superadmin__toggle-btn:hover:not(:disabled) {
-  background: var(--color-bg-hover, #f3f4f6);
-}
-
-.superadmin__toggle-btn--on {
-  background: var(--color-warning, #f59e0b);
-  border-color: var(--color-warning, #f59e0b);
-  color: #fff;
-}
-
-.superadmin__toggle-btn--on:hover:not(:disabled) {
-  background: #d97706;
-  border-color: #d97706;
-}
-
-.superadmin__toggle-btn:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}

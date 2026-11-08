@@ -1,0 +1,34 @@
+/*
+ * Theming tokens (a container can redefine them once):
+ *   --tabs-border-color   line under the whole list
+ *   --tabs-color          inactive text
+ *   --tabs-active-color   active text and underline
+ */
+.tabs {
+  display: flex;
+  border-bottom: 1.5px solid var(--tabs-border-color, var(--color-slate-200));
+}
+
+.tabs__tab {
+  padding: 0.625rem 1rem;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1.5px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--tabs-color, var(--color-slate-500));
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.tabs--stretch .tabs__tab {
+  flex: 1;
+}
+
+.tabs__tab--active {
+  color: var(--tabs-active-color, var(--color-primary));
+  border-bottom-color: var(--tabs-active-color, var(--color-primary));
+  font-weight: 600;
+}

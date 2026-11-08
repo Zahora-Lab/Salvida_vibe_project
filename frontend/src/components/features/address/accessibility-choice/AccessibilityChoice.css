@@ -1,0 +1,24 @@
+.access-choice {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+
+.access-choice__title {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-primary);
+}
+
+.access-choice__options {
+  display: flex;
+  gap: 0.375rem;
+}
+
+/* Pill-shaped options, a notch smaller than the default xs button */
+.btn.access-choice__option {
+  --btn-radius: 9999px;
+  font-size: 0.75rem;
+}

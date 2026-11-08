@@ -36,34 +36,6 @@
   flex-wrap: wrap;
 }
 
-.addresses__filter-btn {
-  padding: 0.5rem 1.125rem;
-  border-radius: 9999px;
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: var(--color-slate-600);
-  background: white;
-  border: 1.5px solid var(--color-slate-200);
-  cursor: pointer;
-  transition: all 0.15s;
-}
-
-.addresses__filter-btn:hover {
-  border-color: var(--color-primary);
-  color: var(--color-primary);
-}
-
-.addresses__filter-btn--active {
-  background: var(--color-primary);
-  border-color: var(--color-primary);
-  color: white;
-  box-shadow: 0 4px 8px -2px var(--color-primary-20);
-}
-
-.addresses__filter-btn--active:hover {
-  color: white;
-}
-
 /* Entity filters (user + PRM) */
 .addresses__entity-filters {
   display: flex;
@@ -88,44 +60,6 @@
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: var(--color-primary);
-}
-
-/* View toggle */
-.addresses__view-toggle {
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
-  background: white;
-  border: 1.5px solid var(--color-slate-200);
-  border-radius: 0.625rem;
-  padding: 0.25rem;
-}
-
-.addresses__view-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 2rem;
-  height: 2rem;
-  border-radius: 0.375rem;
-  color: var(--color-slate-400);
-  cursor: pointer;
-  transition: all 0.15s;
-}
-
-.addresses__view-btn:hover {
-  color: var(--color-primary);
-  background: var(--color-slate-50);
-}
-
-.addresses__view-btn--active {
-  background: var(--color-primary);
-  color: white;
-}
-
-.addresses__view-btn--active:hover {
-  color: white;
-  background: var(--color-primary);
 }
 
 /* Full-height map view */
@@ -258,16 +192,6 @@
   letter-spacing: 0.05em;
 }
 
-.addr-popup__accessible--yes {
-  background: var(--color-emerald-50);
-  color: var(--color-emerald-600);
-}
-
-.addr-popup__accessible--no {
-  background: var(--color-slate-100);
-  color: var(--color-slate-500);
-}
-
 /* Notas de validación */
 .addr-popup__notes {
   margin: 0;
@@ -288,46 +212,7 @@
   flex-wrap: wrap;
 }
 
-.addr-popup__btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.2rem;
-  padding: 0.3rem 0.625rem;
-  border-radius: 0.5rem;
-  font-size: 0.7rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.15s;
-  border: 1px solid transparent;
-}
-
-.addr-popup__btn--validate {
-  background: var(--color-emerald-50);
-  color: var(--color-emerald-600);
-}
-.addr-popup__btn--validate:hover { background: #d1fae5; }
-
-.addr-popup__btn--reject {
-  background: #fff5f5;
-  color: #c53030;
-}
-.addr-popup__btn--reject:hover { background: #fed7d7; }
-
-.addr-popup__btn--reset {
-  background: var(--color-slate-100);
-  color: var(--color-slate-600);
-}
-.addr-popup__btn--reset:hover { background: var(--color-slate-200); }
-
 /* Table */
-.addresses__table-wrap {
-  background: white;
-  border-radius: 1rem;
-  border: 1px solid var(--color-slate-100);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-  overflow: hidden;
-}
-
 .addresses__table {
   width: 100%;
   border-collapse: collapse;
@@ -386,48 +271,8 @@
 }
 
 /* Badges — tri-state accessibility */
-.addresses__access-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.25rem;
-  padding: 0.25rem 0.625rem;
-  border-radius: 9999px;
-  font-size: 0.6875rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  white-space: nowrap;
-}
-
-.addresses__access-badge--pending {
-  background: var(--color-slate-100);
-  color: var(--color-slate-500);
-}
-
-.addresses__access-badge--yes {
-  background: var(--color-emerald-50);
-  color: var(--color-emerald-600);
-}
-
-.addresses__access-badge--no {
-  background: #fff5f5;
-  color: #c53030;
-}
 
 /* Keep status badge for backward compat (used in map popup) */
-.addresses__status-badge {
-  display: inline-block;
-  padding: 0.25rem 0.625rem;
-  border-radius: 9999px;
-  font-size: 0.6875rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-.addresses__status-badge--pending  { background: #fff7ed; color: #c05621; }
-.addresses__status-badge--validated { background: var(--color-emerald-50); color: var(--color-emerald-600); }
-.addresses__status-badge--rejected  { background: #fff5f5; color: #c53030; }
 
 /* Action buttons */
 .addresses__action-group {
@@ -435,67 +280,6 @@
   align-items: center;
   gap: 0.375rem;
   flex-wrap: wrap;
-}
-
-.addresses__action-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.25rem;
-  padding: 0.375rem 0.625rem;
-  border-radius: 0.5rem;
-  font-size: 0.75rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.15s;
-}
-
-.addresses__action-btn--validate {
-  background: var(--color-emerald-50);
-  color: var(--color-emerald-600);
-  border: 1px solid transparent;
-}
-
-.addresses__action-btn--validate:hover {
-  background: var(--color-emerald-100, #d1fae5);
-}
-
-.addresses__action-btn--reject {
-  background: #fff5f5;
-  color: #c53030;
-  border: 1px solid transparent;
-}
-
-.addresses__action-btn--reject:hover {
-  background: #fed7d7;
-}
-
-.addresses__action-btn--reset {
-  background: var(--color-slate-100);
-  color: var(--color-slate-600);
-  border: 1px solid transparent;
-}
-
-.addresses__action-btn--reset:hover {
-  background: var(--color-slate-200);
-}
-
-/* Expand button */
-.addresses__expand-btn {
-  padding: 0.375rem;
-  border-radius: 0.5rem;
-  color: var(--color-slate-400);
-  transition: color 0.15s, background-color 0.15s;
-  display: flex;
-}
-
-.addresses__expand-btn:hover {
-  color: var(--color-primary);
-  background-color: var(--color-slate-50);
-}
-
-.addresses__prm-link:hover {
-  color: var(--color-primary);
-  background-color: rgba(var(--color-primary-rgb, 99, 102, 241), 0.08);
 }
 
 /* Map preview row */
@@ -507,18 +291,6 @@
   border-radius: 0.75rem;
   overflow: hidden;
   border: 1px solid var(--color-slate-100);
-}
-
-/* Empty + loading */
-.addresses__empty {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0.75rem;
-  padding: 4rem 2rem;
-  color: var(--color-slate-400);
-  font-size: 0.9rem;
 }
 
 .addresses__loading {
@@ -533,19 +305,6 @@
   gap: 2rem;
   padding: 1.25rem;
   border-bottom: 1px solid var(--color-slate-50);
-}
-
-.addresses__skeleton {
-  height: 0.875rem;
-  border-radius: 0.375rem;
-  background: linear-gradient(90deg, var(--color-slate-100) 25%, var(--color-slate-50) 50%, var(--color-slate-100) 75%);
-  background-size: 200% 100%;
-  animation: addr-shimmer 1.4s ease infinite;
-}
-
-@keyframes addr-shimmer {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
 }
 
 /* ── Mobile ───────────────────────────────────────────────────────────────── */
@@ -618,7 +377,7 @@
 }
 
 /* Let long badges wrap instead of pushing the icon buttons out of the card */
-.addresses__card-row--status .addr-access-badge {
+.addresses__card-row--status .badge {
   min-width: 0;
   white-space: normal;
   line-height: 1.25;
@@ -644,7 +403,7 @@
   gap: 0.5rem;
 }
 
-.addresses__card-row--actions .addresses__action-btn {
+.addresses__card-row--actions .btn {
   flex: 1 1 0;
   justify-content: center;
   min-height: 2.5rem;

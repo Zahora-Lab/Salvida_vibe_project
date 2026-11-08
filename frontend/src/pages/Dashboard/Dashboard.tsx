@@ -1,14 +1,13 @@
 import { useState, useMemo } from 'react';
-import Header from '../../components/Header/Header';
-import CalendarWidget from '../../components/CalendarWidget/CalendarWidget';
-import FilterBar from '../../components/FilterBar/FilterBar';
-import type { BookingFilterValues } from '../../components/FilterBar/FilterBar';
-import BookingCard from '../../components/BookingCard/BookingCard';
-import type { MultiSelectOption } from '../../components/MultiSelect/MultiSelect';
-import ContractModal from '../../components/ContractModal/ContractModal';
-import MobileAddButton from '../../components/MobileAddButton/MobileAddButton';
+import Header from '../../components/layout/header/Header';
+import CalendarWidget from '../../components/features/booking/calendar-widget/CalendarWidget';
+import FilterBar from '../../components/features/booking/filter-bar/FilterBar';
+import type { BookingFilterValues } from '../../components/features/booking/filter-bar/FilterBar';
+import BookingCard from '../../components/features/booking/booking-card/BookingCard';
+import type { MultiSelectOption } from '../../components/ui/multi-select';
+import ContractModal from '../../components/features/booking/contract-modal/ContractModal';
+import { CreateButton } from '../../components/ui/button';
 import {
-  PlusCircle,
   CalendarDays,
   List,
   ArrowUp,
@@ -16,7 +15,7 @@ import {
   ChevronDown,
   SlidersHorizontal,
 } from 'lucide-react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
   useBookings,
@@ -26,6 +25,10 @@ import {
 import { useAuthStore } from '../../store/useAuthStore';
 import { formatDateISO } from '../../utils';
 import type { Booking } from '../../types';
+import { Skeleton } from '@/components/ui/skeleton';
+import { SegmentedControl } from '@/components/ui/segmented-control';
+import { EmptyState } from '@/components/ui/empty-state';
+import { Chip } from '@/components/ui/chip';
 import './Dashboard.css';
 
 // ─── Types ───────────────────────────────────────────────────────────────────
@@ -48,22 +51,14 @@ function ViewToggle({
 }) {
   const { t } = useTranslation();
   return (
-    <div className="dashboard__view-toggle">
-      <button
-        className={`dashboard__view-btn${view === 'calendar' ? ' dashboard__view-btn--active' : ''}`}
-        onClick={() => onChange('calendar')}
-      >
-        <CalendarDays size={16} />
-        <span>{t('dashboard.viewCalendar')}</span>
-      </button>
-      <button
-        className={`dashboard__view-btn${view === 'list' ? ' dashboard__view-btn--active' : ''}`}
-        onClick={() => onChange('list')}
-      >
-        <List size={16} />
-        <span>{t('dashboard.viewList')}</span>
-      </button>
-    </div>
+    <SegmentedControl
+      value={view}
+      onChange={onChange}
+      options={[
+        { value: 'calendar', label: t('dashboard.viewCalendar'), icon: <CalendarDays size={16} /> },
+        { value: 'list', label: t('dashboard.viewList'), icon: <List size={16} /> },
+      ]}
+    />
   );
 }
 
@@ -277,7 +272,8 @@ export default function Dashboard() {
         {/* ── Mobile-only: view toggle + new booking ── */}
         <div className="dashboard__mobile-toolbar">
           <ViewToggle view={view} onChange={handleViewChange} />
-          <MobileAddButton
+          <CreateButton
+            display="icon"
             to="/app/bookings/new"
             state={view === 'calendar' ? { date: dateStr } : undefined}
             label={t('dashboard.newBookingShort')}
@@ -386,18 +382,11 @@ export default function Dashboard() {
               {isLoading ? (
                 <div className="booking-list">
                   {[1, 2, 3].map((i) => (
-                    <div
-                      key={i}
-                      className="booking-card booking-card--skeleton"
-                    />
+                    <Skeleton key={i} height="5.5rem" radius="1rem" />
                   ))}
                 </div>
               ) : bookings.length === 0 ? (
-                <div className="booking-list booking-list--empty">
-                  <p className="booking-list__empty-text">
-                    {t('dashboard.noBookingsToday')}
-                  </p>
-                </div>
+                <EmptyState bordered size="sm">{t('dashboard.noBookingsToday')}</EmptyState>
               ) : (
                 <div className="booking-list">
                   {bookings.map((booking) => (
@@ -418,14 +407,12 @@ export default function Dashboard() {
                 </div>
               )}
 
-              <Link
+              <CreateButton
+                variant="dashed"
                 to="/app/bookings/new"
                 state={{ date: dateStr }}
-                className="new-booking-btn"
-              >
-                <PlusCircle size={20} />
-                <span>{t('dashboard.newBooking')}</span>
-              </Link>
+                label={t('dashboard.newBooking')}
+              />
             </div>
           </div>
         )}
@@ -454,9 +441,11 @@ export default function Dashboard() {
               </span>
               <div className="booking-sort__chips">
                 {sortColumns.map((col) => (
-                  <button
+                  <Chip
                     key={col.key}
-                    className={`booking-sort__chip${sortKey === col.key ? ' booking-sort__chip--active' : ''}`}
+                    variant="tinted"
+                    size="sm"
+                    selected={sortKey === col.key}
                     onClick={() => toggleSort(col.key)}
                   >
                     {col.label}
@@ -466,7 +455,7 @@ export default function Dashboard() {
                       ) : (
                         <ArrowDown size={12} />
                       ))}
-                  </button>
+                  </Chip>
                 ))}
               </div>
             </div>
@@ -474,16 +463,12 @@ export default function Dashboard() {
             {/* Booking list */}
             {listLoading ? (
               <div className="booking-list">
-                <div className="booking-card booking-card--skeleton" />
-                <div className="booking-card booking-card--skeleton" />
-                <div className="booking-card booking-card--skeleton" />
+                <Skeleton height="5.5rem" radius="1rem" />
+                <Skeleton height="5.5rem" radius="1rem" />
+                <Skeleton height="5.5rem" radius="1rem" />
               </div>
             ) : sortedBookings.length === 0 ? (
-              <div className="booking-list booking-list--empty">
-                <p className="booking-list__empty-text">
-                  {t('dashboard.noBookings')}
-                </p>
-              </div>
+              <EmptyState bordered size="sm">{t('dashboard.noBookings')}</EmptyState>
             ) : (
               <div className="booking-list">
                 {sortedBookings.map((booking) => (
@@ -503,10 +488,7 @@ export default function Dashboard() {
               </div>
             )}
 
-            <Link to="/app/bookings/new" className="new-booking-btn">
-              <PlusCircle size={20} />
-              <span>{t('dashboard.newBooking')}</span>
-            </Link>
+            <CreateButton variant="dashed" to="/app/bookings/new" label={t('dashboard.newBooking')} />
           </div>
         )}
       </div>

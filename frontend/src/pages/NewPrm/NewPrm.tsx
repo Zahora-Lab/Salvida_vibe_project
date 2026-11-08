@@ -1,14 +1,19 @@
 import { useState, type FormEvent } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { ArrowLeft, Plus, Trash2 } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { Plus, Trash2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useCreatePrm } from '../../hooks/usePrms';
 import { useAddPrmAddress } from '../../hooks/usePrmAddresses';
-import AddressSelector from '../../components/AddressSelector';
-import UserSelector from '../../components/UserSelector/UserSelector';
+import AddressSelector from '../../components/features/address/address-selector/AddressSelector';
+import UserSelector from '../../components/features/user/user-selector/UserSelector';
 import { useAuthStore } from '../../store/useAuthStore';
-import DateInput from '../../components/DateInput/DateInput';
+import { DateInput } from '../../components/ui/date-input';
 import type { Address } from '../../types';
+import { Input } from '../../components/ui/input';
+import { FormField } from '../../components/ui/form-field';
+import { BackButton, Button, IconButton } from '../../components/ui/button';
+import { Select } from '../../components/ui/select';
+import { Alert } from '@/components/ui/alert';
 import './NewPrm.css';
 
 interface ContactDraft {
@@ -128,9 +133,7 @@ export default function NewPrm() {
   return (
     <div className="new-prm">
       <div className="new-prm__header">
-        <Link to="/app/prms" className="new-prm__back-btn">
-          <ArrowLeft size={20} />
-        </Link>
+        <BackButton to="/app/prms" />
         <div>
           <h1 className="new-prm__title">{t('prms.newPrm.title')}</h1>
           <p className="new-prm__subtitle">{t('prms.newPrm.subtitle')}</p>
@@ -163,78 +166,81 @@ export default function NewPrm() {
               {t('prms.newPrm.sections.basic')}
             </h2>
             <div className="new-prm__grid">
-              <div className="new-prm__field new-prm__field--full">
-                <label className="new-prm__label" htmlFor="name">
-                  {t('prms.newPrm.nameFull')} <span className="new-prm__required">*</span>
-                </label>
-                <input
-                  id="name"
-                  type="text"
-                  className={`new-prm__input${nameError ? ' new-prm__input--error' : ''}`}
-                  placeholder={t('prms.newPrm.namePlaceholder')}
-                  value={name}
-                  onChange={(e) => { setName(e.target.value); setNameError(''); }}
-                />
-                {nameError && <p className="new-prm__field-error">{nameError}</p>}
-              </div>
+              <FormField
+                className="new-prm__field--full"
+                label={t('prms.newPrm.nameFull')}
+                htmlFor="name"
+                required
+                error={nameError}
+              >
+                {(field) => (
+                  <Input
+                    {...field}
+                    type="text"
+                    placeholder={t('prms.newPrm.namePlaceholder')}
+                    value={name}
+                    onChange={(e) => { setName(e.target.value); setNameError(''); }}
+                  />
+                )}
+              </FormField>
 
-              <div className="new-prm__field">
-                <label className="new-prm__label" htmlFor="email">{t('prms.newPrm.email')}</label>
-                <input
-                  id="email"
-                  type="email"
-                  className="new-prm__input"
-                  placeholder={t('prms.newPrm.emailPlaceholder')}
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-              </div>
+              <FormField label={t('prms.newPrm.email')} htmlFor="email">
+                {(field) => (
+                  <Input
+                    {...field}
+                    type="email"
+                    placeholder={t('prms.newPrm.emailPlaceholder')}
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                )}
+              </FormField>
 
-              <div className="new-prm__field">
-                <label className="new-prm__label" htmlFor="phone">{t('prms.newPrm.phone')}</label>
-                <input
-                  id="phone"
-                  type="tel"
-                  className="new-prm__input"
-                  placeholder={t('prms.newPrm.phonePlaceholder')}
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                />
-              </div>
+              <FormField label={t('prms.newPrm.phone')} htmlFor="phone">
+                {(field) => (
+                  <Input
+                    {...field}
+                    type="tel"
+                    placeholder={t('prms.newPrm.phonePlaceholder')}
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                  />
+                )}
+              </FormField>
 
-              <div className="new-prm__field">
-                <label className="new-prm__label" htmlFor="dni">{t('prms.newPrm.dni')}</label>
-                <input
-                  id="dni"
-                  type="text"
-                  className="new-prm__input"
-                  placeholder={t('prms.newPrm.dniPlaceholder')}
-                  value={dni}
-                  onChange={(e) => setDni(e.target.value)}
-                />
-              </div>
+              <FormField label={t('prms.newPrm.dni')} htmlFor="dni">
+                {(field) => (
+                  <Input
+                    {...field}
+                    type="text"
+                    placeholder={t('prms.newPrm.dniPlaceholder')}
+                    value={dni}
+                    onChange={(e) => setDni(e.target.value)}
+                  />
+                )}
+              </FormField>
 
-              <div className="new-prm__field">
-                <label className="new-prm__label" htmlFor="birthDate">{t('prms.newPrm.birthDate')}</label>
+              <FormField label={t('prms.newPrm.birthDate')} htmlFor="birthDate">
                 <DateInput
+                  id="birthDate"
                   value={birthDate}
                   onChange={setBirthDate}
                   placeholder={t('prms.newPrm.birthDate')}
                 />
-              </div>
+              </FormField>
 
-              <div className="new-prm__field">
-                <label className="new-prm__label" htmlFor="status">{t('prms.newPrm.status')}</label>
-                <select
-                  id="status"
-                  className="new-prm__select"
-                  value={status}
-                  onChange={(e) => setStatus(e.target.value as 'Activo' | 'Inactivo')}
-                >
-                  <option value="Activo">{t('prms.newPrm.statusActive')}</option>
-                  <option value="Inactivo">{t('prms.newPrm.statusInactive')}</option>
-                </select>
-              </div>
+              <FormField label={t('prms.newPrm.status')} htmlFor="status">
+                {(field) => (
+                  <Select
+                    {...field}
+                    value={status}
+                    onChange={(e) => setStatus(e.target.value as 'Activo' | 'Inactivo')}
+                  >
+                    <option value="Activo">{t('prms.newPrm.statusActive')}</option>
+                    <option value="Inactivo">{t('prms.newPrm.statusInactive')}</option>
+                  </Select>
+                )}
+              </FormField>
             </div>
           </section>
 
@@ -244,44 +250,44 @@ export default function NewPrm() {
               {t('prms.newPrm.sections.medical')}
             </h2>
             <div className="new-prm__grid">
-              <div className="new-prm__field">
-                <label className="new-prm__label" htmlFor="bloodType">{t('prms.newPrm.bloodType')}</label>
-                <select
-                  id="bloodType"
-                  className="new-prm__select"
-                  value={bloodType}
-                  onChange={(e) => setBloodType(e.target.value)}
-                >
-                  <option value="">{t('prms.newPrm.bloodTypePlaceholder')}</option>
-                  {['A+','A-','B+','B-','AB+','AB-','O+','O-'].map(g => (
-                    <option key={g} value={g}>{g}</option>
-                  ))}
-                </select>
-              </div>
+              <FormField label={t('prms.newPrm.bloodType')} htmlFor="bloodType">
+                {(field) => (
+                  <Select
+                    {...field}
+                    value={bloodType}
+                    onChange={(e) => setBloodType(e.target.value)}
+                  >
+                    <option value="">{t('prms.newPrm.bloodTypePlaceholder')}</option>
+                    {['A+','A-','B+','B-','AB+','AB-','O+','O-'].map(g => (
+                      <option key={g} value={g}>{g}</option>
+                    ))}
+                  </Select>
+                )}
+              </FormField>
 
-              <div className="new-prm__field">
-                <label className="new-prm__label" htmlFor="height">{t('prms.newPrm.height')}</label>
-                <input
-                  id="height"
-                  type="text"
-                  className="new-prm__input"
-                  placeholder={t('prms.newPrm.heightPlaceholder')}
-                  value={height}
-                  onChange={(e) => setHeight(e.target.value)}
-                />
-              </div>
+              <FormField label={t('prms.newPrm.height')} htmlFor="height">
+                {(field) => (
+                  <Input
+                    {...field}
+                    type="text"
+                    placeholder={t('prms.newPrm.heightPlaceholder')}
+                    value={height}
+                    onChange={(e) => setHeight(e.target.value)}
+                  />
+                )}
+              </FormField>
 
-              <div className="new-prm__field">
-                <label className="new-prm__label" htmlFor="weight">{t('prms.newPrm.weight')}</label>
-                <input
-                  id="weight"
-                  type="text"
-                  className="new-prm__input"
-                  placeholder={t('prms.newPrm.weightPlaceholder')}
-                  value={weight}
-                  onChange={(e) => setWeight(e.target.value)}
-                />
-              </div>
+              <FormField label={t('prms.newPrm.weight')} htmlFor="weight">
+                {(field) => (
+                  <Input
+                    {...field}
+                    type="text"
+                    placeholder={t('prms.newPrm.weightPlaceholder')}
+                    value={weight}
+                    onChange={(e) => setWeight(e.target.value)}
+                  />
+                )}
+              </FormField>
             </div>
           </section>
 
@@ -294,53 +300,59 @@ export default function NewPrm() {
             {contacts.map((contact, index) => (
               <div key={index} className="new-prm__contact-row">
                 <div className="new-prm__grid">
-                  <div className="new-prm__field">
-                    <label className="new-prm__label">{t('prms.newPrm.contactName')}</label>
-                    <input
-                      type="text"
-                      className="new-prm__input"
-                      placeholder={t('prms.newPrm.contactNamePlaceholder')}
-                      value={contact.name}
-                      onChange={(event) => updateContact(index, 'name', event.target.value)}
-                    />
-                  </div>
-                  <div className="new-prm__field">
-                    <label className="new-prm__label">{t('prms.newPrm.contactPhone')}</label>
-                    <input
-                      type="tel"
-                      className="new-prm__input"
-                      placeholder={t('prms.newPrm.phonePlaceholder')}
-                      value={contact.phone}
-                      onChange={(event) => updateContact(index, 'phone', event.target.value)}
-                    />
-                  </div>
-                  <div className="new-prm__field">
-                    <label className="new-prm__label">{t('prms.newPrm.contactRelationship')}</label>
-                    <input
-                      type="text"
-                      className="new-prm__input"
-                      placeholder={t('prms.newPrm.contactRelationshipPlaceholder')}
-                      value={contact.relationship}
-                      onChange={(event) => updateContact(index, 'relationship', event.target.value)}
-                    />
-                  </div>
+                  <FormField label={t('prms.newPrm.contactName')}>
+                    {(field) => (
+                      <Input
+                        {...field}
+                        type="text"
+                        placeholder={t('prms.newPrm.contactNamePlaceholder')}
+                        value={contact.name}
+                        onChange={(event) => updateContact(index, 'name', event.target.value)}
+                      />
+                    )}
+                  </FormField>
+                  <FormField label={t('prms.newPrm.contactPhone')}>
+                    {(field) => (
+                      <Input
+                        {...field}
+                        type="tel"
+                        placeholder={t('prms.newPrm.phonePlaceholder')}
+                        value={contact.phone}
+                        onChange={(event) => updateContact(index, 'phone', event.target.value)}
+                      />
+                    )}
+                  </FormField>
+                  <FormField label={t('prms.newPrm.contactRelationship')}>
+                    {(field) => (
+                      <Input
+                        {...field}
+                        type="text"
+                        placeholder={t('prms.newPrm.contactRelationshipPlaceholder')}
+                        value={contact.relationship}
+                        onChange={(event) => updateContact(index, 'relationship', event.target.value)}
+                      />
+                    )}
+                  </FormField>
                 </div>
-                <button
-                  type="button"
+                <IconButton
                   className="new-prm__contact-remove"
+                  label={t('common.remove')}
+                  icon={<Trash2 size={16} />}
+                  tone="danger"
                   onClick={() => removeContact(index)}
-                  title={t('common.remove')}
-                >
-                  <Trash2 size={16} />
-                </button>
+                />
               </div>
             ))}
 
             {contacts.length < 2 ? (
-              <button type="button" className="new-prm__add-contact-btn" onClick={addContact}>
-                <Plus size={16} />
+              <Button
+                variant="dashed"
+                className="new-prm__add-contact-btn"
+                icon={<Plus size={16} />}
+                onClick={addContact}
+              >
                 {t('prms.newPrm.contactAdd')}
-              </button>
+              </Button>
             ) : (
               <p className="new-prm__contact-max">{t('prms.newPrm.contactMax')}</p>
             )}
@@ -358,47 +370,45 @@ export default function NewPrm() {
                     onChange={(v) => updateAddressDraftValue(index, v)}
                     showValidation={false}
                   />
-                  <input
+                  <Input
                     type="text"
-                    className="new-prm__input"
                     placeholder={t('prms.newPrm.addressAlias')}
                     value={draft.alias}
                     onChange={(event) => updateAddressDraftAlias(index, event.target.value)}
                     maxLength={40}
                   />
                 </div>
-                <button
-                  type="button"
+                <IconButton
                   className="new-prm__contact-remove"
+                  label={t('common.remove')}
+                  icon={<Trash2 size={16} />}
+                  tone="danger"
                   onClick={() => removeAddressDraft(index)}
-                  title={t('common.remove')}
-                >
-                  <Trash2 size={16} />
-                </button>
+                />
               </div>
             ))}
 
-            <button type="button" className="new-prm__add-contact-btn" onClick={addAddressDraft}>
-              <Plus size={16} />
+            <Button
+              variant="dashed"
+              className="new-prm__add-contact-btn"
+              icon={<Plus size={16} />}
+              onClick={addAddressDraft}
+            >
               {t('prms.newPrm.addAddress')}
-            </button>
+            </Button>
           </section>
 
-          {formError && <p className="new-prm__form-error">{formError}</p>}
+          {formError && <Alert>{formError}</Alert>}
 
           <div className="new-prm__actions">
-            <Link to="/app/prms" className="new-prm__cancel-btn">
+            <Button to="/app/prms" variant="outline" size="lg">
               {t('prms.newPrm.cancel')}
-            </Link>
-            <button
-              type="submit"
-              className="new-prm__submit-btn"
-              disabled={createPrm.isPending}
-            >
+            </Button>
+            <Button type="submit" size="lg" loading={createPrm.isPending}>
               {createPrm.isPending
                 ? t('prms.newPrm.submitting')
                 : t('prms.newPrm.submit')}
-            </button>
+            </Button>
           </div>
         </form>
       </div>

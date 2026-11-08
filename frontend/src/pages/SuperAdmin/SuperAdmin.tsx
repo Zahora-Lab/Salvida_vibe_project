@@ -1,5 +1,6 @@
 import { ShieldCheck } from 'lucide-react';
-import Header from '../../components/Header/Header';
+import Header from '../../components/layout/header/Header';
+import { Button } from '../../components/ui/button';
 import { useAuthStore } from '../../store/useAuthStore';
 import { useDemoMode } from '../../hooks/useProfile';
 import './SuperAdmin.css';
@@ -32,14 +33,16 @@ export default function SuperAdmin() {
                 {isDemo ? 'Demo activo' : 'Demo inactivo'}
               </span>
             </div>
-            <button
-              className={`superadmin__toggle-btn${isDemo ? ' superadmin__toggle-btn--on' : ''}`}
+            <Button
+              variant={isDemo ? 'soft' : 'outline'}
+              tone={isDemo ? 'warning' : 'neutral'}
+              size="sm"
               onClick={() => demoMode.mutate(!isDemo)}
-              disabled={demoMode.isPending}
+              loading={demoMode.isPending}
               aria-pressed={isDemo}
             >
               {isDemo ? 'Desactivar demo' : 'Activar demo'}
-            </button>
+            </Button>
           </div>
         </section>
       </div>

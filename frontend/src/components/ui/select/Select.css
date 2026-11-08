@@ -1,0 +1,9 @@
+/* Field styles (variant, size, status, tokens) come from BaseInput.css. */
+.select {
+  cursor: pointer;
+}
+
+.select:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}

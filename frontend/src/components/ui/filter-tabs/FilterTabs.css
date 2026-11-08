@@ -1,0 +1,4 @@
+.filter-tabs {
+  display: flex;
+  gap: 0.375rem;
+}

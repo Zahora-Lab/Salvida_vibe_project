@@ -1,7 +1,7 @@
 import { Link, useSearchParams } from "react-router-dom";
 import { SalvidaLogo } from "@/assets/icons/SalvidaLogo";
 import { useTranslation } from "react-i18next";
-import AuthCard from "../../components/AuthCard/AuthCard";
+import AuthCard from "../../components/features/auth/auth-card/AuthCard";
 import "./Login.css";
 
 export default function Login() {
