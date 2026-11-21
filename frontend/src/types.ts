@@ -71,6 +71,7 @@ export interface Booking {
   status: 'Approved' | 'Pending' | 'Completed' | 'Cancelled' | 'SignPending';
   service_reason?: ServiceReason;
   service_reason_notes?: string;
+  observations?: string | null;
   is_demo?: boolean;
   created_by_admin?: boolean;
   owner_name?: string;

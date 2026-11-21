@@ -2,6 +2,8 @@ import re
 from pydantic import BaseModel, field_validator, model_validator
 from typing import Literal, Optional
 
+OBSERVATIONS_MAX_LENGTH = 1000
+
 
 BookingStatus = Literal["Approved", "Pending", "Completed", "Cancelled", "SignPending"]
 ServiceReason = Literal[
@@ -12,6 +14,17 @@ ServiceReason = Literal[
     "administrative",
     "other",
 ]
+
+
+def _clean_observations(v: Optional[str]) -> Optional[str]:
+    if v is None:
+        return None
+    v = v.strip()
+    if not v:
+        return None
+    if len(v) > OBSERVATIONS_MAX_LENGTH:
+        raise ValueError(f"observations must be at most {OBSERVATIONS_MAX_LENGTH} characters")
+    return v
 
 
 class BookingBase(BaseModel):
@@ -25,6 +38,12 @@ class BookingBase(BaseModel):
     lng: Optional[float] = None
     service_reason: Optional[ServiceReason] = None
     service_reason_notes: Optional[str] = None
+    observations: Optional[str] = None
+
+    @field_validator("observations")
+    @classmethod
+    def validate_observations(cls, v: Optional[str]) -> Optional[str]:
+        return _clean_observations(v)
 
     @field_validator("date")
     @classmethod
@@ -59,6 +78,12 @@ class BookingUpdate(BaseModel):
     status: Optional[BookingStatus] = None
     service_reason: Optional[ServiceReason] = None
     service_reason_notes: Optional[str] = None
+    observations: Optional[str] = None
+
+    @field_validator("observations")
+    @classmethod
+    def validate_observations(cls, v: Optional[str]) -> Optional[str]:
+        return _clean_observations(v)
 
 
 class BookingStatusUpdate(BaseModel):

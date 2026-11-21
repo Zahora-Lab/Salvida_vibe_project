@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import {
   Clock, MapPin, Pencil, Trash2, CheckCircle, X, FileSignature,
-  CalendarDays, User,
+  CalendarDays, User, StickyNote,
 } from 'lucide-react';
 import { DropdownMenu } from '@/components/ui/dropdown-menu';
 import { formatDateShort } from '@/utils';
@@ -112,6 +112,12 @@ export default function BookingCard({
             </span>
           )}
         </div>
+        {isAdmin && booking.observations && (
+          <div className="booking-card__observations" title={booking.observations}>
+            <StickyNote size={13} />
+            <span className="booking-card__observations-text">{booking.observations}</span>
+          </div>
+        )}
       </div>
     </div>
   );
