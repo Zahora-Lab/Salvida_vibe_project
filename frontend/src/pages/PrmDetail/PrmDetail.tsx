@@ -4,6 +4,7 @@ import {
   Mail,
   Phone,
   Cake,
+  PartyPopper,
   BookOpen,
   X,
   Check,
@@ -32,7 +33,8 @@ import AddressSelector from '../../components/features/address/address-selector/
 import PrmAddressesMap from '../../components/features/prm/prm-addresses-map/PrmAddressesMap';
 import AddressAccessibilityBadge from '../../components/features/address/address-accessibility-badge/AddressAccessibilityBadge';
 import { DateInput } from '../../components/ui/date-input';
-import type { Address } from '../../types';
+import type { Address, PrmGender } from '../../types';
+import { getAge, isBirthdayToday, parseIsoDateLocal } from '../../lib/birthDate';
 import PrmRecentHistory from '@/components/features/prm/prm-recent-history/PrmRecentHistory';
 import { Input } from '../../components/ui/input';
 import { Button, BackButton, IconButton } from '../../components/ui/button';
@@ -44,13 +46,16 @@ import { Avatar } from '@/components/ui/avatar';
 import { EMPTY_VALUE, orDash } from '../../utils';
 import './PrmDetail.css';
 
+const GENDER_OPTIONS: PrmGender[] = ['M', 'F', 'Other', 'Undisclosed'];
+
 function formatBirthDate(iso: string) {
-  if (!iso) return EMPTY_VALUE;
+  const date = parseIsoDateLocal(iso);
+  if (!date) return EMPTY_VALUE;
   return new Intl.DateTimeFormat('es-ES', {
     day: 'numeric',
     month: 'long',
     year: 'numeric',
-  }).format(new Date(iso));
+  }).format(date);
 }
 
 export default function PrmDetail() {
@@ -129,6 +134,7 @@ export default function PrmDetail() {
           email: prm.email,
           phone: prm.phone,
           birthDate: prm.birthDate,
+          gender: (prm.gender ?? '') as PrmGender | '',
           dni: prm.dni || '',
           bloodType: prm.bloodType,
           height: prm.height ?? '',
@@ -139,6 +145,7 @@ export default function PrmDetail() {
           email: '',
           phone: '',
           birthDate: '',
+          gender: '' as PrmGender | '',
           dni: '',
           bloodType: '',
           height: '' as string | number,
@@ -153,6 +160,7 @@ export default function PrmDetail() {
         email: prm.email,
         phone: prm.phone,
         birthDate: prm.birthDate,
+        gender: (prm.gender ?? '') as PrmGender | '',
         dni: prm.dni || '',
         bloodType: prm.bloodType,
         height: prm.height ?? '',
@@ -171,6 +179,7 @@ export default function PrmDetail() {
         email: draft.email,
         phone: draft.phone,
         birthDate: draft.birthDate,
+        gender: draft.gender || null,
         dni: draft.dni || undefined,
         bloodType: draft.bloodType,
         height: draft.height ? Number(draft.height) : undefined,
@@ -223,6 +232,9 @@ export default function PrmDetail() {
       </div>
     );
   }
+
+  const age = getAge(prm.birthDate);
+  const birthdayToday = isBirthdayToday(prm.birthDate);
 
   return (
     <div className="prm-detail">
@@ -293,7 +305,19 @@ export default function PrmDetail() {
                   onChange={(event) => setDraft({ ...draft, name: event.target.value })}
                 />
               ) : (
-                <h1 className="prm-profile__name">{prm.name}</h1>
+                <h1 className="prm-profile__name">
+                  {prm.name}
+                  {birthdayToday && (
+                    <span
+                      className="prm-profile__birthday"
+                      role="img"
+                      aria-label={t('prmDetail.birthdayToday')}
+                      title={t('prmDetail.birthdayToday')}
+                    >
+                      <PartyPopper size={24} aria-hidden="true" />
+                    </span>
+                  )}
+                </h1>
               )}
               <div className="prm-profile__badges">
                 <Badge tone={prm.status === 'Activo' ? 'success' : 'neutral'}>
@@ -466,6 +490,38 @@ export default function PrmDetail() {
                 ) : (
                   <span className="prm-info__row-value">
                     {formatBirthDate(prm.birthDate)}
+                    {age !== null && ` (${t('prmDetail.age', { count: age })})`}
+                  </span>
+                )}
+              </div>
+              <div className="prm-info__row">
+                <div className="prm-info__row-left">
+                  <div className="prm-info__row-icon">
+                    <User size={16} />
+                  </div>
+                  <span className="prm-info__row-key">
+                    {t('prmDetail.gender')}
+                  </span>
+                </div>
+                {editing ? (
+                  <Select
+                    variant="compact"
+                    size="xs"
+                    value={draft.gender}
+                    onChange={(event) =>
+                      setDraft({ ...draft, gender: event.target.value as PrmGender | '' })
+                    }
+                  >
+                    <option value="">{t('prmDetail.genderPlaceholder')}</option>
+                    {GENDER_OPTIONS.map((g) => (
+                      <option key={g} value={g}>
+                        {t(`prmDetail.genderOptions.${g}`)}
+                      </option>
+                    ))}
+                  </Select>
+                ) : (
+                  <span className="prm-info__row-value">
+                    {prm.gender ? t(`prmDetail.genderOptions.${prm.gender}`) : EMPTY_VALUE}
                   </span>
                 )}
               </div>

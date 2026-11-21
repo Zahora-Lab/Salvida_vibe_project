@@ -48,6 +48,7 @@ def _row_to_booking(row: dict, prm_name: str = "", prm_avatar: Optional[str] = N
         status=row.get("status", "Pending"),
         service_reason=row.get("service_reason"),
         service_reason_notes=row.get("service_reason_notes"),
+        observations=row.get("observations"),
         is_demo=row.get("is_demo", False),
         created_by_admin=row.get("created_by_admin", False),
         owner_name=owner_name,
@@ -81,6 +82,13 @@ def _fetch_full_booking(booking_id: str, supabase) -> Booking:
     row = result.data
     prm = row.get("prms") or {}
     return _row_to_booking(row, prm.get("name", ""), prm.get("avatar"))
+
+
+def _visible_to(booking: Booking, user: dict) -> Booking:
+    """Observations are internal notes: only admins/superadmins can see them."""
+    if is_admin(user) or booking.observations is None:
+        return booking
+    return booking.model_copy(update={"observations": None})
 
 
 # ---------------------------------------------------------------------------
@@ -145,7 +153,7 @@ async def list_bookings(
     for row in rows:
         prm = row.get("prms") or {}
         owner_name = owner_map.get(row.get("created_by")) if owner_map else None
-        bookings.append(_row_to_booking(row, prm.get("name", ""), prm.get("avatar"), owner_name))
+        bookings.append(_visible_to(_row_to_booking(row, prm.get("name", ""), prm.get("avatar"), owner_name), user))
 
     return bookings
 
@@ -157,7 +165,7 @@ async def list_bookings(
 async def get_booking(booking_id: str, user: dict = Depends(get_current_user)):
     supabase = get_supabase()
     _assert_booking_access(booking_id, user, supabase)
-    return _fetch_full_booking(booking_id, supabase)
+    return _visible_to(_fetch_full_booking(booking_id, supabase), user)
 
 
 # ---------------------------------------------------------------------------
@@ -218,6 +226,7 @@ async def create_booking(body: BookingCreate, background_tasks: BackgroundTasks,
         "lng": addr_lng,
         "service_reason": body.service_reason,
         "service_reason_notes": body.service_reason_notes,
+        "observations": body.observations if caller_is_admin else None,
         "status": "SignPending",
         "user_id": booking_owner,
         "created_by": booking_owner,
@@ -235,7 +244,7 @@ async def create_booking(body: BookingCreate, background_tasks: BackgroundTasks,
         f"Reserva para {prm_data['name']} el {body.date}. Por favor firmá el contrato para confirmarla.",
         {"bookingId": str(booking.id), "action": "sign"},
     )
-    return booking
+    return _visible_to(booking, user)
 
 
 # ---------------------------------------------------------------------------
@@ -262,9 +271,13 @@ async def update_booking(
         "status": "status",
         "service_reason": "service_reason",
         "service_reason_notes": "service_reason_notes",
+        "observations": "observations",
     }
 
     raw = body.model_dump(exclude_unset=True)
+    if not is_admin(user):
+        # Only admins may write observations; ignore silently so existing notes survive.
+        raw.pop("observations", None)
     updates = {field_map.get(k, k): v for k, v in raw.items()}
 
     if updates:
@@ -277,7 +290,7 @@ async def update_booking(
         "Reserva actualizada",
         f"La reserva para {booking.prmName} ha sido modificada.",
     )
-    return booking
+    return _visible_to(booking, user)
 
 
 # ---------------------------------------------------------------------------
@@ -331,7 +344,7 @@ async def update_booking_status(
         except Exception as exc:
             logger.error("Could not send review request email for booking %s: %s", booking_id, exc)
 
-    return booking
+    return _visible_to(booking, user)
 
 
 # ---------------------------------------------------------------------------
@@ -403,7 +416,7 @@ async def sign_booking(
         {"status": "Approved", "signed_at": now, "signature_url": signed_url}
     ).eq("id", booking_id).execute()
 
-    return _fetch_full_booking(booking_id, supabase)
+    return _visible_to(_fetch_full_booking(booking_id, supabase), user)
 
 
 # ---------------------------------------------------------------------------
@@ -432,4 +445,4 @@ async def cancel_booking(
         updates["service_reason_notes"] = body.reason
 
     supabase.table("bookings").update(updates).eq("id", booking_id).execute()
-    return _fetch_full_booking(booking_id, supabase)
+    return _visible_to(_fetch_full_booking(booking_id, supabase), user)

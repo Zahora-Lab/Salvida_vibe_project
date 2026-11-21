@@ -22,12 +22,15 @@ export interface EmergencyContact {
   relationship: string;
 }
 
+export type PrmGender = 'M' | 'F' | 'Other' | 'Undisclosed';
+
 export interface Prm {
   id: string;
   name: string;
   email: string;
   phone: string;
   birthDate: string;
+  gender?: PrmGender | null;
   bloodType: string;
   height?: number;
   weight?: number;
@@ -68,6 +71,7 @@ export interface Booking {
   status: 'Approved' | 'Pending' | 'Completed' | 'Cancelled' | 'SignPending';
   service_reason?: ServiceReason;
   service_reason_notes?: string;
+  observations?: string | null;
   is_demo?: boolean;
   created_by_admin?: boolean;
   owner_name?: string;

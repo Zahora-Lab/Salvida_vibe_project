@@ -397,3 +397,34 @@
   font-size: 0.875rem;
   color: var(--color-slate-400);
 }
+
+/* Observaciones (textarea + contador) */
+.field-card__textarea {
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 5rem;
+  padding: 0.625rem 0.875rem;
+  border: 1.5px solid var(--color-slate-200);
+  border-radius: 0.75rem;
+  background: white;
+  color: var(--color-slate-900);
+  font-size: 0.875rem;
+  line-height: 1.4;
+  resize: vertical;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.field-card__textarea::placeholder {
+  color: var(--color-slate-400);
+}
+
+.field-card__textarea:focus {
+  border-color: var(--color-primary);
+}
+
+.field-card__counter {
+  align-self: flex-end;
+  font-size: 0.75rem;
+  color: var(--color-slate-400);
+}

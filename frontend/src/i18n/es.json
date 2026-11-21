@@ -166,6 +166,14 @@
       "dni": "DNI / NIE",
       "dniPlaceholder": "12345678A",
       "birthDate": "Fecha de nacimiento",
+      "gender": "Género",
+      "genderPlaceholder": "Sin especificar",
+      "genderOptions": {
+        "M": "Hombre",
+        "F": "Mujer",
+        "Other": "Otro",
+        "Undisclosed": "Prefiere no decirlo"
+      },
       "status": "Estado",
       "statusActive": "Activo",
       "statusInactive": "Inactivo",
@@ -208,6 +216,17 @@
     "email": "Email",
     "phone": "Teléfono",
     "birthdate": "Fecha de nacimiento",
+    "age_one": "{{count}} año",
+    "age_other": "{{count}} años",
+    "birthdayToday": "¡Hoy es su cumpleaños!",
+    "gender": "Género",
+    "genderPlaceholder": "Sin especificar",
+    "genderOptions": {
+      "M": "Hombre",
+      "F": "Mujer",
+      "Other": "Otro",
+      "Undisclosed": "Prefiere no decirlo"
+    },
     "dni": "DNI / NIE",
     "status": "Estado",
     "notFound": "Usuario del servicio no encontrado",
@@ -325,6 +344,9 @@
     "dateTime": "Fecha y hora",
     "assistDate": "Fecha de asistencia",
     "assistTime": "Hora de asistencia",
+    "observations": "Observaciones",
+    "observationsPlaceholder": "Indicaciones para el conductor, acompañamiento, accesos…",
+    "observationsCounter": "{{current}}/{{max}}",
     "requirements": {
       "title": "Para enviar la solicitud necesitas:",
       "patientSelected": "Paciente seleccionado",

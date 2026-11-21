@@ -8,7 +8,7 @@ import AddressSelector from '../../components/features/address/address-selector/
 import UserSelector from '../../components/features/user/user-selector/UserSelector';
 import { useAuthStore } from '../../store/useAuthStore';
 import { DateInput } from '../../components/ui/date-input';
-import type { Address } from '../../types';
+import type { Address, PrmGender } from '../../types';
 import { Input } from '../../components/ui/input';
 import { FormField } from '../../components/ui/form-field';
 import { BackButton, Button, IconButton } from '../../components/ui/button';
@@ -38,6 +38,7 @@ export default function NewPrm() {
   const [phone, setPhone] = useState('');
   const [dni, setDni] = useState('');
   const [birthDate, setBirthDate] = useState('');
+  const [gender, setGender] = useState<PrmGender | ''>('');
   const [status, setStatus] = useState<'Activo' | 'Inactivo'>('Activo');
 
   // Medical fields
@@ -103,6 +104,7 @@ export default function NewPrm() {
         phone,
         dni,
         birthDate,
+        gender: gender || null,
         status,
         bloodType,
         height: height ? parseFloat(height) : undefined,
@@ -227,6 +229,21 @@ export default function NewPrm() {
                   onChange={setBirthDate}
                   placeholder={t('prms.newPrm.birthDate')}
                 />
+              </FormField>
+
+              <FormField label={t('prms.newPrm.gender')} htmlFor="gender">
+                {(field) => (
+                  <Select
+                    {...field}
+                    value={gender}
+                    onChange={(e) => setGender(e.target.value as PrmGender | '')}
+                  >
+                    <option value="">{t('prms.newPrm.genderPlaceholder')}</option>
+                    {(['M', 'F', 'Other', 'Undisclosed'] as const).map((g) => (
+                      <option key={g} value={g}>{t(`prms.newPrm.genderOptions.${g}`)}</option>
+                    ))}
+                  </Select>
+                )}
               </FormField>
 
               <FormField label={t('prms.newPrm.status')} htmlFor="status">
