@@ -312,6 +312,38 @@
   }
 }
 
+.lp-stats__error {
+  max-width: 72rem;
+  margin: 0 auto 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.lp-stats__error-text {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--lp-on-surface-variant);
+}
+
+.lp-stats__retry {
+  font-family: var(--lp-font);
+  font-size: 0.875rem;
+  font-weight: 700;
+  padding: 0.5rem 1.25rem;
+  border: none;
+  border-radius: 9999px;
+  background: var(--lp-primary);
+  color: var(--lp-on-primary);
+  cursor: pointer;
+}
+
+.lp-stats__retry:hover {
+  background: var(--lp-primary-container);
+}
+
 .lp-stats__card {
   background: var(--lp-surface-container-lowest);
   padding: 2.5rem;

@@ -272,7 +272,10 @@ export default function LandingPage() {
   const { t } = useTranslation();
   const [activeSection, setActiveSection] = useState<string>("home");
   const [kpis, setKpis] = useState<GlobalKpis>(DEFAULT_KPIS);
-  const [kpisLoading, setKpisLoading] = useState(true);
+  const [kpisStatus, setKpisStatus] = useState<"loading" | "ready" | "error">(
+    "loading",
+  );
+  const [kpisAttempt, setKpisAttempt] = useState(0);
   const [socialLinks, setSocialLinks] =
     useState<ApiSocialLink[]>(DEFAULT_SOCIAL_LINKS);
   const [reviews, setReviews] = useState<ApiReview[] | null>(null);
@@ -305,18 +308,29 @@ export default function LandingPage() {
     return () => ac.abort();
   }, []);
 
-  // Fetch global KPIs on mount — only the stat counters and auth CTAs wait for it
+  // Fetch global KPIs — the stat counters and auth CTAs wait for it. The CTAs
+  // are only enabled once the backend has answered; on failure the user can retry.
   useEffect(() => {
     const ac = new AbortController();
     fetchWithRetry(`${BASE_URL}/globalKpis`, {}, ac.signal)
       .then((r) => (r.ok ? r.json() : Promise.reject(r.status)))
-      .then((data: GlobalKpis) => setKpis(data))
-      .catch(() => {
-        // fallback – keep zeros, but still release counters and CTAs
+      .then((data: GlobalKpis) => {
+        setKpis(data);
+        setKpisStatus("ready");
       })
-      .finally(() => setKpisLoading(false));
+      .catch(() => {
+        if (!ac.signal.aborted) setKpisStatus("error");
+      });
     return () => ac.abort();
-  }, []);
+  }, [kpisAttempt]);
+
+  function handleKpisRetry() {
+    setKpisStatus("loading");
+    setKpisAttempt((n) => n + 1);
+  }
+
+  const kpisLoading = kpisStatus === "loading";
+  const ctasDisabled = kpisStatus !== "ready";
 
   function handleNavClick(id: string) {
     setActiveSection(id);
@@ -428,7 +442,7 @@ export default function LandingPage() {
           <button
             className="lp-nav__cta"
             onClick={() => navigate("/login")}
-            disabled={kpisLoading}
+            disabled={ctasDisabled}
             aria-busy={kpisLoading}
           >
             {t("landing.nav.login")}
@@ -453,7 +467,7 @@ export default function LandingPage() {
             <button
               className="lp-hero__btn-primary"
               onClick={() => navigate("/login")}
-              disabled={kpisLoading}
+              disabled={ctasDisabled}
               aria-busy={kpisLoading}
             >
               {t("landing.hero.loginBtn")}
@@ -461,7 +475,7 @@ export default function LandingPage() {
             <button
               className="lp-hero__btn-secondary"
               onClick={() => navigate("/login?register=true")}
-              disabled={kpisLoading}
+              disabled={ctasDisabled}
               aria-busy={kpisLoading}
             >
               {t("landing.hero.registerBtn")}
@@ -471,6 +485,20 @@ export default function LandingPage() {
 
         {/* ── Stats ── */}
         <section className="lp-stats" id="servicios">
+          {kpisStatus === "error" && (
+            <div className="lp-stats__error" role="alert">
+              <p className="lp-stats__error-text">
+                {t("landing.stats.unavailable")}
+              </p>
+              <button
+                type="button"
+                className="lp-stats__retry"
+                onClick={handleKpisRetry}
+              >
+                {t("landing.stats.retry")}
+              </button>
+            </div>
+          )}
           <div className="lp-stats__grid">
             <StatCard
               icon="transfer_within_a_station"
