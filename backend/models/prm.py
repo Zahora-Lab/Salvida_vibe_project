@@ -4,6 +4,7 @@ from typing import Literal, Optional
 from .address import Address
 
 PrmStatus = Literal["Activo", "Inactivo"]
+PrmGender = Literal["M", "F", "Other", "Undisclosed"]
 
 
 class EmergencyContactCreate(BaseModel):
@@ -30,6 +31,7 @@ class PrmBase(BaseModel):
     phone: str = ""
     # Stored as ISO 'YYYY-MM-DD' in DB; frontend formats for display
     birthDate: Optional[str] = None
+    gender: Optional[PrmGender] = None
     bloodType: str = ""
     height: Optional[float] = None
     weight: Optional[float] = None
@@ -55,6 +57,11 @@ class PrmBase(BaseModel):
             raise ValueError("birthDate must be in YYYY-MM-DD format")
         return v
 
+    @field_validator("gender", mode="before")
+    @classmethod
+    def empty_gender_to_none(cls, v):
+        return None if v == "" else v
+
 
 class PrmCreate(PrmBase):
     emergency_contacts: list[EmergencyContactCreate] = []
@@ -66,12 +73,18 @@ class PrmUpdate(BaseModel):
     email: Optional[str] = None
     phone: Optional[str] = None
     birthDate: Optional[str] = None
+    gender: Optional[PrmGender] = None
     bloodType: Optional[str] = None
     height: Optional[float] = None
     weight: Optional[float] = None
     status: Optional[PrmStatus] = None
     avatar: Optional[str] = None
     dni: Optional[str] = None
+
+    @field_validator("gender", mode="before")
+    @classmethod
+    def empty_gender_to_none(cls, v):
+        return None if v == "" else v
 
 
 class PrmListItem(BaseModel):
