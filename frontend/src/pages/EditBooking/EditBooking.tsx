@@ -7,6 +7,7 @@ import { DateInput } from '../../components/ui/date-input';
 import { TimeInput } from '../../components/ui/time-input';
 import ContractModal from '../../components/features/booking/contract-modal/ContractModal';
 import { useBooking, useUpdateBooking } from '../../hooks/useBookings';
+import { useAuthStore } from '@/store/useAuthStore';
 import type { Address } from '../../types';
 import { Button, BackButton } from '../../components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -31,6 +32,7 @@ export default function EditBooking() {
   const { t } = useTranslation();
   const { data: booking, isLoading } = useBooking(id!);
   const updateBooking = useUpdateBooking();
+  const isAdmin = useAuthStore((s) => s.user?.role === 'admin' || s.user?.role === 'superadmin');
 
   const [date, setDate] = useState(() => booking?.date ?? '');
   const [time, setTime] = useState(() => booking?.startTime ?? '');
@@ -74,7 +76,7 @@ export default function EditBooking() {
         addressId: address.id,
         lat: address.lat,
         lng: address.lng,
-        observations: observations.trim() || null,
+        ...(isAdmin ? { observations: observations.trim() || null } : {}),
       });
       navigate(-1);
     } catch {
@@ -179,27 +181,29 @@ export default function EditBooking() {
             </div>
           </div>
 
-          {/* Observaciones (opcional) */}
-          <div className={`field-card ${cardState(observations.trim(), false)}`}>
-            <div className="field-card__header">
-              <span className="field-card__icon">📝</span>
-              <label className="field-card__label" htmlFor="booking-observations">{t('booking.observations')}</label>
+          {/* Observaciones (opcional, solo admin/superadmin) */}
+          {isAdmin && (
+            <div className={`field-card ${cardState(observations.trim(), false)}`}>
+              <div className="field-card__header">
+                <span className="field-card__icon">📝</span>
+                <label className="field-card__label" htmlFor="booking-observations">{t('booking.observations')}</label>
+              </div>
+              <div className="field-card__content">
+                <textarea
+                  id="booking-observations"
+                  className="field-card__textarea"
+                  rows={3}
+                  maxLength={OBSERVATIONS_MAX_LENGTH}
+                  value={observations}
+                  onChange={(event) => setObservationsDraft(event.target.value)}
+                  placeholder={t('booking.observationsPlaceholder')}
+                />
+                <span className="field-card__counter">
+                  {t('booking.observationsCounter', { current: observations.length, max: OBSERVATIONS_MAX_LENGTH })}
+                </span>
+              </div>
             </div>
-            <div className="field-card__content">
-              <textarea
-                id="booking-observations"
-                className="field-card__textarea"
-                rows={3}
-                maxLength={OBSERVATIONS_MAX_LENGTH}
-                value={observations}
-                onChange={(event) => setObservationsDraft(event.target.value)}
-                placeholder={t('booking.observationsPlaceholder')}
-              />
-              <span className="field-card__counter">
-                {t('booking.observationsCounter', { current: observations.length, max: OBSERVATIONS_MAX_LENGTH })}
-              </span>
-            </div>
-          </div>
+          )}
 
           {/* Firma del contrato — solo si está pendiente de firma */}
           {booking.status === 'SignPending' && (

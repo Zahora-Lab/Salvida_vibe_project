@@ -112,7 +112,7 @@ export default function BookingCard({
             </span>
           )}
         </div>
-        {booking.observations && (
+        {isAdmin && booking.observations && (
           <div className="booking-card__observations" title={booking.observations}>
             <StickyNote size={13} />
             <span className="booking-card__observations-text">{booking.observations}</span>

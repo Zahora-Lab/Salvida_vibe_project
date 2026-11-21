@@ -73,7 +73,7 @@ export default function NewBooking() {
         addressId: address.id,
         lat: address.lat,
         lng: address.lng,
-        observations: observations.trim() || null,
+        ...(isAdmin ? { observations: observations.trim() || null } : {}),
       });
       navigate(-1);
     } catch {
@@ -261,27 +261,29 @@ export default function NewBooking() {
             </div>
           </div>
 
-          {/* Observaciones (opcional) */}
-          <div className={`field-card ${cardState(observations.trim(), false)}`}>
-            <div className="field-card__header">
-              <span className="field-card__icon">📝</span>
-              <label className="field-card__label" htmlFor="booking-observations">{t('booking.observations')}</label>
+          {/* Observaciones (opcional, solo admin/superadmin) */}
+          {isAdmin && (
+            <div className={`field-card ${cardState(observations.trim(), false)}`}>
+              <div className="field-card__header">
+                <span className="field-card__icon">📝</span>
+                <label className="field-card__label" htmlFor="booking-observations">{t('booking.observations')}</label>
+              </div>
+              <div className="field-card__content">
+                <textarea
+                  id="booking-observations"
+                  className="field-card__textarea"
+                  rows={3}
+                  maxLength={OBSERVATIONS_MAX_LENGTH}
+                  value={observations}
+                  onChange={(event) => setObservations(event.target.value)}
+                  placeholder={t('booking.observationsPlaceholder')}
+                />
+                <span className="field-card__counter">
+                  {t('booking.observationsCounter', { current: observations.length, max: OBSERVATIONS_MAX_LENGTH })}
+                </span>
+              </div>
             </div>
-            <div className="field-card__content">
-              <textarea
-                id="booking-observations"
-                className="field-card__textarea"
-                rows={3}
-                maxLength={OBSERVATIONS_MAX_LENGTH}
-                value={observations}
-                onChange={(event) => setObservations(event.target.value)}
-                placeholder={t('booking.observationsPlaceholder')}
-              />
-              <span className="field-card__counter">
-                {t('booking.observationsCounter', { current: observations.length, max: OBSERVATIONS_MAX_LENGTH })}
-              </span>
-            </div>
-          </div>
+          )}
 
         </div>
       </div>
