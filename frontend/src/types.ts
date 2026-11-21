@@ -22,12 +22,15 @@ export interface EmergencyContact {
   relationship: string;
 }
 
+export type PrmGender = 'M' | 'F' | 'Other' | 'Undisclosed';
+
 export interface Prm {
   id: string;
   name: string;
   email: string;
   phone: string;
   birthDate: string;
+  gender?: PrmGender | null;
   bloodType: string;
   height?: number;
   weight?: number;

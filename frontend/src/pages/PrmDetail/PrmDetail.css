@@ -89,6 +89,13 @@
   letter-spacing: -0.025em;
 }
 
+.prm-profile__birthday {
+  display: inline-block;
+  margin-left: 0.5rem;
+  vertical-align: middle;
+  color: var(--color-amber-500);
+}
+
 .prm-profile__badges {
   display: flex;
   align-items: center;
