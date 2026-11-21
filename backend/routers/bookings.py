@@ -48,6 +48,7 @@ def _row_to_booking(row: dict, prm_name: str = "", prm_avatar: Optional[str] = N
         status=row.get("status", "Pending"),
         service_reason=row.get("service_reason"),
         service_reason_notes=row.get("service_reason_notes"),
+        observations=row.get("observations"),
         is_demo=row.get("is_demo", False),
         created_by_admin=row.get("created_by_admin", False),
         owner_name=owner_name,
@@ -218,6 +219,7 @@ async def create_booking(body: BookingCreate, background_tasks: BackgroundTasks,
         "lng": addr_lng,
         "service_reason": body.service_reason,
         "service_reason_notes": body.service_reason_notes,
+        "observations": body.observations,
         "status": "SignPending",
         "user_id": booking_owner,
         "created_by": booking_owner,
@@ -262,6 +264,7 @@ async def update_booking(
         "status": "status",
         "service_reason": "service_reason",
         "service_reason_notes": "service_reason_notes",
+        "observations": "observations",
     }
 
     raw = body.model_dump(exclude_unset=True)

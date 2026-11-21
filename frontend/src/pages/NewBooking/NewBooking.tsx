@@ -17,6 +17,8 @@ import { Avatar } from '@/components/ui/avatar';
 import { Spinner } from '@/components/ui/spinner';
 import './NewBooking.css';
 
+const OBSERVATIONS_MAX_LENGTH = 1000;
+
 export default function NewBooking() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -27,6 +29,7 @@ export default function NewBooking() {
   const [address, setAddress] = useState<Partial<Address>>({});
   const [date, setDate] = useState(() => (location.state as { date?: string } | null)?.date || todayIso());
   const [time, setTime] = useState('');
+  const [observations, setObservations] = useState('');
 
   // Admin: selected user
   const [selectedOwnerId, setSelectedOwnerId] = useState('');
@@ -70,6 +73,7 @@ export default function NewBooking() {
         addressId: address.id,
         lat: address.lat,
         lng: address.lng,
+        observations: observations.trim() || null,
       });
       navigate(-1);
     } catch {
@@ -254,6 +258,28 @@ export default function NewBooking() {
                   />
                 </div>
               </div>
+            </div>
+          </div>
+
+          {/* Observaciones (opcional) */}
+          <div className={`field-card ${cardState(observations.trim(), false)}`}>
+            <div className="field-card__header">
+              <span className="field-card__icon">📝</span>
+              <label className="field-card__label" htmlFor="booking-observations">{t('booking.observations')}</label>
+            </div>
+            <div className="field-card__content">
+              <textarea
+                id="booking-observations"
+                className="field-card__textarea"
+                rows={3}
+                maxLength={OBSERVATIONS_MAX_LENGTH}
+                value={observations}
+                onChange={(event) => setObservations(event.target.value)}
+                placeholder={t('booking.observationsPlaceholder')}
+              />
+              <span className="field-card__counter">
+                {t('booking.observationsCounter', { current: observations.length, max: OBSERVATIONS_MAX_LENGTH })}
+              </span>
             </div>
           </div>
 

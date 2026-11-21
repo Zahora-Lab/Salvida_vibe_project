@@ -14,6 +14,8 @@ import { Avatar } from '@/components/ui/avatar';
 import { Spinner } from '@/components/ui/spinner';
 import '../NewBooking/NewBooking.css';
 
+const OBSERVATIONS_MAX_LENGTH = 1000;
+
 function cardState(
   value: unknown,
   submitAttempted: boolean,
@@ -42,6 +44,10 @@ export default function EditBooking() {
         }
       : {},
   );
+  // null = untouched: fall back to the loaded booking so a hard refresh (booking not
+  // cached yet on first render) never sends an empty value and wipes existing notes.
+  const [observationsDraft, setObservationsDraft] = useState<string | null>(null);
+  const observations = observationsDraft ?? booking?.observations ?? '';
   const [submitAttempted, setSubmitAttempted] = useState(false);
   const [showSignModal, setShowSignModal] = useState(false);
 
@@ -68,6 +74,7 @@ export default function EditBooking() {
         addressId: address.id,
         lat: address.lat,
         lng: address.lng,
+        observations: observations.trim() || null,
       });
       navigate(-1);
     } catch {
@@ -169,6 +176,28 @@ export default function EditBooking() {
                   />
                 </div>
               </div>
+            </div>
+          </div>
+
+          {/* Observaciones (opcional) */}
+          <div className={`field-card ${cardState(observations.trim(), false)}`}>
+            <div className="field-card__header">
+              <span className="field-card__icon">📝</span>
+              <label className="field-card__label" htmlFor="booking-observations">{t('booking.observations')}</label>
+            </div>
+            <div className="field-card__content">
+              <textarea
+                id="booking-observations"
+                className="field-card__textarea"
+                rows={3}
+                maxLength={OBSERVATIONS_MAX_LENGTH}
+                value={observations}
+                onChange={(event) => setObservationsDraft(event.target.value)}
+                placeholder={t('booking.observationsPlaceholder')}
+              />
+              <span className="field-card__counter">
+                {t('booking.observationsCounter', { current: observations.length, max: OBSERVATIONS_MAX_LENGTH })}
+              </span>
             </div>
           </div>
 
